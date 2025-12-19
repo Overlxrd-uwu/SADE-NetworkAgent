@@ -10,7 +10,7 @@
 
 <h1 id="🤖overview">🤖 Overview</h1>
 
-![alt text](./assets/images/NIKA_architecture.png)
+![alt text](./assets/images/nika_arch_gpt.png)
 
 This repository is a unified platform that can offer: 
 1. A benchmark suite of curated network incidents that covers 54 realistic network issues, ranging from link and host failures to resource contention, and includes five network scenarios, four of which can be instantiated at different topology sizes, spanning campus and data center networks. By combining these dimensions, the benchmark yields 640 distinct troubleshooting incidents for evaluating AI agents. The benchmark can be further extended by randomizing failure locations and composing multiple issues within a single incident. 
