@@ -82,7 +82,7 @@ class SDNStar(NetworkEnvBase):
         for host_id in range(SWITCH_NUM):
             host_name = f"host_{host_id + 1}"
             host_machine = self.lab.new_machine(
-                host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
             )
             host_meta = HostMeta(
                 name=host_name,
@@ -94,7 +94,7 @@ class SDNStar(NetworkEnvBase):
 
         # add controller
         controller = self.lab.new_machine(
-            "controller", **{"image": "kathara/ryu-stress", "cpus": 0.5, "mem": "256m", "bridged": True}
+            "controller", **{"image": "kathara/nika-ryu", "cpus": 0.5, "mem": "256m", "bridged": True}
         )
 
         for switch_meta in tot_switch_list:

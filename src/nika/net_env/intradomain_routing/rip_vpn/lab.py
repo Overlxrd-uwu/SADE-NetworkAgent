@@ -94,7 +94,7 @@ class RIPSmallInternetVPN(NetworkEnvBase):
         tot_host_list: list[HostMeta] = []
         for host_idx in range(1, self.host_num + 1):
             host_name = f"host_{host_idx}"
-            host_machine = self.lab.new_machine(host_name, **{"image": "kathara/wireguard", "cpu": 0.5, "mem": "256m"})
+            host_machine = self.lab.new_machine(host_name, **{"image": "kathara/nika-wireguard", "cpu": 0.5, "mem": "256m"})
             host_meta = HostMeta(
                 name=host_name,
                 machine=host_machine,
@@ -133,7 +133,7 @@ class RIPSmallInternetVPN(NetworkEnvBase):
             for server_idx in range(1, self.ext_server_num + 1):
                 server_name = f"web_server_{i}_{server_idx}"
                 server_machine = self.lab.new_machine(
-                    server_name, **{"image": "kathara/wireguard", "cpu": 0.5, "mem": "256m"}
+                    server_name, **{"image": "kathara/nika-wireguard", "cpu": 0.5, "mem": "256m"}
                 )
                 server_meta = HostMeta(
                     name=server_name,
@@ -147,7 +147,7 @@ class RIPSmallInternetVPN(NetworkEnvBase):
         tot_vpn_dict = {}
         vpn_server_name = "vpn_server_1"
         vpn_server_machine = self.lab.new_machine(
-            vpn_server_name, **{"image": "kathara/wireguard", "cpu": 0.5, "mem": "256m"}
+            vpn_server_name, **{"image": "kathara/nika-wireguard", "cpu": 0.5, "mem": "256m"}
         )
         vpn_server_meta = HostMeta(
             name=vpn_server_name,

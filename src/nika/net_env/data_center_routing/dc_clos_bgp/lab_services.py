@@ -110,7 +110,7 @@ class DCClosService(NetworkEnvBase):
 
         for ss in range(self.super_spine_count):
             ss_name = f"super_spine_router_{ss}"
-            router_ss = self.lab.new_machine(ss_name, **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"})
+            router_ss = self.lab.new_machine(ss_name, **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"})
             router_ss_meta = RouterMeta(
                 name=ss_name,
                 machine=router_ss,
@@ -125,7 +125,7 @@ class DCClosService(NetworkEnvBase):
             for spine_id in range(self.spine_count):
                 spine_name = f"spine_router_{pod}_{spine_id}"
                 router_spine = self.lab.new_machine(
-                    spine_name, **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+                    spine_name, **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
                 )
                 spine_meta = RouterMeta(
                     name=spine_name,
@@ -141,7 +141,7 @@ class DCClosService(NetworkEnvBase):
             for leaf_id in range(self.leaf_count):
                 leaf_name = f"leaf_router_{pod}_{leaf_id}"
                 router_leaf = self.lab.new_machine(
-                    leaf_name, **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+                    leaf_name, **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
                 )
                 leaf_meta = RouterMeta(
                     name=leaf_name,
@@ -156,7 +156,7 @@ class DCClosService(NetworkEnvBase):
             pod_dns[pod] = []
             # a dns and three webserver per pod
             dns_name = f"dns_pod{pod}"
-            dns_machine = self.lab.new_machine(dns_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"})
+            dns_machine = self.lab.new_machine(dns_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"})
             dns_meta = HostMeta(
                 name=dns_name,
                 machine=dns_machine,
@@ -170,7 +170,7 @@ class DCClosService(NetworkEnvBase):
             for host in range(self.leaf_count - 1):
                 web_name = f"webserver{host}_pod{pod}"
                 web_machine = self.lab.new_machine(
-                    web_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                    web_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                 )
                 web_meta = HostMeta(
                     name=web_name,
@@ -185,7 +185,7 @@ class DCClosService(NetworkEnvBase):
         for client_id in range(self.super_spine_count):
             client_name = f"client_{client_id}"
             client_machine = self.lab.new_machine(
-                client_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                client_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
             )
             client_meta = HostMeta(
                 name=client_name,

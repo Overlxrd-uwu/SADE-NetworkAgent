@@ -90,7 +90,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
         core_routers = {}
         for core_id in range(1, 4):
             router_core = self.lab.new_machine(
-                f"router_core_{core_id}", **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+                f"router_core_{core_id}", **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
             )
             router_core_meta = RouterMeta(
                 name=f"router_core_{core_id}",
@@ -109,7 +109,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
             for dist_id in range(1, DIST_SW_COUNT + 1):
                 dist_name = f"switch_dist_{core_id}_{dist_id}"
                 router_dist = self.lab.new_machine(
-                    dist_name, **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+                    dist_name, **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
                 )
                 dist_meta = RouterMeta(
                     name=dist_name,
@@ -125,7 +125,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
                 for access_id in range(1, ACCESS_SW_PER_DIST + 1):
                     access_name = f"switch_access_{core_id}_{dist_id}_{access_id}"
                     router_access = self.lab.new_machine(
-                        access_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                        access_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                     )
                     access_meta = SwitchMeta(
                         name=access_name,
@@ -141,7 +141,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
                     for host_id in range(1, HOST_PER_ACCESS + 1):
                         host_name = f"host_{core_id}_{dist_id}_{access_id}_{host_id}"
                         host_machine = self.lab.new_machine(
-                            host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                            host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                         )
                         host_meta = HostMeta(
                             name=host_name,
@@ -162,7 +162,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
 
         # dns
         host_name = "dns_server"
-        host_machine = self.lab.new_machine(host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"})
+        host_machine = self.lab.new_machine(host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"})
         host_meta = HostMeta(
             name=host_name,
             machine=host_machine,
@@ -175,7 +175,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
         for web_idx in range(web_server_count):
             host_name = f"web_server_{web_idx}"
             host_machine = self.lab.new_machine(
-                host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
             )
             host_meta = HostMeta(
                 name=host_name,
@@ -188,7 +188,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
 
         # server access switch
         server_switch = self.lab.new_machine(
-            "switch_server_access", **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+            "switch_server_access", **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
         )
         server_access_meta = RouterMeta(
             name="switch_server_access",

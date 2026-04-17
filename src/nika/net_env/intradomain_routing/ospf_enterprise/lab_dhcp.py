@@ -92,7 +92,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
         core_routers = {}
         for core_id in range(1, 4):
             router_core = self.lab.new_machine(
-                f"router_core_{core_id}", **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+                f"router_core_{core_id}", **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
             )
             router_core_meta = RouterMeta(
                 name=f"router_core_{core_id}",
@@ -111,7 +111,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
             for dist_id in range(1, DIST_SW_COUNT + 1):
                 dist_name = f"router_dist_{core_id}_{dist_id}"
                 router_dist = self.lab.new_machine(
-                    dist_name, **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+                    dist_name, **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
                 )
                 dist_meta = RouterMeta(
                     name=dist_name,
@@ -127,7 +127,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
                 for access_id in range(1, ACCESS_SW_PER_DIST + 1):
                     access_name = f"switch_access_{core_id}_{dist_id}_{access_id}"
                     router_access = self.lab.new_machine(
-                        access_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                        access_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                     )
                     access_meta = SwitchMeta(
                         name=access_name,
@@ -143,7 +143,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
                     for host_id in range(1, HOST_PER_ACCESS + 1):
                         host_name = f"host_{core_id}_{dist_id}_{access_id}_{host_id}"
                         host_machine = self.lab.new_machine(
-                            host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                            host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                         )
                         host_meta = HostMeta(
                             name=host_name,
@@ -164,7 +164,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
 
         # dns
         host_name = "dns_server"
-        host_machine = self.lab.new_machine(host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"})
+        host_machine = self.lab.new_machine(host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"})
         host_meta = HostMeta(
             name=host_name,
             machine=host_machine,
@@ -177,7 +177,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
         for web_idx in range(web_server_count):
             host_name = f"web_server_{web_idx}"
             host_machine = self.lab.new_machine(
-                host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
             )
             host_meta = HostMeta(
                 name=host_name,
@@ -190,7 +190,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
 
         # load balancer and its backend servers
         lb_name = "load_balancer"
-        lb_machine = self.lab.new_machine(lb_name, **{"image": "kathara/nginx-stress", "cpus": 0.5, "mem": "256m"})
+        lb_machine = self.lab.new_machine(lb_name, **{"image": "kathara/nika-nginx", "cpus": 0.5, "mem": "256m"})
         lb_meta = HostMeta(
             name=lb_name,
             machine=lb_machine,
@@ -202,7 +202,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
         for web_idx in range(3):  # 3 backend servers
             backend_name = f"backend_web_{web_idx}"
             backend_machine = self.lab.new_machine(
-                backend_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                backend_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
             )
             backend_meta = HostMeta(
                 name=backend_name,
@@ -214,7 +214,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
 
         # dhcp
         host_name = "dhcp_server"
-        host_machine = self.lab.new_machine(host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"})
+        host_machine = self.lab.new_machine(host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"})
         host_meta = HostMeta(
             name=host_name,
             machine=host_machine,
@@ -225,7 +225,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
 
         # server access switch
         server_router = self.lab.new_machine(
-            "server_access_router", **{"image": "kathara/frr-stress", "cpus": 0.5, "mem": "256m"}
+            "server_access_router", **{"image": "kathara/nika-frr", "cpus": 0.5, "mem": "256m"}
         )
         server_router_meta = RouterMeta(
             name="server_access_router",

@@ -104,7 +104,7 @@ class SDNClos(NetworkEnvBase):
             for host_id in range(HOST_PER_LEAF):
                 host_name = f"host_{leaf_id + 1}_{host_id + 1}"
                 host_machine = self.lab.new_machine(
-                    host_name, **{"image": "kathara/base-stress", "cpus": 0.5, "mem": "256m"}
+                    host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                 )
                 host_meta = HostMeta(
                     name=host_name,
@@ -116,7 +116,7 @@ class SDNClos(NetworkEnvBase):
 
         # ---------- Controller ----------
         controller = self.lab.new_machine(
-            "controller", **{"image": "kathara/ryu-stress", "cpus": 0.5, "mem": "256m", "bridged": True}
+            "controller", **{"image": "kathara/nika-ryu", "cpus": 0.5, "mem": "256m", "bridged": True}
         )
 
         # ---------- Switch initialize ----------
