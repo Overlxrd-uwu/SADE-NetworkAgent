@@ -22,7 +22,10 @@ Pipeline:
      events with is_error=true (the runner's tool_errors CSV column is
      unreliable for Claude-Code agents); persist
      data/tool_errors_from_logs.csv. Required by fig09.
-  3. Render 11 publication figures into figures/.
+  3. Render 11 publication figures into figures/. fig07 also persists
+     data/nika_failure_breakdown.csv (manual_injection + train_obs
+     outcomes plus deployment-skip rows) used by the discussion's
+     NIKA-injector audit table.
 """
 
 from __future__ import annotations
@@ -468,7 +471,13 @@ def fig06_topology_scaling():
 
 
 def fig07_nika_limits():
-    """NIKA injector limits: SADE on manual_injection vs train_obs."""
+    """NIKA injector limits: SADE on manual_injection vs train_obs.
+
+    Also persists ``data/nika_failure_breakdown.csv`` --- the merged
+    record of (manual_injection, train_obs) outcomes plus the
+    deployment-skip rows from ``benchmark_skips.csv``. The discussion
+    section's NIKA-injector audit table reads from this CSV.
+    """
     nika = []
     for label, p in [("manual_injection", NIKA_SOURCES["manual_injection"]),
                      ("train_obs",        NIKA_SOURCES["train_obs"])]:
@@ -487,8 +496,36 @@ def fig07_nika_limits():
                 })
     nika_df = pd.DataFrame(nika)
 
-    if nika_df.empty:
-        print("  (skipping fig07: NIKA-limits CSVs missing)")
+    # Deployment skips: benchmark cases where the test-set runner
+    # could not deploy the lab. Captured for the audit table only;
+    # not plotted.
+    deploy = []
+    if NIKA_SOURCES["skips_test"].is_file():
+        with NIKA_SOURCES["skips_test"].open(encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                deploy.append({
+                    "source": "deployment_skip",
+                    "problem": r.get("problem", "?"),
+                    "exception_type": r.get("exception_type", "?"),
+                })
+
+    # Only persist the breakdown when we actually have NIKA-set rows.
+    # Otherwise we would overwrite a previously committed 80-row CSV
+    # with a 2-row deployment-skip-only file on machines that don't have
+    # NIKA_LIMITS_DIR pointing at the manual_injection / train_obs runs.
+    if not nika_df.empty:
+        breakdown = pd.concat(
+            [
+                nika_df.assign(category="nika_set"),
+                pd.DataFrame(deploy).assign(category="deployment_skip"),
+            ],
+            ignore_index=True,
+        )
+        breakdown.to_csv(DATA / "nika_failure_breakdown.csv", index=False)
+        print(f"  wrote {DATA/'nika_failure_breakdown.csv'}")
+    else:
+        print("  (skipping nika_failure_breakdown.csv: NIKA_LIMITS_DIR not set)")
+        print("  (skipping fig07 plot: NIKA-limits CSVs missing)")
         return
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.2),
