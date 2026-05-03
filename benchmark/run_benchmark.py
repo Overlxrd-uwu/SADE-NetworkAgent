@@ -488,8 +488,8 @@ def main():
     parser.add_argument(
         "--benchmark-csv",
         type=str,
-        default=os.path.join(cur_dir, "benchmark.csv"),
-        help="Path to benchmark CSV file",
+        default=os.path.join(cur_dir, "benchmark_selected.csv"),
+        help="Path to benchmark CSV file (default: benchmark_selected.csv, the held-out test slice)",
     )
 
     parser.add_argument("--problem", type=str, help="Problem name")
