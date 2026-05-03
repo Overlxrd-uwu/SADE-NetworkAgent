@@ -149,12 +149,12 @@ python src/scripts/step1_net_env_start.py --scenario simple_ospf --topo_size s
 python src/scripts/step2_failure_inject.py --root_cause_name ospf_neighbor_missing
 
 # 3. Run the agent (pick one)
-python src/scripts/step3_agent_run.py --agent_type claude-code-sade --model claude-sonnet-4-6 --max_steps 20
-# python src/scripts/step3_agent_run.py --agent_type claude-code      --model claude-sonnet-4-6 --max_steps 20
-# python src/scripts/step3_agent_run.py --agent_type react            --llm_backend openai --model gpt-5 --max_steps 20
+python src/scripts/step3_agent_run.py --agent-type claude-code-sade --model claude-sonnet-4-6 --max-steps 20
+# python src/scripts/step3_agent_run.py --agent-type claude-code      --model claude-sonnet-4-6 --max-steps 20
+# python src/scripts/step3_agent_run.py --agent-type react            --llm-backend openai --model gpt-5 --max-steps 20
 
 # 4. Score the run (LLM-as-judge + grading)
-python src/scripts/step4_result_eval.py --judge_model gpt-5-mini
+python src/scripts/step4_result_eval.py --judge-model gpt-5-mini
 ```
 
 A successful run appends one row to `results/0_summary/evaluation_summary.csv`
@@ -165,7 +165,7 @@ detection / localisation / RCA metrics.
 
 ```bash
 # Iterate the four steps over benchmark/benchmark_selected.csv
-python benchmark/run_benchmark.py --agent_type claude-code-sade --model claude-sonnet-4-6 --max_steps 20
+python benchmark/run_benchmark.py --agent-type claude-code-sade --model claude-sonnet-4-6 --max-steps 20
 ```
 
 Each row in `benchmark_selected.csv` defines one (root cause, scenario,
