@@ -1,111 +1,159 @@
 # Research_results
 
-LCN-paper analysis pack comparing **SADE** (Claude-Code with the SADE workflow) against two baselines on the NIKA network-fault diagnosis benchmark.
+Analysis pack for the SADE evaluation: per-agent run CSVs, the unified
+matched-set CSV, log-scanned tool-error counts, and the rendered figures
+and tables that read from them. Everything in this directory is
+regenerable from `build_research_results.py` plus the per-agent run
+artifacts in `results_{ReAct_GPT5, ClaudeB, sade}/`.
 
-All three agents are evaluated on the **held-out test set** (`benchmark/benchmark_test.csv`) and matched on (problem, scenario, topo_size) triples. Comparison is restricted to the 523 triples that all three agents successfully evaluated.
+## Agents under comparison
 
-## Three test-set agents
+All three agents run on the same 4-step NIKA pipeline (`step1_net_env_start`
+→ `step2_failure_inject` → `step3_agent_run` → `step4_result_eval`) over
+identical (problem, scenario, topo_size) triples. They differ only in the
+agent framework and the workflow scaffolding.
 
-| Agent | Source | Framework / Model | Workflow scaffolding |
-|---|---|---|---|
-| **ReAct (GPT-5)** | `Research_results/results_ReAct_GPT5/results/` | LangGraph ReAct, `gpt-5-mini` (NIKA's original baseline) | None — minimal prompt only |
-| **CC-Baseline** | `results_ClaudeB/` | Claude Code (Sonnet 4.6) | None — minimal prompt only |
-| **SADE** | `results_sade/` | Claude Code (Sonnet 4.6) | Phase gates, fault-family skills, `CLAUDE.md` fault-routing index |
+| Agent | Source dir | Framework | Backbone | Workflow scaffolding |
+|---|---|---|---|---|
+| **ReAct (GPT-5)** | `results_ReAct_GPT5/results/` | LangGraph ReAct | `gpt-5` | minimal prompt only |
+| **CC-Baseline** | `results_ClaudeB/` | Claude Code SDK | Claude Sonnet 4.6 | minimal prompt only |
+| **SADE** | `results_sade/` | Claude Code SDK | Claude Sonnet 4.6 | phase gates + 15-skill library + diagnosis manual |
 
-All three see the same MCP tool surface (`task_mcp_server.list_avail_problems`, `submit`, the Kathara base/FRR/BMv2 servers, etc.) and the same problem suite. They differ only in framework and the SADE-side workflow scaffolding.
+The `results_*/0_summary/evaluation_summary.csv` file in each agent dir is
+the single per-row record produced by `step4_result_eval.py`. The matched
+test slice is the intersection of those three CSVs on (problem, scenario,
+topo_size).
 
-## NIKA injector-limit sources (purpose-different, both SADE-driven)
+## NIKA-injector audit sources (separate purpose)
 
-These are *not* part of the agent comparison. They were both run with SADE and surface NIKA's own benchmark-side limitations (cases the injector does not cleanly produce, or where the planted symptom is ambiguous to a thorough agent):
+These are *not* part of the agent comparison — both runs use SADE. They
+exist to characterise NIKA's fault-injection layer itself:
 
-- `nika-claude/results_manual_injection/` (39 rows)
-- `nika-claude/results_train_obs/` (39 rows)
-- `results_sade/0_summary/benchmark_skips.csv` (deployment-time injector failures)
+- `manual_injection` (39 rows) — runs under a verified-injection harness
+  that confirms the fault is actually installed before scoring.
+- `train_obs` (39 rows) — runs under NIKA's stock injection on the same
+  fault families.
+- `benchmark_skips.csv` (deployment-time injector failures) — captured
+  per agent in `results_*/0_summary/benchmark_skips.csv`.
 
-These feed into Figure 7 / `nika_failure_breakdown.csv` only.
+These three sources feed `data/nika_failure_breakdown.csv` and Figure 7;
+the rendered audit table referenced from the discussion section reads
+from there.
 
-## Headline numbers (test set, 523 matched triples)
+## Layout
 
-| Metric | ReAct (GPT-5) | CC-Baseline | **SADE** |
-|---|---:|---:|---:|
-| Overall judge (1–5) | 3.81 | 3.93 | **4.32** |
-| Final outcome (1–5) | 3.21 | 3.30 | **4.01** |
-| Detection accuracy | 0.69 | 0.67 | **0.85** |
-| Localization F1 | 0.61 | 0.80 | **0.81** |
-| RCA F1 | 0.44 | 0.65 | **0.80** |
-| Mean input tokens | 67k | 236k | 395k |
-| Mean output tokens | 10.9k | 9.5k | 12.9k |
-| Mean wall-clock (s) | 227 | 217 | 261 |
+```
+Research_results/
+├── data/
+│   ├── unified_test_3way.csv         # 3-way matched test slice (523 × 3 = 1569 rows)
+│   ├── tool_errors_from_logs.csv     # log-scanned `is_error: true` counts per session
+│   └── nika_failure_breakdown.csv    # NIKA-injector audit (manual + train_obs + skips)
+├── figures/                           # 11 PNGs + data_provenance.{md,pdf}
+├── tables/                            # paper Table 1 + per-family / topology / time-efficiency (csv + md)
+├── examples/                          # SADE-wins case study + accuracy sidecar
+├── results_ClaudeB/, results_sade/, results_ReAct_GPT5/   # per-agent run CSVs (input)
+├── build_research_results.py         # one-shot regenerator for figures, tables, and data/*.csv
+├── build_examples.py                 # writes examples/sade_wins.md
+└── _verify_tool_calls.py, _verify_tool_errors.py    # sample audits (stdout only)
+```
 
-**Bold** = best. SADE wins every correctness metric. The token-cost ladder is exactly inverted: ReAct cheapest (67k) but worst on RCA (0.44); SADE most expensive (395k) but strongest correctness across the board.
+## How everything regenerates
 
-## Statistical significance (paired Wilcoxon signed-rank)
-
-Across all three matched-pair comparisons (SADE vs CC, SADE vs ReAct, CC vs ReAct):
-
-| Comparison | Overall | Final outcome | Localization F1 | RCA F1 |
-|---|---:|---:|---:|---:|
-| SADE vs CC-Baseline | p < 1e-4 | p < 1e-4 | p < 1e-4 | p < 1e-4 |
-| SADE vs ReAct (GPT-5) | p < 1e-4 | p < 1e-4 | p < 1e-4 | p < 1e-4 |
-| CC-Baseline vs ReAct | **p = 0.026** | p = 0.17 (n.s.) | p = 0.10 (n.s.) | **p = 0.010** |
-
-Three useful claims fall out:
-1. **SADE > both baselines** on every correctness metric (p < 1e-4).
-2. **CC-Baseline is significantly better than ReAct on RCA F1** (p = 0.010) — the framework matters even without SADE scaffolding.
-3. **SADE's token cost is significantly higher** than both baselines (p < 1e-4 in both directions). Wall-clock time is significantly slower than CC (p < 1e-4) but not significantly different from ReAct (p = 0.42).
-
-Full table in `tables/table_significance.csv`.
-
-## Figures (300 DPI, IEEE-styled, in `figures/`)
-
-| File | Caption / Paper section |
-|---|---|
-| `fig01_headline.png` | 5-panel headline metrics with error bars (SEM). Goes in **Sec 5.1 Headline results**. |
-| `fig02_per_family.png` | Per fault-family overall-score heatmap (3 columns × ~50 families). Goes in **Sec 5.2 Per-fault-family analysis**. Single most-impactful figure for the paper. |
-| `fig03_efficiency.png` | Cost-vs-correctness scatter: input tokens vs overall judge score. Goes in **Sec 5.3 Cost vs correctness**. Pareto-style argument: SADE's cluster sits up-and-right. |
-| `fig04_token_budget.png` | Per-session input-token boxplot (3 agents). Goes in **Sec 5.3** alongside fig03. |
-| `fig05_outcome_distribution.png` | Stacked bars of correct (≥4) / partial (2–3) / wrong (≤1) by agent. Goes in **Sec 5.5 Failure modes**. |
-| `fig06_topology_scaling.png` | Test-set s/m/l scaling for overall score and tokens. Goes in **Sec 5.4 Scaling**. |
-| `fig07_nika_limits.png` | Two-panel: (a) injector deployment failures by exception class, (b) where SADE still fails on `manual_injection`/`train_obs` cases. Goes in **Sec 6 Limitations**. |
-
-## Tables (`tables/`)
-
-- `table_headline_metrics.csv` — paper Table 1 (per-agent mean / std / median for every reported metric).
-- `table_per_family.csv` — per-(family × agent) means, tabular form of fig02.
-- `table_topology_scaling.csv` — per-(topo_size × agent) breakdown for fig06.
-- `table_significance.csv` — paired Wilcoxon results: median-A, median-B, median-diff, p-value for every (metric × agent-pair).
-
-## Unified data (`data/`)
-
-- `unified_test_3way.csv` — all three test-set agents on the 523 matched triples (one row per agent×triple). The single source of truth for every figure and table.
-- `nika_failure_breakdown.csv` — exception classes from the deployment-skip log plus misclassified cases from `manual_injection` / `train_obs`.
-
-Rebuild any time:
 ```bash
+pip install matplotlib numpy pandas
 python Research_results/build_research_results.py
 ```
 
-Idempotent — reads the three test CSVs at the top of the script, regenerates everything else.
+The script runs three steps:
+
+1. Load the three per-agent `evaluation_summary.csv` files, intersect on
+   (problem, scenario, topo_size), persist `data/unified_test_3way.csv`.
+2. Walk every session's `conversation_diagnosis_agent.log`, count
+   `tool_end` events with `is_error: true`, persist
+   `data/tool_errors_from_logs.csv`. Required by fig09 because the runner
+   does not record tool-error counts in the CSV for Claude-Code agents.
+3. Render 11 PNGs into `figures/` and 4 paper tables (csv + md) into
+   `tables/`. Figure 7 also persists `data/nika_failure_breakdown.csv`
+   when `NIKA_LIMITS_DIR` is set (see below); without it, the existing
+   committed CSV is left untouched.
+
+`build_examples.py` (run separately) regenerates `examples/sade_wins.md`,
+the case-by-case "where SADE beats both baselines" walkthrough.
+
+## NIKA limits dataset is not in the repo
+
+`results_manual_injection/` and `results_train_obs/` are not committed.
+To regenerate `nika_failure_breakdown.csv` and the Figure 7 plot from
+scratch, point at the directory containing them:
+
+```bash
+NIKA_LIMITS_DIR=/path/to/dir/with/results_{manual_injection,train_obs} \
+    python Research_results/build_research_results.py
+```
+
+Without the env var, the build skips Figure 7's plot and the breakdown
+write — the committed CSV stays in place so reviewers without the audit
+data still see the right table from the discussion.
+
+## Files
+
+### `figures/` — 11 PNGs
+
+| File | What it shows | Read from |
+|---|---|---|
+| `fig01_headline.png` | Three-panel headline (Overall judge, RCA F1, Detection accuracy) per agent | `unified_test_3way.csv` |
+| `fig02_per_family.png` | Per (fault family × agent) overall-score heatmap | `unified_test_3way.csv` |
+| `fig02_per_category.png` | Per NIKA root-cause category (6 buckets) bar chart | `unified_test_3way.csv` |
+| `fig03_efficiency.png` | Cost-vs-correctness scatter: input tokens vs overall judge | `unified_test_3way.csv` |
+| `fig04_token_budget.png` | Per-session input-token boxplot | `unified_test_3way.csv` |
+| `fig05_no_submission_rate.png` | % of sessions where every loc/RCA metric is −1 | `unified_test_3way.csv` |
+| `fig06_topology_scaling.png` | s/m/l overall-score and input-token by topology size | `unified_test_3way.csv` |
+| `fig07_nika_limits.png` | NIKA injector regimes (verified vs stock) outcome split | `nika_failure_breakdown.csv` |
+| `fig08_time_taken.png` | Mean wall-clock per agent | `unified_test_3way.csv` |
+| `fig09_tool_errors.png` | Per-session and per-tool-call error rate (hybrid source) | `tool_errors_from_logs.csv` + `unified_test_3way.csv` |
+| `fig10_tool_calls.png` | Mean tool calls per session and per correct submission | `unified_test_3way.csv` |
+
+### `tables/` — paper tables (csv + md)
+
+| File | Source |
+|---|---|
+| `table_headline_metrics.{csv,md}` | per-agent overall, final, detection, F1s, tokens, time, no-submission |
+| `table_per_family.{csv,md}` | per-(fault family × agent) overall and final scores |
+| `table_topology_scaling.{csv,md}` | per-(topology size × agent) overall, final, tokens, time |
+| `table_time_efficiency.{csv,md}` | mean / median time, tokens-per-correct, % correct |
+
+### `data/` — all reproducible
+
+Each CSV has a documented generator in `build_research_results.py` (see
+"How everything regenerates" above). No orphan files.
+
+### `examples/`
+
+- `sade_wins.md` — narrative walk-through of cases where SADE submits the
+  canonical label and both baselines fail. Regenerated by `build_examples.py`.
+- `accuracy_panels.png`, `accuracy_table.{csv,md}` — accuracy-view sidecar
+  preserved from earlier analysis (no live regenerator).
 
 ## Caveats and known data quirks
 
-1. **`localization_f1 = -1` for some P4 cases.** When a problem has no canonical device-set mapping (e.g. some P4 fault families with `topo_size = -`), the runner records −1 and only the LLM judge is authoritative. The F1 means in fig01 / table_headline are computed over rows where F1 ≥ 0; the LLM-judge metrics include those rows.
-2. **ReAct's localization F1 (0.61) is significantly lower than CC-Baseline's (0.80)** despite both using `list_avail_problems()` and the same submit signature. The gap is in *device localization* — ReAct often submits subsets or wrong devices; the LLM-judge final outcome (3.21 vs 3.30) is much closer.
-3. **`no_submission_rate` is heuristic.** Computed as the fraction with `localization_precision = recall = 0` AND `final_outcome ≤ 1`, approximating "agent submitted nothing useful." Not equal to literal empty submission.
-4. **ReAct sample size: 524 rows / 523 unique triples** (one duplicate). After 3-way matching with CC and SADE (530 each, 530 unique), the common set is **523 triples**. The 7 triples in CC/SADE without a ReAct row are excluded from the 3-way comparison.
-5. **Token cost cardinality.** ReAct's mean input (67k) is much smaller than the train-set ReAct numbers we previously had (114k). The test-set ReAct sessions are evidently shorter; the median/mean reported in this pack reflects the test-set runs only.
-6. **Wall-clock comparison is approximate.** Time depends on machine load and concurrent runs; treat the means as ballpark, not as precise efficiency claims.
-
-## Suggested LCN-paper narrative
-
-- **Sec 4 Methodology**: cite this README for matched-pair construction; reference the agent-vs-baseline definitions above.
-- **Sec 5.1 Headline**: insert `fig01_headline.png` + `table_headline_metrics.csv`. Cite Wilcoxon p-values from `table_significance.csv`.
-- **Sec 5.2 Per fault family**: insert `fig02_per_family.png`. Discuss the green-dominated SADE column; call out the small set of families that resist all agents (`mac_address_conflict`, `host_incorrect_dns`, `sender_resource_contention`).
-- **Sec 5.3 Cost vs correctness**: insert `fig03_efficiency.png` + `fig04_token_budget.png`. Argue: SADE costs ~1.7× CC-Baseline and ~6× ReAct in input tokens, but the relative correctness gain (overall +10%, RCA F1 +23–82%) clears the cost premium.
-- **Sec 5.4 Scaling**: insert `fig06_topology_scaling.png`. SADE's correctness advantage holds across topology sizes; tokens scale roughly linearly.
-- **Sec 5.5 Failure modes**: insert `fig05_outcome_distribution.png`. SADE pushes the bulk of sessions into the "correct" bucket; ReAct has the largest "wrong" share.
-- **Sec 6 Limitations**: insert `fig07_nika_limits.png` + cite `nika_failure_breakdown.csv`. Use `manual_injection` / `train_obs` results to argue that some apparent agent failures are NIKA-side ambiguities, not workflow failures.
-
-## Token augmentation provenance
-
-All five contributing CSVs were token-augmented by parsing the last `llm_end` event in each session's `conversation_diagnosis_agent.log`. The reusable script `scripts/augment_generic.py` falls back from the SADE-style `tokens.total_input_tokens` to the raw SDK `usage.input_tokens + cache_creation_input_tokens + cache_read_input_tokens` so it works on either log shape.
+1. **`localization_f1 = -1` markers.** Sessions where the runner could not
+   score a submission (no parseable `submit()`, or no canonical
+   device-set mapping for some P4 fault families with `topo_size = -`)
+   are recorded with all loc/RCA metrics at −1. The F1 columns in the
+   paper tables clip these to 0 (failing to submit is a real outcome,
+   not missing data); the LLM-judge columns include them.
+2. **`no_submission_rate` heuristic.** Defined as the fraction of sessions
+   where every loc/RCA metric is −1. Approximates "agent never produced a
+   parseable submit", not literal empty submission.
+3. **Sample-size mismatch.** ReAct has 524 rows / 523 unique triples (one
+   duplicate); CC-Baseline and SADE have 530 each. The 3-way matched
+   intersection is 523 triples — the 7 in CC/SADE without a matching
+   ReAct row are excluded from headline metrics.
+4. **Tool-error counts are hybrid.** The runner's `tool_errors` CSV column
+   is reliable for ReAct (LangGraph captures errors via its handler) but
+   reports 0 for both Claude agents (the SDK's `is_error` flag is not
+   wired into the CSV writer). fig09 reads ReAct from the CSV column and
+   the two Claude agents from `tool_errors_from_logs.csv`. See the figure
+   caption for the source per agent.
+5. **Wall-clock comparison is approximate.** Runtimes depend on machine
+   load and concurrent labs. Treat means as ballpark.
