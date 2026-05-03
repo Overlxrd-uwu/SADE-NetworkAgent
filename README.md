@@ -112,19 +112,29 @@ LANGFUSE_PUBLIC_KEY=
 
 ### Sanity check
 
-After setup, confirm the SADE skill library and helper launcher landed:
+After setup, confirm the SADE skill library and helper launcher landed.
+Expected: **15** skill directories (12 fault-family + `diagnosis-methodology-skill`
++ `baseline-behavior-skill` + `big-return-skill`).
 
 ```bash
-# 15 directories expected (12 fault-family + diagnosis-methodology + baseline + big-return)
+# Linux / macOS
 ls src/agent/.claude/skills/ | wc -l
-
-# Should print a usage message listing helper-script names, not "helper not found"
-python h.py
 ```
 
-If `ls` shows fewer than 15 skill dirs, your clone or extraction skipped
-hidden directories — re-clone with `git clone` (not "download zip") because
-GitHub's archive endpoint occasionally drops dot-prefixed paths.
+```powershell
+# Windows PowerShell
+(Get-ChildItem src/agent/.claude/skills/).Count
+```
+
+Then verify the helper launcher resolves the skill paths:
+
+```bash
+python h.py     # should print a usage message + helper list, not "helper not found"
+```
+
+If the count is below 15, your clone or extraction skipped hidden
+directories — re-clone with `git clone` (not "Download ZIP" from the GitHub
+UI), since the archive endpoint occasionally drops dot-prefixed paths.
 
 <h2 id="quick-start">Quick Start</h2>
 
