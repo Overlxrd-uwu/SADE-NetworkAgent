@@ -44,15 +44,42 @@ topology) triples.
 # Clone
 git clone https://github.com/Overlxrd-uwu/Clean-SADE.git
 cd Clean-SADE
+```
 
-# Install Python deps (uv recommended; pip install -e . also works).
-# claude-agent-sdk is pinned in pyproject.toml and installs automatically.
+Install Python deps. `claude-agent-sdk` is pinned in `pyproject.toml` and
+ships with whichever path you pick.
+
+**Option A — uv (recommended).** Install `uv` first if you don't have it:
+
+```bash
+# Linux / macOS
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows PowerShell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Then sync and activate the venv:
+
+```bash
 uv sync
-source .venv/bin/activate          # macOS/Linux
+source .venv/bin/activate          # macOS / Linux
 # .\.venv\Scripts\Activate.ps1     # Windows PowerShell
+```
 
-# Add current user to docker group so Kathará calls don't need sudo.
-# (Linux only — security implications: see Docker docs.)
+**Option B — plain pip.**
+
+```bash
+python -m venv .venv
+source .venv/bin/activate          # macOS / Linux
+# .\.venv\Scripts\Activate.ps1     # Windows PowerShell
+pip install -e .
+```
+
+Add the current user to the `docker` group so Kathará calls don't need
+`sudo` (Linux only — security implications: see Docker docs):
+
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
