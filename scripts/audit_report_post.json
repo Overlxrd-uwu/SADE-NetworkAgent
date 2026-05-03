@@ -1,0 +1,11 @@
+{
+  "csv_path": "D:\\SadeAgent\\SADE-Agent\\results_sade\\0_summary\\evaluation_summary.csv",
+  "csv_row_count": 530,
+  "csv_unique_pairs": 530,
+  "csv_duplicates": [],
+  "disk_pair_count": 530,
+  "missing_count": 0,
+  "orphan_count": 0,
+  "missing": [],
+  "orphans": []
+}

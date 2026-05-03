@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61,<80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nika"
+version = "1.0.0"
+description = ""
+authors = [{ name = "Zhihao Wang", email = "zhihao.wang@polito.it" }]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic",
+    "openai",
+    "instructor",
+    "kathara>=3.7.9",
+    "langfuse",
+    "python-dotenv",
+    "langchain-deepseek",
+    "langgraph",
+    "mcp[cli]",
+    "langchain-mcp-adapters",
+    "google-api-python-client",
+    "setuptools>=61,<80",
+    "fs>=2.4.16",
+    "langchain-ollama",
+    "langchain-anthropic",
+    "claude-agent-sdk",
+    "langchain==1.0",
+    "pandas>=2.3.3",
+    "polars>=1.35.2",
+    "func-timeout>=4.3.5",
+    "networkx>=3.6",
+    "jupyter>=1.1.1",
+    "pyarrow>=22.0.0",
+    "seaborn>=0.13.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["nika*", "agent*", "scripts*"]
+
+

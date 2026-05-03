@@ -1,0 +1,3 @@
+pass,n,llm_judge_overall_score,llm_judge_correctness_score,llm_judge_final_outcome_score,rca_f1,localization_f1
+with_table,10,4.600,4.700,4.200,0.800,0.800
+without_table,10,4.300,4.600,3.800,0.700,0.800

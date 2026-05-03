@@ -1,0 +1,35 @@
+timestamp,agent_type,model,problem,scenario,topo_size,skip_session_id,active_session_id,exception_type,exception_message
+2026-04-25T13:29:59,claude-code,claude-sonnet-4-6,host_ip_conflict,dc_clos_service,s,SKIP_0425132959,0425132959,ValueError,Sample larger than population or is negative
+2026-04-25T14:14:05,claude-code,claude-sonnet-4-6,host_ip_conflict,p4_int,-,SKIP_0425141405,0425141404,TypeError,"Population must be a sequence.  For dicts or sets, use sorted(d)."
+2026-04-25T17:30:54,claude-code,claude-sonnet-4-6,host_incorrect_ip,p4_int,-,SKIP_0425173054,0425173054,TypeError,object of type 'NoneType' has no len()
+2026-04-25T19:57:25,claude-code,claude-sonnet-4-6,host_missing_ip,p4_int,-,SKIP_0425195725,0425195725,TypeError,object of type 'NoneType' has no len()
+2026-04-25T22:01:24,claude-code,claude-sonnet-4-6,link_detach,p4_int,-,SKIP_0425220124,0425220124,TypeError,object of type 'NoneType' has no len()
+2026-04-25T23:41:08,claude-code,claude-sonnet-4-6,link_down,p4_int,-,SKIP_0425234108,0425234108,TypeError,object of type 'NoneType' has no len()
+2026-04-26T01:53:18,claude-code,claude-sonnet-4-6,link_flap,p4_int,-,SKIP_0426015318,0426015317,TypeError,object of type 'NoneType' has no len()
+2026-04-26T04:23:49,claude-code,claude-sonnet-4-6,link_fragmentation_disabled,p4_int,-,SKIP_0426042349,0426042348,TypeError,object of type 'NoneType' has no len()
+2026-04-26T07:17:12,claude-code,claude-sonnet-4-6,arp_acl_block,p4_int,-,SKIP_0426071712,0426071710,TypeError,object of type 'NoneType' has no len()
+2026-04-26T13:11:04,claude-code,claude-sonnet-4-6,icmp_acl_block,p4_int,-,SKIP_0426131104,0426131103,TypeError,object of type 'NoneType' has no len()
+2026-04-26T14:08:17,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,dc_clos_bgp,s,SKIP_0426140817,0426140749,IndexError,list index out of range
+2026-04-26T14:09:22,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,dc_clos_bgp,m,SKIP_0426140922,0426140911,IndexError,list index out of range
+2026-04-26T14:13:35,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,dc_clos_bgp,l,SKIP_0426141335,0426141244,IndexError,list index out of range
+2026-04-26T14:16:22,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,dc_clos_service,s,SKIP_0426141622,0426141600,IndexError,list index out of range
+2026-04-26T14:17:36,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,dc_clos_service,m,SKIP_0426141736,0426141716,IndexError,list index out of range
+2026-04-26T14:20:18,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,dc_clos_service,l,SKIP_0426142018,0426141946,IndexError,list index out of range
+2026-04-26T14:22:01,claude-code,claude-sonnet-4-6,bgp_blackhole_route_leak,simple_bgp,-,SKIP_0426142201,0426142143,IndexError,list index out of range
+2026-04-26T15:23:10,claude-code,claude-sonnet-4-6,host_static_blackhole,dc_clos_bgp,s,SKIP_0426152310,0426152235,IndexError,list index out of range
+2026-04-26T15:24:47,claude-code,claude-sonnet-4-6,host_static_blackhole,dc_clos_bgp,m,SKIP_0426152447,0426152421,IndexError,list index out of range
+2026-04-26T15:29:40,claude-code,claude-sonnet-4-6,host_static_blackhole,dc_clos_bgp,l,SKIP_0426152940,0426152848,IndexError,list index out of range
+2026-04-26T15:32:30,claude-code,claude-sonnet-4-6,host_static_blackhole,dc_clos_service,s,SKIP_0426153230,0426153205,IndexError,list index out of range
+2026-04-26T15:33:51,claude-code,claude-sonnet-4-6,host_static_blackhole,dc_clos_service,m,SKIP_0426153351,0426153324,IndexError,list index out of range
+2026-04-26T15:36:44,claude-code,claude-sonnet-4-6,host_static_blackhole,dc_clos_service,l,SKIP_0426153644,0426153607,IndexError,list index out of range
+2026-04-26T15:38:31,claude-code,claude-sonnet-4-6,host_static_blackhole,simple_bgp,-,SKIP_0426153831,0426153813,IndexError,list index out of range
+2026-04-26T18:54:40,claude-code,claude-sonnet-4-6,p4_aggressive_detection_thresholds,p4_bloom_filter,-,SKIP_0426185440,0426185439,AttributeError,'P4AggressiveDetectionThresholdsDetection' object has no attribute 'p4_name'
+2026-04-27T00:06:45,claude-code,claude-sonnet-4-6,sdn_controller_crash,sdn_star,s,SKIP_0427000645,,DockerPluginError,Kathara has been left in an inconsistent state! Please run `kathara wipe`.
+2026-04-27T01:17:35,claude-code,claude-sonnet-4-6,p4_header_definition_error,p4_int,-,SKIP_0427011735,0427011735,TypeError,object of type 'NoneType' has no len()
+2026-04-27T01:27:03,claude-code,claude-sonnet-4-6,p4_compilation_error_parser_state,p4_int,-,SKIP_0427012703,0427012703,TypeError,object of type 'NoneType' has no len()
+2026-04-27T01:45:53,claude-code,claude-sonnet-4-6,p4_table_entry_misconfig,p4_int,-,SKIP_0427014553,0427014553,TypeError,'NoneType' object is not subscriptable
+2026-04-27T02:05:08,claude-code,claude-sonnet-4-6,p4_table_entry_missing,p4_int,-,SKIP_0427020508,0427020508,TypeError,object of type 'NoneType' has no len()
+2026-04-27T02:15:16,claude-code,claude-sonnet-4-6,bmv2_switch_down,p4_int,-,SKIP_0427021516,0427021516,TypeError,object of type 'NoneType' has no len()
+2026-04-27T04:57:54,claude-code,claude-sonnet-4-6,arp_cache_poisoning,p4_int,-,SKIP_0427045754,0427045753,TypeError,object of type 'NoneType' has no len()
+2026-04-27T10:24:34,claude-code,claude-sonnet-4-6,link_bandwidth_throttling,p4_int,-,SKIP_0427102434,0427102434,TypeError,object of type 'NoneType' has no len()
+2026-04-27T12:39:19,claude-code,claude-sonnet-4-6,link_high_packet_corruption,p4_int,-,SKIP_0427123919,0427123919,TypeError,object of type 'NoneType' has no len()
