@@ -5,8 +5,7 @@
 [Installation](#installation) ·
 [Quick Start](#quick-start) ·
 [Reproducing the paper](#reproducing-the-paper) ·
-[Repo layout](#repo-layout) ·
-[Cite](#cite)
+[Repo layout](#repo-layout)
 
 </div>
 
@@ -214,19 +213,6 @@ Clean-SADE/
     │   └── .claude/skills/             # 15-skill library (SADE)
     ├── nika/                  # NIKA orchestrator (unmodified)
     └── scripts/               # step1–step4 pipeline (unmodified)
-```
-
-<h2 id="cite">Cite</h2>
-
-If SADE is useful in your work, please cite:
-
-```bibtex
-@inproceedings{sade2026,
-  title={SADE: Symptom-Aware Diagnostic Escalation for LLM-Based Network Troubleshooting},
-  author={...},
-  booktitle={IEEE Local Computer Networks (LCN)},
-  year={2026}
-}
 ```
 
 Built on top of [NIKA](https://github.com/sands-lab/nika); please cite the
