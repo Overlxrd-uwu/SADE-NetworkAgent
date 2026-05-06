@@ -116,8 +116,10 @@ class ClaudeCodeAgentSADE:
         Run the SADE-enhanced Claude Code agent on a diagnosis task.
 
         Uses ClaudeSDKClient for bidirectional messaging. Tracks turn count
-        and injects a single gentle reminder at ~70% budget to reinforce
-        the SADE workflow without panic language.
+        and injects a single gentle reminder at the halfway mark
+        (TURN_REMINDER_FRAC of max_turns, default 50%) to reinforce the
+        SADE workflow without panic language. Halfway leaves enough budget
+        for the agent to act on the reminder before the cap.
 
         Returns the final result string from the agent.
         """

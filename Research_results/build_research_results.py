@@ -417,13 +417,16 @@ def fig05_no_submission_rate():
 
 
 def fig06_topology_scaling():
-    """Two-panel S/M/L scaling: overall judge + input tokens."""
+    """Two-panel S/M/L scaling: overall judge + total tokens (input+output). Horizontal layout for full-width (figure*) rendering."""
     sizes = ["s", "m", "l"]
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4.0))
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
     panel_specs = [
         ("llm_judge_overall_score", "(a) Overall judge score", "score (1-5)", "{:.2f}"),
-        ("in_tokens", "(b) Input-token budget", "input tokens (thousands)", "{:.0f}"),
+        ("total_tokens", "(b) Overall token budget (input + output)", "total tokens (thousands)", "{:.0f}"),
     ]
+    # Add a derived column for total tokens (input + output)
+    if "total_tokens" not in unified.columns:
+        unified["total_tokens"] = unified["in_tokens"].fillna(0) + unified["out_tokens"].fillna(0)
     for ax, (col, title, ylabel, fmt) in zip(axes, panel_specs):
         x = np.arange(len(sizes))
         width = 0.26
@@ -434,27 +437,27 @@ def fig06_topology_scaling():
                 d = unified[(unified["agent"] == a) & (unified["scenario_topo_size"] == sz)][col].dropna()
                 ys.append(d.mean() if len(d) else 0)
                 errs.append((d.std() / np.sqrt(len(d))) if len(d) > 1 else 0)
-            if col == "in_tokens":
+            if col == "total_tokens":
                 ys = [y / 1000 for y in ys]
                 errs = [e / 1000 for e in errs]
             xpos = x + (i - 1) * width
             ax.bar(xpos, ys, width=width, yerr=errs,
-                   color=AGENT_COLOR[a], capsize=2.5,
-                   edgecolor="black", linewidth=0.4,
-                   label=a, error_kw={"alpha": 0.65})
+                   color=AGENT_COLOR[a], capsize=3,
+                   edgecolor="black", linewidth=0.5,
+                   label=a, error_kw={"alpha": 0.7})
             for xi, yi in zip(xpos, ys):
                 ax.text(xi, yi, fmt.format(yi),
                         ha="center", va="bottom",
-                        fontsize=7.5, fontweight="bold")
+                        fontsize=10, fontweight="bold")
             all_means.extend(ys)
         ax.set_xticks(x)
-        ax.set_xticklabels(sizes)
-        ax.set_xlabel("topology size")
-        ax.set_ylabel(ylabel)
-        ax.set_title(title)
+        ax.set_xticklabels(["small (s)", "medium (m)", "large (l)"], fontsize=12)
+        ax.set_ylabel(ylabel, fontsize=12)
+        ax.set_title(title, fontsize=13)
+        ax.tick_params(axis='y', labelsize=11)
         ax.grid(axis="y", linestyle=":", alpha=0.4)
         if col == "llm_judge_overall_score":
-            ax.set_ylim(min(all_means) * 0.95, max(all_means) * 1.08)
+            ax.set_ylim(min(all_means) * 0.95, max(all_means) * 1.10)
         else:
             ax.set_ylim(0, max(all_means) * 1.18)
     legend_handles = [plt.Rectangle((0, 0), 1, 1, color=AGENT_COLOR[a]) for a in AGENT_ORDER]
@@ -462,10 +465,8 @@ def fig06_topology_scaling():
                      "CC-Baseline (Claude Code, no SADE)",
                      "SADE (Claude Code + SADE workflow)"]
     fig.legend(legend_handles, legend_labels, loc="lower center", ncol=3,
-               frameon=False, bbox_to_anchor=(0.5, -0.04), fontsize=9)
-    fig.suptitle("Scaling by topology size (test, matched; topo_size = '-' excluded)",
-                 fontsize=11, y=1.02)
-    fig.savefig(FIGS / "fig06_topology_scaling.png", bbox_inches="tight")
+               frameon=False, bbox_to_anchor=(0.5, -0.04), fontsize=11)
+    fig.savefig(FIGS / "fig06_topology_scaling.png", bbox_inches="tight", dpi=200)
     plt.close(fig)
     print(f"  wrote {FIGS/'fig06_topology_scaling.png'}")
 
