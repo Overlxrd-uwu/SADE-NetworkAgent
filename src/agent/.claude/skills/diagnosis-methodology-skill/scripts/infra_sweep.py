@@ -2,7 +2,8 @@
 """
 Universal infrastructure sweep: one pass across every device.
 
-This is the "Step 0c" safety net that the legacy hardcoded prompt ran in parallel:
+A single-pass safety net for fault classes that would otherwise need
+multiple separate checks:
 - nft list ruleset      -> catch ACL/firewall drops (http_acl_block, icmp_acl_block,
                            dns_port_blocked, ospf_acl_block, link_fragmentation_disabled)
 - ip -br addr / ip route -> catch missing IPs, missing default routes, wrong netmask,

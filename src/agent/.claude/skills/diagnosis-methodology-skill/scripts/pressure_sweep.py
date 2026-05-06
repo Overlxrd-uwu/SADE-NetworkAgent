@@ -2,8 +2,8 @@
 """
 Pressure sweep across service-path devices.
 
-Covers the symptoms the legacy hardcoded prompt used to catch with a parallel
-fan-out of `ps aux --sort=-%cpu`, `/proc/loadavg`, and `ss -s`:
+Combines `ps aux --sort=-%cpu`, `/proc/loadavg`, and `ss -s` in a single
+per-device pass to cover these symptoms:
 
 - `load_balancer_overload`    -> stress/stress-ng on LB, >50% CPU daemon, ESTAB spike
 - `web_dos_attack`            -> ab/hey/wrk/hping/httperf on clients, ESTAB/TW spike on server
