@@ -575,8 +575,10 @@ def run_single(
     scenario: str,
     topo_size: str,
     agent_type: str,
-    backend_model: str,
+    llm_backend: str,
+    model: str,
     max_steps: int,
+    judge_llm_backend: str,
     judge_model: str,
     destroy_env: bool,
     auto_recover_stale_env: bool,
@@ -611,10 +613,10 @@ def run_single(
         _rescue_and_verify(problem, lab_name)
 
     print("== Step 3: start agent ==")
-    start_agent(agent_type=agent_type, backend_model=backend_model, max_steps=max_steps)
+    start_agent(agent_type=agent_type, llm_backend=llm_backend, model=model, max_steps=max_steps)
 
     print("== Step 4: evaluate ==")
-    eval_results(judge_model=judge_model, destroy_env=destroy_env)
+    eval_results(judge_llm_backend=judge_llm_backend, judge_model=judge_model, destroy_env=destroy_env)
 
     if destroy_env and auto_recover_stale_env and _runtime_looks_stale(scenario, topo_size):
         _cleanup_stale_runtime(
@@ -652,8 +654,10 @@ def main() -> None:
     p.add_argument("--scenario", default=None)
     p.add_argument("--topo-size", default=None)
     p.add_argument("--agent-type", default="claude-code-sade")
-    p.add_argument("--backend-model", default="claude-sonnet-4-6")
+    p.add_argument("--llm-backend", default="openai")
+    p.add_argument("--model", "--backend-model", dest="model", default="claude-sonnet-4-6")
     p.add_argument("--max-steps", type=int, default=20)
+    p.add_argument("--judge-llm-backend", default="openai")
     p.add_argument("--judge-model", default="gpt-5-mini")
     p.add_argument("--destroy-env", action="store_true")
     p.set_defaults(auto_recover_stale_env=True)
@@ -665,8 +669,10 @@ def main() -> None:
 
     shared = dict(
         agent_type=args.agent_type,
-        backend_model=args.backend_model,
+        llm_backend=args.llm_backend,
+        model=args.model,
         max_steps=args.max_steps,
+        judge_llm_backend=args.judge_llm_backend,
         judge_model=args.judge_model,
         destroy_env=args.destroy_env,
         auto_recover_stale_env=args.auto_recover_stale_env,
