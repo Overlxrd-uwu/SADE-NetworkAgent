@@ -4,7 +4,7 @@ NIKA-break pipeline — inherits NIKA's broken injector, then rescues it.
 Two flows, selected per-problem:
 
   A) STRESS FAMILY (load_balancer_overload / sender_resource_contention /
-     receiver_resource_contention) — test.py pattern:
+     receiver_resource_contention) — direct-inject pattern:
        Step 1:  start_net_env(scenario, topo_size)
        Step 2:  _stress_family_inject(problem, net_env, lab_name)
                   └─ pick ONE target from the right pool,
@@ -29,10 +29,10 @@ Two flows, selected per-problem:
        Step 3:  start_agent(...)
        Step 4:  eval_results(...)
 
-Differs from test.py: test.py bypasses NIKA entirely for all problems. Here we
-keep NIKA in the loop for the non-stress families (where its injector is only
-partially broken and a rescue is enough), and adopt test.py's direct-inject
-pattern only for stress (where NIKA's aggressive cocktail is unrecoverable).
+Why two flows? For the non-stress families NIKA's injector is only partially
+broken and a per-fault rescue is enough to land the fault. For the stress
+family, NIKA's aggressive `stress-ng` cocktail is unrecoverable, so we
+bypass it entirely and direct-launch our own stress-ng with sane parameters.
 
 Usage:
   python run_nika_break.py --benchmark-csv benchmark/bench_mark_nika_break.csv
@@ -79,17 +79,16 @@ FRR_RELOAD_SETTLE_SECONDS = 15
 
 STRESS_CMD = (
     # Identical stress-ng parameters to NIKA's injector (cpu-load 100,
-    # vm-bytes 75%, hdd 2, etc.) — mirrors what test.py uses and has been
-    # observed working. The target container's memory is bumped to 1g/2g
-    # right before this runs (see _stress_family_inject), and the command
-    # is wrapped with `setsid nohup ... </dev/null >/tmp/stress.log 2>&1 &`
+    # vm-bytes 75%, hdd 2, etc.). The target container's memory is bumped
+    # to 1g/2g right before this runs (see _stress_family_inject), and the
+    # command is wrapped with `setsid nohup ... </dev/null >/tmp/stress.log 2>&1 &`
     # so the child survives docker exec session teardown.
     "setsid nohup stress-ng --cpu 0 --cpu-load 100 --iomix 0 --sock 0 --hdd 2 "
     "--vm 0 --vm-bytes 75% --timeout {duration} "
     "</dev/null >/tmp/stress.log 2>&1 &"
 )
 
-# Problems handled via direct test.py-pattern injection (bypass NIKA's broken
+# Problems handled via direct injection (bypass NIKA's broken
 # `inject_stress_all`, pick one target, bump its memory, launch stress ourselves).
 STRESS_PROBLEMS = {
     "load_balancer_overload",
@@ -147,7 +146,7 @@ def _docker_bump_memory(host_name: str, memory: str = "1g", swap: str = "2g") ->
 
 
 # ---------------------------------------------------------------------------
-# Stress-family direct injection — test.py pattern, bypasses NIKA's injector.
+# Stress-family direct injection — bypasses NIKA's injector.
 # ---------------------------------------------------------------------------
 
 
@@ -165,8 +164,7 @@ def _stress_family_inject(problem: str, net_env, lab_name: str) -> None:
          pick randomly and do not honor `target_devices`.
 
     NIKA's aggressive `stress-ng ... &` (no nohup, 75% host RAM, N workers)
-    never runs, so there is no OOM cascade and no rescue needed. test.py has
-    used this pattern successfully.
+    never runs, so there is no OOM cascade and no rescue needed.
     """
     pool = _stress_target_pool(problem, net_env)
     if not pool:
@@ -602,7 +600,7 @@ def run_single(
     lab_name = net_env.lab.name
 
     if problem in STRESS_PROBLEMS:
-        print("== Step 2: direct stress injection (test.py pattern, bypasses NIKA) ==")
+        print("== Step 2: direct stress injection (bypasses NIKA) ==")
         _stress_family_inject(problem, net_env, lab_name)
         print("== Step 2c: verify ==")
         _verify_injection(problem, lab_name)
