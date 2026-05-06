@@ -43,17 +43,22 @@ from nika.utils.logger import system_logger
 load_dotenv()
 
 
-def _resolve_anthropic_auth() -> str:
-    """Return the auth mode the spawned Claude Code CLI will use.
+def _require_api_key() -> str:
+    """Return the ANTHROPIC_API_KEY loaded from .env / environment.
 
-    If ANTHROPIC_API_KEY is set we authenticate via API key (billed to that
-    key). Otherwise we fall back to the OAuth/keychain credentials saved by
-    a prior `claude /login` (billed against the user's Pro/Max plan). At
-    least one must be present or the SDK subprocess will fail to start."""
+    The CC-Baseline agent runs in API-key mode: the key is read from `.env`
+    (loaded via `load_dotenv()` above) and passed explicitly to the spawned
+    Claude Code CLI via `ClaudeAgentOptions.env`, which the SDK merges on
+    top of `os.environ` when starting the subprocess. Failing loud here is
+    better than letting the subprocess silently fall through to OAuth/keychain
+    credentials that may bill an unrelated account."""
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
-    if api_key:
-        return "api_key"
-    return "oauth"
+    if not api_key:
+        raise RuntimeError(
+            "ANTHROPIC_API_KEY is not set. Add it to "
+            f"{BASE_DIR}/.env or export it in the shell before running."
+        )
+    return api_key
 
 
 logger = logging.getLogger(__name__)
@@ -131,8 +136,10 @@ class ClaudeCodeAgent:
             "mcp_servers": list(self.mcp_servers.keys()),
         })
 
-        auth_mode = _resolve_anthropic_auth()
-        system_logger.info(f"ClaudeCodeAgent: auth mode = {auth_mode}")
+        api_key = _require_api_key()
+        system_logger.info(
+            f"ClaudeCodeAgent: auth mode = api_key (key ends ...{api_key[-4:]})"
+        )
         async for message in query(
             prompt=task_description,
             options=ClaudeAgentOptions(
@@ -141,6 +148,10 @@ class ClaudeCodeAgent:
                 mcp_servers=self.mcp_servers,
                 max_turns=self.max_turns,
                 permission_mode="bypassPermissions",
+                env={
+                    "ANTHROPIC_API_KEY": api_key,
+                    "ANTHROPIC_AUTH_TOKEN": "",
+                },
             ),
         ):
             if isinstance(message, SystemMessage) and message.subtype == "init":
