@@ -86,8 +86,8 @@ SADE adds:
 
 ```bash
 # Clone
-git clone https://github.com/Overlxrd-uwu/Clean-SADE.git
-cd Clean-SADE
+git clone https://github.com/Overlxrd-uwu/SADE-NetworkAgent.git
+cd SADE-NetworkAgent
 ```
 
 Install Python deps. `claude-agent-sdk` is pinned in `pyproject.toml` and
@@ -139,7 +139,7 @@ bash src/nika/net_env/utils/DockerFiles/build_dockers.sh
 Create a `.env` at the repo root:
 
 ```bash
-BASE_DIR=/absolute/path/to/Clean-SADE
+BASE_DIR=/absolute/path/to/SADE-NetworkAgent
 
 # SADE / CC-Baseline runners
 ANTHROPIC_API_KEY=sk-ant-...
@@ -278,7 +278,7 @@ full benchmark above for each agent.
 <h2 id="repo-layout">Repo layout</h2>
 
 ```
-Clean-SADE/
+SADE-NetworkAgent/
 ├── benchmark/                # NIKA benchmark + selected slice
 │   ├── benchmark_full.csv         # 640-incident pool
 │   ├── benchmark_selected.csv     # held-out test slice (paper headline)
