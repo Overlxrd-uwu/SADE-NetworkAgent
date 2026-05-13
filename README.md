@@ -391,7 +391,7 @@ agent = MCPAgent(
 <h1 id="📚cite">📚 Cite</h1>
 
 ```bibtex
-@misc{wang2025networkarenabenchmarkingai,
+@misc{nika,
       title={A Network Arena for Benchmarking AI Agents on Network Troubleshooting}, 
       author={Zhihao Wang and Alessandro Cornacchia and Alessio Sacco and Franco Galante and Marco Canini and Dingde Jiang},
       year={2025},
@@ -399,6 +399,24 @@ agent = MCPAgent(
       archivePrefix={arXiv},
       primaryClass={cs.NI},
       url={https://arxiv.org/abs/2512.16381}, 
+}
+```
+
+```bibtex
+@inproceedings{llm4netlab,
+author = {Wang, Zhihao and Cornacchia, Alessandro and Galante, Franco and Centofanti, Carlo and Sacco, Alessio and Jiang, Dingde},
+title = {Towards a Playground to Democratize Experimentation and Benchmarking of AI Agents for Network Troubleshooting},
+year = {2025},
+isbn = {9798400720871},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3748496.3748990},
+doi = {10.1145/3748496.3748990},
+booktitle = {Proceedings of the 1st Workshop on Next-Generation Network Observability},
+pages = {1–3},
+numpages = {3},
+location = {Coimbra, Portugal},
+series = {NGNO '25}
 }
 ```
 
