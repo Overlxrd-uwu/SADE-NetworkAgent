@@ -17,6 +17,11 @@
 > library, two new Claude-Code-based agents, and a reproducibility data pack
 > on top — see [What SADE adds](#what-sade-adds) for the full list.
 
+<h2 id="News">News</h2>
+
+- This work is presented as a [paper](https://arxiv.org/abs/2605.04530). If you use it in academic research, please cite the paper.
+- We have integrated the SADE agent into the original [NIKA](https://github.com/sands-lab/nika) framework.  
+
 <h2 id="overview">Overview</h2>
 
 SADE is a methodology-grounded LLM agent for network troubleshooting on the
@@ -314,5 +319,12 @@ and the LLM-as-judge scoring framework that this work depends on. SADE uses
 all of those unmodified; only the agent layer and the reproducibility data
 pack are ours.
 
-Please cite the underlying NIKA benchmark when reporting numbers from this
-repo.
+<h2 id="Citation">Citation</h2>
+
+```bibtex
+@article{tseng2026sade,
+  title={SADE: Symptom-Aware Diagnostic Escalation for LLM-Based Network Troubleshooting},
+  author={Tseng, Kuan-Hao and Bogahawatta, Niruth and Ginige, Yasod and Dekic, Kosta and Sivanathan, Arunan and Seneviratne, Suranga},
+  journal={arXiv preprint arXiv:2605.04530},
+  year={2026}
+}
