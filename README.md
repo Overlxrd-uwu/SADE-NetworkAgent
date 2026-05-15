@@ -156,7 +156,7 @@ You can follow the steps below to run a complete troubleshooting task with NIKA.
 - <problem_id>: ID of the problem to inject (default: frr_service_down). Full list in `src/nika/orchestrator/problems` and `benchmark/benchmark_selected.csv`.
 - <llm_backend>, <judge_llm_backend>: The LLM backend to use (e.g. openai, ollama, deepseek). Extend `src/agent/llm/model_factory.py` to include more.
 - <model>, <judge_model>: LLM backend model to use (e.g. gpt-4).
-- <agent_type>: Type of the AI agent to use (for now only **react** is supported).
+- <agent_type>: Type of the AI agent to use: **react**, **claude-code**, or **claude-code-sade**.
 - <max_steps>: Maximum steps for the agent to take (default: 20).
 
 ### Benchmark Runner
