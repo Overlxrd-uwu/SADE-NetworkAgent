@@ -32,6 +32,10 @@ This repository is a unified platform that can offer:
 - Easy integration of custom AI agents
 - Automatic evaluation mechanism
 
+## What is new
+
+- Added the [SADE](https://github.com/Overlxrd-uwu/SADE-NetworkAgent) agent to the agent pool.
+
 <h1 id="📦installation">📦 Installation</h1>
 
 ## Requirements

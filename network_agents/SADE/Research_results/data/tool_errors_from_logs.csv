@@ -1,0 +1,1570 @@
+agent,root_cause_name,net_env,scenario_topo_size,session_id,csv_tool_errors,log_is_err,log_txt_err,log_any_err
+ReAct (GPT-5),dns_record_error,dc_clos_service,s,0424123108,0,0,0,0
+ReAct (GPT-5),dns_record_error,dc_clos_service,m,0424125725,0,0,0,0
+ReAct (GPT-5),dns_record_error,dc_clos_service,l,0424130221,0,0,0,0
+ReAct (GPT-5),host_crash,dc_clos_bgp,s,0424130650,3,0,0,0
+ReAct (GPT-5),host_crash,dc_clos_bgp,m,0424131606,2,0,0,0
+ReAct (GPT-5),host_crash,dc_clos_bgp,l,0424131927,2,0,0,0
+ReAct (GPT-5),host_crash,dc_clos_service,s,0424132519,3,0,0,0
+ReAct (GPT-5),host_crash,dc_clos_service,m,0424132948,2,0,0,0
+ReAct (GPT-5),host_crash,dc_clos_service,l,0424133342,1,0,0,0
+ReAct (GPT-5),host_crash,ospf_enterprise_static,s,0424133844,2,0,0,0
+ReAct (GPT-5),host_crash,ospf_enterprise_static,m,0424134326,2,0,0,0
+ReAct (GPT-5),host_crash,ospf_enterprise_static,l,0424134801,1,0,0,0
+ReAct (GPT-5),host_crash,rip_small_internet_vpn,s,0424135334,2,0,0,0
+ReAct (GPT-5),host_crash,rip_small_internet_vpn,m,0424135838,1,0,0,0
+ReAct (GPT-5),host_crash,rip_small_internet_vpn,l,0424140220,1,0,0,0
+ReAct (GPT-5),host_crash,sdn_star,s,0424140551,4,0,0,0
+ReAct (GPT-5),host_crash,sdn_star,m,0424140820,1,0,0,0
+ReAct (GPT-5),host_crash,sdn_star,l,0424141321,5,0,0,0
+ReAct (GPT-5),host_crash,sdn_clos,s,0424141744,2,0,0,0
+ReAct (GPT-5),host_crash,sdn_clos,m,0424142005,2,0,0,0
+ReAct (GPT-5),host_crash,sdn_clos,l,0424142526,3,0,0,0
+ReAct (GPT-5),host_crash,p4_bloom_filter,-,0424142901,2,0,0,0
+ReAct (GPT-5),host_crash,p4_counter,-,0424143109,3,0,0,0
+ReAct (GPT-5),host_crash,p4_int,-,0424152003,2,0,0,0
+ReAct (GPT-5),host_crash,p4_mpls,-,0424152356,3,0,0,0
+ReAct (GPT-5),host_crash,simple_bgp,-,0424152625,4,0,0,0
+ReAct (GPT-5),host_ip_conflict,dc_clos_bgp,s,0424152841,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,dc_clos_bgp,m,0424153058,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,dc_clos_bgp,l,0424153338,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,ospf_enterprise_static,s,0424153757,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,ospf_enterprise_static,m,0424154241,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,ospf_enterprise_static,l,0424154837,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,rip_small_internet_vpn,s,0424155312,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,rip_small_internet_vpn,m,0424155801,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,rip_small_internet_vpn,l,0424160154,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,sdn_star,s,0424160828,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,sdn_star,m,0424161253,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,sdn_star,l,0424161705,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,sdn_clos,s,0424162203,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,sdn_clos,m,0424162450,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,sdn_clos,l,0424163220,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,p4_bloom_filter,-,0424163753,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,p4_counter,-,0424164048,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,p4_int,-,0424164301,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,p4_mpls,-,0424164512,0,0,0,0
+ReAct (GPT-5),host_ip_conflict,simple_bgp,-,0424164812,0,0,0,0
+ReAct (GPT-5),host_incorrect_dns,dc_clos_service,s,0424165100,0,0,0,0
+ReAct (GPT-5),host_incorrect_dns,dc_clos_service,m,0424165359,0,0,0,0
+ReAct (GPT-5),host_incorrect_dns,dc_clos_service,l,0424165731,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,dc_clos_bgp,s,0424170238,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,dc_clos_bgp,m,0424170950,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,dc_clos_bgp,l,0424171322,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,dc_clos_service,s,0424171838,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,dc_clos_service,m,0424172230,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,dc_clos_service,l,0424172508,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,ospf_enterprise_static,s,0424172931,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,ospf_enterprise_static,m,0424173355,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,ospf_enterprise_static,l,0424173959,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,rip_small_internet_vpn,s,0424174438,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,rip_small_internet_vpn,m,0424174758,0,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,rip_small_internet_vpn,l,0424175121,1,0,0,0
+ReAct (GPT-5),host_incorrect_gateway,simple_bgp,-,0424175645,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,dc_clos_bgp,s,0424175834,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,dc_clos_bgp,m,0424180056,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,dc_clos_bgp,l,0424180651,1,0,0,0
+ReAct (GPT-5),host_incorrect_ip,dc_clos_service,s,0424181206,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,dc_clos_service,m,0424181521,1,0,0,0
+ReAct (GPT-5),host_incorrect_ip,dc_clos_service,l,0424181834,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,ospf_enterprise_static,s,0424182324,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,ospf_enterprise_static,m,0424182801,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,ospf_enterprise_static,l,0424183131,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,rip_small_internet_vpn,s,0424183514,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,rip_small_internet_vpn,m,0424183846,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,rip_small_internet_vpn,l,0424184244,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,sdn_star,s,0424184621,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,sdn_star,m,0424184812,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,sdn_star,l,0424185046,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,sdn_clos,s,0424185243,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,sdn_clos,m,0424185417,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,sdn_clos,l,0424185920,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,p4_bloom_filter,-,0424190323,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,p4_counter,-,0424190609,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,p4_int,-,0424190933,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,p4_mpls,-,0424191244,0,0,0,0
+ReAct (GPT-5),host_incorrect_ip,simple_bgp,-,0424191657,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,dc_clos_bgp,s,0424191848,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,dc_clos_bgp,m,0424192237,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,dc_clos_bgp,l,0424192621,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,dc_clos_service,s,0424193003,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,dc_clos_service,m,0424193236,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,dc_clos_service,l,0424193657,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,ospf_enterprise_static,s,0424194019,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,ospf_enterprise_static,m,0424194435,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,ospf_enterprise_static,l,0424194907,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,rip_small_internet_vpn,s,0424195404,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,rip_small_internet_vpn,m,0424200014,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,rip_small_internet_vpn,l,0424200542,0,0,0,0
+ReAct (GPT-5),host_incorrect_netmask,simple_bgp,-,0424200957,0,0,0,0
+ReAct (GPT-5),host_missing_ip,dc_clos_bgp,s,0424201130,0,0,0,0
+ReAct (GPT-5),host_missing_ip,dc_clos_bgp,m,0424201524,0,0,0,0
+ReAct (GPT-5),host_missing_ip,dc_clos_bgp,l,0424201754,0,0,0,0
+ReAct (GPT-5),host_missing_ip,dc_clos_service,s,0424202109,0,0,0,0
+ReAct (GPT-5),host_missing_ip,dc_clos_service,m,0424202406,0,0,0,0
+ReAct (GPT-5),host_missing_ip,dc_clos_service,l,0424202742,0,0,0,0
+ReAct (GPT-5),host_missing_ip,ospf_enterprise_static,s,0424203100,0,0,0,0
+ReAct (GPT-5),host_missing_ip,ospf_enterprise_static,m,0424203614,0,0,0,0
+ReAct (GPT-5),host_missing_ip,ospf_enterprise_static,l,0424204155,0,0,0,0
+ReAct (GPT-5),host_missing_ip,rip_small_internet_vpn,s,0424204502,0,0,0,0
+ReAct (GPT-5),host_missing_ip,rip_small_internet_vpn,m,0424204819,0,0,0,0
+ReAct (GPT-5),host_missing_ip,rip_small_internet_vpn,l,0424205324,0,0,0,0
+ReAct (GPT-5),host_missing_ip,sdn_star,s,0424205809,0,0,0,0
+ReAct (GPT-5),host_missing_ip,sdn_star,m,0424210008,0,0,0,0
+ReAct (GPT-5),host_missing_ip,sdn_star,l,0424210306,0,0,0,0
+ReAct (GPT-5),host_missing_ip,sdn_clos,s,0424210631,0,0,0,0
+ReAct (GPT-5),host_missing_ip,sdn_clos,m,0424210835,0,0,0,0
+ReAct (GPT-5),host_missing_ip,sdn_clos,l,0424211256,0,0,0,0
+ReAct (GPT-5),host_missing_ip,p4_bloom_filter,-,0424211644,0,0,0,0
+ReAct (GPT-5),host_missing_ip,p4_counter,-,0424211812,0,0,0,0
+ReAct (GPT-5),host_missing_ip,p4_int,-,0424211944,0,0,0,0
+ReAct (GPT-5),host_missing_ip,p4_mpls,-,0424212120,0,0,0,0
+ReAct (GPT-5),host_missing_ip,simple_bgp,-,0424212342,0,0,0,0
+ReAct (GPT-5),dns_service_down,dc_clos_service,s,0424212537,0,0,0,0
+ReAct (GPT-5),dns_service_down,dc_clos_service,m,0424212812,0,0,0,0
+ReAct (GPT-5),dns_service_down,dc_clos_service,l,0424213222,0,0,0,0
+ReAct (GPT-5),host_vpn_membership_missing,rip_small_internet_vpn,s,0424213604,0,0,0,0
+ReAct (GPT-5),host_vpn_membership_missing,rip_small_internet_vpn,m,0424214028,0,0,0,0
+ReAct (GPT-5),host_vpn_membership_missing,rip_small_internet_vpn,l,0424214824,0,0,0,0
+ReAct (GPT-5),link_detach,dc_clos_bgp,s,0424215510,0,0,0,0
+ReAct (GPT-5),link_detach,dc_clos_bgp,m,0424215918,0,0,0,0
+ReAct (GPT-5),link_detach,dc_clos_bgp,l,0424220412,0,0,0,0
+ReAct (GPT-5),link_detach,dc_clos_service,s,0424220856,0,0,0,0
+ReAct (GPT-5),link_detach,dc_clos_service,m,0424221129,0,0,0,0
+ReAct (GPT-5),link_detach,dc_clos_service,l,0424221334,0,0,0,0
+ReAct (GPT-5),link_detach,ospf_enterprise_static,s,0424221809,0,0,0,0
+ReAct (GPT-5),link_detach,ospf_enterprise_static,m,0424222429,0,0,0,0
+ReAct (GPT-5),link_detach,ospf_enterprise_static,l,0424223108,0,0,0,0
+ReAct (GPT-5),link_detach,rip_small_internet_vpn,s,0424223509,0,0,0,0
+ReAct (GPT-5),link_detach,rip_small_internet_vpn,m,0424223824,0,0,0,0
+ReAct (GPT-5),link_detach,rip_small_internet_vpn,l,0424224201,0,0,0,0
+ReAct (GPT-5),link_detach,sdn_star,s,0424224554,0,0,0,0
+ReAct (GPT-5),link_detach,sdn_star,m,0424224845,0,0,0,0
+ReAct (GPT-5),link_detach,sdn_star,l,0424225136,0,0,0,0
+ReAct (GPT-5),link_detach,sdn_clos,s,0424225507,0,0,0,0
+ReAct (GPT-5),link_detach,sdn_clos,m,0424225709,0,0,0,0
+ReAct (GPT-5),link_detach,sdn_clos,l,0424230131,0,0,0,0
+ReAct (GPT-5),link_detach,p4_bloom_filter,-,0424230830,0,0,0,0
+ReAct (GPT-5),link_detach,p4_counter,-,0424231005,0,0,0,0
+ReAct (GPT-5),link_detach,p4_int,-,0424231336,0,0,0,0
+ReAct (GPT-5),link_detach,p4_mpls,-,0424231513,0,0,0,0
+ReAct (GPT-5),link_detach,simple_bgp,-,0424231740,0,0,0,0
+ReAct (GPT-5),link_down,dc_clos_bgp,s,0424231951,0,0,0,0
+ReAct (GPT-5),link_down,dc_clos_bgp,m,0424232230,0,0,0,0
+ReAct (GPT-5),link_down,dc_clos_bgp,l,0424232547,0,0,0,0
+ReAct (GPT-5),link_down,dc_clos_service,s,0424232926,0,0,0,0
+ReAct (GPT-5),link_down,dc_clos_service,m,0424233432,0,0,0,0
+ReAct (GPT-5),link_down,dc_clos_service,l,0424233813,0,0,0,0
+ReAct (GPT-5),link_down,ospf_enterprise_static,s,0424234240,0,0,0,0
+ReAct (GPT-5),link_down,ospf_enterprise_static,m,0424234703,0,0,0,0
+ReAct (GPT-5),link_down,ospf_enterprise_static,l,0424235146,0,0,0,0
+ReAct (GPT-5),link_down,rip_small_internet_vpn,s,0424235610,0,0,0,0
+ReAct (GPT-5),link_down,rip_small_internet_vpn,m,0424235942,0,0,0,0
+ReAct (GPT-5),link_down,rip_small_internet_vpn,l,0425000455,1,0,0,0
+ReAct (GPT-5),link_down,sdn_star,s,0425001339,0,0,0,0
+ReAct (GPT-5),link_down,sdn_star,m,0425001638,0,0,0,0
+ReAct (GPT-5),link_down,sdn_star,l,0425001951,0,0,0,0
+ReAct (GPT-5),link_down,sdn_clos,s,0425002301,0,0,0,0
+ReAct (GPT-5),link_down,sdn_clos,m,0425002542,0,0,0,0
+ReAct (GPT-5),link_down,sdn_clos,l,0425003052,0,0,0,0
+ReAct (GPT-5),link_down,p4_bloom_filter,-,0425003657,0,0,0,0
+ReAct (GPT-5),link_down,p4_counter,-,0425003939,0,0,0,0
+ReAct (GPT-5),link_down,p4_int,-,0425004203,0,0,0,0
+ReAct (GPT-5),link_down,p4_mpls,-,0425004502,0,0,0,0
+ReAct (GPT-5),link_down,simple_bgp,-,0425004851,0,0,0,0
+ReAct (GPT-5),link_flap,dc_clos_bgp,s,0425005107,0,0,0,0
+ReAct (GPT-5),link_flap,dc_clos_bgp,m,0425005558,0,0,0,0
+ReAct (GPT-5),link_flap,dc_clos_bgp,l,0425010122,1,0,0,0
+ReAct (GPT-5),link_flap,dc_clos_service,s,0425010811,0,0,0,0
+ReAct (GPT-5),link_flap,dc_clos_service,m,0425011117,1,0,0,0
+ReAct (GPT-5),link_flap,dc_clos_service,l,0425011728,0,0,0,0
+ReAct (GPT-5),link_flap,ospf_enterprise_static,s,0425012116,0,0,0,0
+ReAct (GPT-5),link_flap,ospf_enterprise_static,m,0425012658,0,0,0,0
+ReAct (GPT-5),link_flap,ospf_enterprise_static,l,0425013302,0,0,0,0
+ReAct (GPT-5),link_flap,rip_small_internet_vpn,s,0425013734,0,0,0,0
+ReAct (GPT-5),link_flap,rip_small_internet_vpn,m,0425014012,0,0,0,0
+ReAct (GPT-5),link_flap,rip_small_internet_vpn,l,0425014714,1,0,0,0
+ReAct (GPT-5),link_flap,sdn_star,s,0425015236,0,0,0,0
+ReAct (GPT-5),link_flap,sdn_star,m,0425015741,0,0,0,0
+ReAct (GPT-5),link_flap,sdn_star,l,0425020240,0,0,0,0
+ReAct (GPT-5),link_flap,sdn_clos,s,0425020716,0,0,0,0
+ReAct (GPT-5),link_flap,sdn_clos,m,0425021023,0,0,0,0
+ReAct (GPT-5),link_flap,sdn_clos,l,0425021402,0,0,0,0
+ReAct (GPT-5),link_flap,p4_bloom_filter,-,0425021849,0,0,0,0
+ReAct (GPT-5),link_flap,p4_counter,-,0425022342,0,0,0,0
+ReAct (GPT-5),link_flap,p4_int,-,0425022635,0,0,0,0
+ReAct (GPT-5),link_flap,p4_mpls,-,0425023103,0,0,0,0
+ReAct (GPT-5),link_flap,simple_bgp,-,0425023329,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,dc_clos_bgp,s,0425023812,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,dc_clos_bgp,m,0425024155,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,dc_clos_bgp,l,0425024651,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,dc_clos_service,s,0425025312,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,dc_clos_service,m,0425030029,1,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,dc_clos_service,l,0425030836,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,ospf_enterprise_static,s,0425031407,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,ospf_enterprise_static,m,0425032153,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,ospf_enterprise_static,l,0425033030,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,rip_small_internet_vpn,s,0425033931,1,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,rip_small_internet_vpn,m,0425034409,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,rip_small_internet_vpn,l,0425035044,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,sdn_star,s,0425035546,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,sdn_star,m,0425040007,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,sdn_star,l,0425040550,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,sdn_clos,s,0425041027,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,sdn_clos,m,0425041336,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,sdn_clos,l,0425042236,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,p4_bloom_filter,-,0425042629,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,p4_counter,-,0425043111,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,p4_int,-,0425043657,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,p4_mpls,-,0425044035,0,0,0,0
+ReAct (GPT-5),link_fragmentation_disabled,simple_bgp,-,0425044406,0,0,0,0
+ReAct (GPT-5),arp_acl_block,dc_clos_bgp,s,0425044754,0,0,0,0
+ReAct (GPT-5),arp_acl_block,dc_clos_bgp,m,0425045141,0,0,0,0
+ReAct (GPT-5),arp_acl_block,dc_clos_bgp,l,0425045438,0,0,0,0
+ReAct (GPT-5),arp_acl_block,dc_clos_service,s,0425050154,0,0,0,0
+ReAct (GPT-5),arp_acl_block,dc_clos_service,m,0425050440,0,0,0,0
+ReAct (GPT-5),arp_acl_block,dc_clos_service,l,0425050719,0,0,0,0
+ReAct (GPT-5),arp_acl_block,ospf_enterprise_static,s,0425051026,0,0,0,0
+ReAct (GPT-5),arp_acl_block,ospf_enterprise_static,m,0425051459,0,0,0,0
+ReAct (GPT-5),arp_acl_block,ospf_enterprise_static,l,0425051958,0,0,0,0
+ReAct (GPT-5),arp_acl_block,rip_small_internet_vpn,s,0425052458,0,0,0,0
+ReAct (GPT-5),arp_acl_block,rip_small_internet_vpn,m,0425053101,0,0,0,0
+ReAct (GPT-5),arp_acl_block,rip_small_internet_vpn,l,0425053401,0,0,0,0
+ReAct (GPT-5),arp_acl_block,sdn_star,s,0425053903,0,0,0,0
+ReAct (GPT-5),arp_acl_block,sdn_star,m,0425054138,0,0,0,0
+ReAct (GPT-5),arp_acl_block,sdn_star,l,0425054723,0,0,0,0
+ReAct (GPT-5),arp_acl_block,sdn_clos,s,0425055128,0,0,0,0
+ReAct (GPT-5),arp_acl_block,sdn_clos,m,0425055558,0,0,0,0
+ReAct (GPT-5),arp_acl_block,sdn_clos,l,0425060155,0,0,0,0
+ReAct (GPT-5),arp_acl_block,p4_bloom_filter,-,0425060822,0,0,0,0
+ReAct (GPT-5),arp_acl_block,p4_counter,-,0425061041,0,0,0,0
+ReAct (GPT-5),arp_acl_block,p4_int,-,0425061334,0,0,0,0
+ReAct (GPT-5),arp_acl_block,p4_mpls,-,0425061809,0,0,0,0
+ReAct (GPT-5),arp_acl_block,simple_bgp,-,0425062104,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,dc_clos_bgp,s,0425062306,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,dc_clos_bgp,m,0425062519,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,dc_clos_bgp,l,0425062831,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,dc_clos_service,s,0425063359,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,dc_clos_service,m,0425063726,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,dc_clos_service,l,0425064007,0,0,0,0
+ReAct (GPT-5),bgp_acl_block,simple_bgp,-,0425064350,0,0,0,0
+ReAct (GPT-5),dns_port_blocked,dc_clos_service,s,0425064543,0,0,0,0
+ReAct (GPT-5),dns_port_blocked,dc_clos_service,m,0425064849,0,0,0,0
+ReAct (GPT-5),dns_port_blocked,dc_clos_service,l,0425065311,0,0,0,0
+ReAct (GPT-5),http_acl_block,dc_clos_service,s,0425065653,0,0,0,0
+ReAct (GPT-5),http_acl_block,dc_clos_service,m,0425065900,0,0,0,0
+ReAct (GPT-5),http_acl_block,dc_clos_service,l,0425070137,0,0,0,0
+ReAct (GPT-5),http_acl_block,ospf_enterprise_static,s,0425070633,0,0,0,0
+ReAct (GPT-5),http_acl_block,ospf_enterprise_static,m,0425071103,0,0,0,0
+ReAct (GPT-5),http_acl_block,ospf_enterprise_static,l,0425071508,0,0,0,0
+ReAct (GPT-5),http_acl_block,rip_small_internet_vpn,s,0425071957,0,0,0,0
+ReAct (GPT-5),http_acl_block,rip_small_internet_vpn,m,0425072613,0,0,0,0
+ReAct (GPT-5),http_acl_block,rip_small_internet_vpn,l,0425073124,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,dc_clos_bgp,s,0425073519,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,dc_clos_bgp,m,0425073737,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,dc_clos_bgp,l,0425074055,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,dc_clos_service,s,0425074554,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,dc_clos_service,m,0425074833,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,dc_clos_service,l,0425075149,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,ospf_enterprise_static,s,0425075604,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,ospf_enterprise_static,m,0425080153,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,ospf_enterprise_static,l,0425080700,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,rip_small_internet_vpn,s,0425081153,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,rip_small_internet_vpn,m,0425081613,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,rip_small_internet_vpn,l,0425081910,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,sdn_star,s,0425082238,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,sdn_star,m,0425082515,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,sdn_clos,m,0425083315,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,sdn_clos,l,0425083618,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,p4_bloom_filter,-,0425084139,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,p4_counter,-,0425084445,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,p4_int,-,0425084828,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,p4_mpls,-,0425085145,0,0,0,0
+ReAct (GPT-5),icmp_acl_block,simple_bgp,-,0425085525,0,0,0,0
+ReAct (GPT-5),ospf_acl_block,ospf_enterprise_static,s,0425085638,0,0,0,0
+ReAct (GPT-5),ospf_acl_block,ospf_enterprise_static,m,0425090116,0,0,0,0
+ReAct (GPT-5),ospf_acl_block,ospf_enterprise_static,l,0425090701,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,dc_clos_bgp,s,0425091055,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,dc_clos_bgp,m,0425091309,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,dc_clos_bgp,l,0425091752,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,dc_clos_service,s,0425092121,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,dc_clos_service,m,0425092413,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,dc_clos_service,l,0425092818,0,0,0,0
+ReAct (GPT-5),bgp_asn_misconfig,simple_bgp,-,0425093209,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,dc_clos_bgp,s,0425093351,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,dc_clos_bgp,m,0425093606,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,dc_clos_bgp,l,0425093915,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,dc_clos_service,s,0425094643,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,dc_clos_service,m,0425095055,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,dc_clos_service,l,0425095505,0,0,0,0
+ReAct (GPT-5),bgp_blackhole_route_leak,simple_bgp,-,0425095951,0,0,0,0
+ReAct (GPT-5),bgp_hijacking,dc_clos_service,s,0425100436,0,0,0,0
+ReAct (GPT-5),bgp_hijacking,dc_clos_service,m,0425101322,0,0,0,0
+ReAct (GPT-5),bgp_hijacking,dc_clos_service,l,0425102337,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,dc_clos_bgp,s,0425102958,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,dc_clos_bgp,m,0425103233,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,dc_clos_bgp,l,0425104040,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,dc_clos_service,s,0425104537,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,dc_clos_service,m,0425105114,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,dc_clos_service,l,0425105548,0,0,0,0
+ReAct (GPT-5),bgp_missing_route_advertisement,simple_bgp,-,0425105952,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,dc_clos_bgp,s,0425110301,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,dc_clos_bgp,m,0425111141,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,dc_clos_bgp,l,0425111807,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,dc_clos_service,s,0425112440,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,dc_clos_service,m,0425113117,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,dc_clos_service,l,0425113705,0,0,0,0
+ReAct (GPT-5),host_static_blackhole,simple_bgp,-,0425114529,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,dc_clos_bgp,s,0425114949,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,dc_clos_bgp,m,0425115218,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,dc_clos_bgp,l,0425115530,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,dc_clos_service,s,0425120100,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,dc_clos_service,m,0425120417,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,dc_clos_service,l,0425120740,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,ospf_enterprise_static,s,0425121245,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,ospf_enterprise_static,m,0425122034,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,ospf_enterprise_static,l,0425122552,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,rip_small_internet_vpn,s,0425122945,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,rip_small_internet_vpn,m,0425123539,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,rip_small_internet_vpn,l,0425124121,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,sdn_star,s,0425124752,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,sdn_star,m,0425125133,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,sdn_star,l,0425125731,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,sdn_clos,s,0425130151,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,sdn_clos,m,0425130450,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,sdn_clos,l,0425131048,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,p4_bloom_filter,-,0425131725,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,p4_counter,-,0425132243,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,p4_int,-,0425132718,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,p4_mpls,-,0425133252,0,0,0,0
+ReAct (GPT-5),mac_address_conflict,simple_bgp,-,0425133847,0,0,0,0
+ReAct (GPT-5),ospf_area_misconfiguration,ospf_enterprise_static,s,0425134130,0,0,0,0
+ReAct (GPT-5),ospf_area_misconfiguration,ospf_enterprise_static,m,0425134537,0,0,0,0
+ReAct (GPT-5),ospf_area_misconfiguration,ospf_enterprise_static,l,0425135403,0,0,0,0
+ReAct (GPT-5),ospf_neighbor_missing,ospf_enterprise_static,s,0425135849,0,0,0,0
+ReAct (GPT-5),ospf_neighbor_missing,ospf_enterprise_static,m,0425140307,0,0,0,0
+ReAct (GPT-5),ospf_neighbor_missing,ospf_enterprise_static,l,0425140759,0,0,0,0
+ReAct (GPT-5),flow_rule_loop,sdn_star,s,0425141307,0,0,0,0
+ReAct (GPT-5),flow_rule_loop,sdn_star,m,0425141754,0,0,0,0
+ReAct (GPT-5),flow_rule_loop,sdn_star,l,0425142058,0,0,0,0
+ReAct (GPT-5),flow_rule_loop,sdn_clos,s,0425142517,0,0,0,0
+ReAct (GPT-5),flow_rule_loop,sdn_clos,m,0425143017,0,0,0,0
+ReAct (GPT-5),flow_rule_loop,sdn_clos,l,0425143640,0,0,0,0
+ReAct (GPT-5),flow_rule_shadowing,sdn_star,s,0425144140,0,0,0,0
+ReAct (GPT-5),flow_rule_shadowing,sdn_star,m,0425144810,0,0,0,0
+ReAct (GPT-5),flow_rule_shadowing,sdn_star,l,0425145204,0,0,0,0
+ReAct (GPT-5),flow_rule_shadowing,sdn_clos,s,0425145700,0,0,0,0
+ReAct (GPT-5),flow_rule_shadowing,sdn_clos,m,0425150153,0,0,0,0
+ReAct (GPT-5),flow_rule_shadowing,sdn_clos,l,0425150915,0,0,0,0
+ReAct (GPT-5),sdn_controller_crash,sdn_star,s,0425151504,0,0,0,0
+ReAct (GPT-5),sdn_controller_crash,sdn_star,m,0425151849,0,0,0,0
+ReAct (GPT-5),sdn_controller_crash,sdn_star,l,0425152250,0,0,0,0
+ReAct (GPT-5),sdn_controller_crash,sdn_clos,s,0425152828,0,0,0,0
+ReAct (GPT-5),sdn_controller_crash,sdn_clos,m,0425153227,0,0,0,0
+ReAct (GPT-5),sdn_controller_crash,sdn_clos,l,0425153718,0,0,0,0
+ReAct (GPT-5),southbound_port_block,sdn_star,s,0425154253,0,0,0,0
+ReAct (GPT-5),southbound_port_block,sdn_star,m,0425154712,0,0,0,0
+ReAct (GPT-5),southbound_port_block,sdn_star,l,0425155055,0,0,0,0
+ReAct (GPT-5),southbound_port_block,sdn_clos,s,0425155448,0,0,0,0
+ReAct (GPT-5),southbound_port_block,sdn_clos,m,0425155757,0,0,0,0
+ReAct (GPT-5),southbound_port_block,sdn_clos,l,0425160408,0,0,0,0
+ReAct (GPT-5),southbound_port_mismatch,sdn_star,s,0425161343,0,0,0,0
+ReAct (GPT-5),southbound_port_mismatch,sdn_star,m,0425161736,0,0,0,0
+ReAct (GPT-5),southbound_port_mismatch,sdn_star,l,0425162134,0,0,0,0
+ReAct (GPT-5),southbound_port_mismatch,sdn_clos,s,0425162451,0,0,0,0
+ReAct (GPT-5),southbound_port_mismatch,sdn_clos,m,0425162730,0,0,0,0
+ReAct (GPT-5),southbound_port_mismatch,sdn_clos,l,0425163050,0,0,0,0
+ReAct (GPT-5),p4_header_definition_error,p4_bloom_filter,-,0425163355,0,0,0,0
+ReAct (GPT-5),p4_header_definition_error,p4_counter,-,0425164000,0,0,0,0
+ReAct (GPT-5),p4_header_definition_error,p4_int,-,0425164212,0,0,0,0
+ReAct (GPT-5),p4_header_definition_error,p4_mpls,-,0425164457,0,0,0,0
+ReAct (GPT-5),p4_compilation_error_parser_state,p4_bloom_filter,-,0425164830,0,0,0,0
+ReAct (GPT-5),p4_compilation_error_parser_state,p4_counter,-,0425165248,0,0,0,0
+ReAct (GPT-5),p4_compilation_error_parser_state,p4_int,-,0425165915,0,0,0,0
+ReAct (GPT-5),p4_compilation_error_parser_state,p4_mpls,-,0425170308,0,0,0,0
+ReAct (GPT-5),mpls_label_limit_exceeded,p4_mpls,-,0425170712,0,0,0,0
+ReAct (GPT-5),p4_table_entry_misconfig,p4_bloom_filter,-,0425171152,0,0,0,0
+ReAct (GPT-5),p4_table_entry_misconfig,p4_counter,-,0425171545,0,0,0,0
+ReAct (GPT-5),p4_table_entry_misconfig,p4_int,-,0425172156,0,0,0,0
+ReAct (GPT-5),p4_table_entry_misconfig,p4_mpls,-,0425172625,1,0,0,0
+ReAct (GPT-5),p4_table_entry_missing,p4_bloom_filter,-,0425173132,0,0,0,0
+ReAct (GPT-5),p4_table_entry_missing,p4_counter,-,0425173627,0,0,0,0
+ReAct (GPT-5),p4_table_entry_missing,p4_int,-,0425173913,0,0,0,0
+ReAct (GPT-5),p4_table_entry_missing,p4_mpls,-,0425174511,0,0,0,0
+ReAct (GPT-5),bmv2_switch_down,p4_bloom_filter,-,0425174937,0,0,0,0
+ReAct (GPT-5),bmv2_switch_down,p4_counter,-,0425175601,0,0,0,0
+ReAct (GPT-5),bmv2_switch_down,p4_int,-,0425180626,0,0,0,0
+ReAct (GPT-5),bmv2_switch_down,p4_mpls,-,0425181228,0,0,0,0
+ReAct (GPT-5),frr_service_down,dc_clos_bgp,s,0425181742,0,0,0,0
+ReAct (GPT-5),frr_service_down,dc_clos_bgp,m,0425182015,0,0,0,0
+ReAct (GPT-5),frr_service_down,dc_clos_bgp,l,0425182323,0,0,0,0
+ReAct (GPT-5),frr_service_down,dc_clos_service,s,0425182809,0,0,0,0
+ReAct (GPT-5),frr_service_down,dc_clos_service,m,0425183114,0,0,0,0
+ReAct (GPT-5),frr_service_down,dc_clos_service,l,0425183515,0,0,0,0
+ReAct (GPT-5),frr_service_down,ospf_enterprise_static,s,0425183845,0,0,0,0
+ReAct (GPT-5),frr_service_down,ospf_enterprise_static,m,0425184227,0,0,0,0
+ReAct (GPT-5),frr_service_down,ospf_enterprise_static,l,0425184957,0,0,0,0
+ReAct (GPT-5),frr_service_down,rip_small_internet_vpn,s,0425185457,0,0,0,0
+ReAct (GPT-5),frr_service_down,rip_small_internet_vpn,m,0425190228,0,0,0,0
+ReAct (GPT-5),frr_service_down,rip_small_internet_vpn,l,0425190630,2,0,0,0
+ReAct (GPT-5),frr_service_down,simple_bgp,-,0425191543,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,dc_clos_bgp,s,0425191740,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,dc_clos_bgp,m,0425192525,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,dc_clos_bgp,l,0425193156,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,dc_clos_service,s,0425193714,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,dc_clos_service,m,0425194210,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,dc_clos_service,l,0425194724,2,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,ospf_enterprise_static,s,0425195501,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,ospf_enterprise_static,m,0425200128,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,ospf_enterprise_static,l,0425200736,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,rip_small_internet_vpn,s,0425201706,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,rip_small_internet_vpn,m,0425202228,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,rip_small_internet_vpn,l,0425202923,1,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,sdn_star,s,0425203702,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,sdn_star,m,0425204054,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,sdn_star,l,0425204443,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,sdn_clos,s,0425204849,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,sdn_clos,m,0425205250,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,sdn_clos,l,0425205733,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,p4_bloom_filter,-,0425210433,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,p4_counter,-,0425210910,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,p4_int,-,0425211449,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,p4_mpls,-,0425211945,0,0,0,0
+ReAct (GPT-5),arp_cache_poisoning,simple_bgp,-,0425212348,0,0,0,0
+ReAct (GPT-5),web_dos_attack,dc_clos_service,s,0425212758,0,0,0,0
+ReAct (GPT-5),web_dos_attack,dc_clos_service,m,0425213554,1,0,0,0
+ReAct (GPT-5),web_dos_attack,dc_clos_service,l,0425213922,0,0,0,0
+ReAct (GPT-5),web_dos_attack,ospf_enterprise_static,s,0425214757,0,0,0,0
+ReAct (GPT-5),web_dos_attack,ospf_enterprise_static,m,0425215558,1,0,0,0
+ReAct (GPT-5),web_dos_attack,ospf_enterprise_static,l,0425220529,0,0,0,0
+ReAct (GPT-5),web_dos_attack,rip_small_internet_vpn,s,0425221755,0,0,0,0
+ReAct (GPT-5),web_dos_attack,rip_small_internet_vpn,m,0425222355,0,0,0,0
+ReAct (GPT-5),web_dos_attack,rip_small_internet_vpn,l,0425222646,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,dc_clos_service,s,0425223024,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,dc_clos_service,m,0425223244,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,dc_clos_service,l,0425223501,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,ospf_enterprise_static,s,0425223831,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,ospf_enterprise_static,m,0425224257,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,ospf_enterprise_static,l,0425224653,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,rip_small_internet_vpn,s,0425225237,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,rip_small_internet_vpn,m,0425225942,0,0,0,0
+ReAct (GPT-5),incast_traffic_network_limitation,rip_small_internet_vpn,l,0425230826,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,dc_clos_bgp,s,0425231532,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,dc_clos_bgp,m,0425231903,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,dc_clos_bgp,l,0425232320,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,dc_clos_service,s,0425232805,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,dc_clos_service,m,0425233050,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,dc_clos_service,l,0425233306,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,ospf_enterprise_static,s,0425233632,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,ospf_enterprise_static,m,0425234158,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,ospf_enterprise_static,l,0425234632,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,rip_small_internet_vpn,m,0426000033,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,rip_small_internet_vpn,l,0426000639,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,sdn_star,s,0426001101,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,sdn_star,m,0426001436,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,sdn_star,l,0426002254,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,sdn_clos,s,0426003018,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,sdn_clos,m,0426003631,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,sdn_clos,l,0426004420,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,p4_bloom_filter,-,0426005157,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,p4_int,-,0427214310,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,p4_mpls,-,0427214925,0,0,0,0
+ReAct (GPT-5),link_bandwidth_throttling,simple_bgp,-,0427215353,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,dc_clos_bgp,s,0427215554,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,dc_clos_bgp,m,0427220013,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,dc_clos_bgp,l,0427220403,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,dc_clos_service,s,0427220940,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,dc_clos_service,m,0427221356,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,dc_clos_service,l,0427221902,2,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,ospf_enterprise_static,s,0427222249,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,ospf_enterprise_static,m,0427222653,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,ospf_enterprise_static,l,0427223223,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,rip_small_internet_vpn,s,0427223650,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,rip_small_internet_vpn,m,0427224059,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,rip_small_internet_vpn,l,0427224615,1,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,sdn_star,s,0427225055,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,sdn_star,m,0427225544,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,sdn_star,l,0427225930,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,sdn_clos,s,0427230309,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,sdn_clos,m,0427230916,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,sdn_clos,l,0427231343,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,p4_bloom_filter,-,0427231757,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,p4_counter,-,0427232037,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,p4_int,-,0427232442,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,p4_mpls,-,0427232834,0,0,0,0
+ReAct (GPT-5),link_high_packet_corruption,simple_bgp,-,0427233441,0,0,0,0
+ReAct (GPT-5),dns_lookup_latency,dc_clos_service,s,0427233743,0,0,0,0
+ReAct (GPT-5),dns_lookup_latency,dc_clos_service,m,0427234010,0,0,0,0
+ReAct (GPT-5),dns_lookup_latency,dc_clos_service,l,0427234241,0,0,0,0
+ReAct (GPT-5),receiver_resource_contention,dc_clos_service,s,0427234546,2,0,0,0
+ReAct (GPT-5),receiver_resource_contention,dc_clos_service,m,0427235216,2,0,0,0
+ReAct (GPT-5),receiver_resource_contention,dc_clos_service,l,0427235746,4,0,0,0
+ReAct (GPT-5),receiver_resource_contention,ospf_enterprise_static,s,0428000504,2,0,0,0
+ReAct (GPT-5),receiver_resource_contention,ospf_enterprise_static,m,0428001401,4,0,0,0
+ReAct (GPT-5),receiver_resource_contention,ospf_enterprise_static,l,0428002153,3,0,0,0
+ReAct (GPT-5),receiver_resource_contention,rip_small_internet_vpn,s,0428002914,0,0,0,0
+ReAct (GPT-5),receiver_resource_contention,rip_small_internet_vpn,l,0428004259,0,0,0,0
+ReAct (GPT-5),sender_application_delay,dc_clos_service,s,0428004900,0,0,0,0
+ReAct (GPT-5),sender_application_delay,dc_clos_service,m,0428005109,0,0,0,0
+ReAct (GPT-5),sender_application_delay,dc_clos_service,l,0428005527,0,0,0,0
+ReAct (GPT-5),sender_application_delay,ospf_enterprise_static,s,0428005820,0,0,0,0
+ReAct (GPT-5),sender_application_delay,ospf_enterprise_static,m,0428010240,0,0,0,0
+ReAct (GPT-5),sender_application_delay,ospf_enterprise_static,l,0428010715,0,0,0,0
+ReAct (GPT-5),sender_application_delay,rip_small_internet_vpn,s,0428011055,0,0,0,0
+ReAct (GPT-5),sender_application_delay,rip_small_internet_vpn,m,0428011555,0,0,0,0
+ReAct (GPT-5),sender_application_delay,rip_small_internet_vpn,l,0428012032,0,0,0,0
+ReAct (GPT-5),sender_resource_contention,dc_clos_service,s,0428012526,0,0,0,0
+ReAct (GPT-5),sender_resource_contention,dc_clos_service,m,0428013111,1,0,0,0
+ReAct (GPT-5),sender_resource_contention,dc_clos_service,l,0428013625,2,0,0,0
+ReAct (GPT-5),sender_resource_contention,ospf_enterprise_static,s,0428014422,4,0,0,0
+ReAct (GPT-5),sender_resource_contention,ospf_enterprise_static,m,0428015035,6,0,0,0
+ReAct (GPT-5),sender_resource_contention,ospf_enterprise_static,l,0428015849,3,0,0,0
+ReAct (GPT-5),sender_resource_contention,rip_small_internet_vpn,s,0428020524,0,0,0,0
+ReAct (GPT-5),sender_resource_contention,rip_small_internet_vpn,m,0428021250,0,0,0,0
+ReAct (GPT-5),sender_resource_contention,rip_small_internet_vpn,l,0428022130,0,0,0,0
+CC-Baseline,dns_record_error,dc_clos_service,s,0425024202,0,0,0,0
+CC-Baseline,dns_record_error,dc_clos_service,m,0425024348,0,0,0,0
+CC-Baseline,dns_record_error,dc_clos_service,l,0425024725,0,0,0,0
+CC-Baseline,host_crash,dc_clos_bgp,s,0425025157,0,12,0,12
+CC-Baseline,host_crash,dc_clos_bgp,m,0425025536,0,6,0,6
+CC-Baseline,host_crash,dc_clos_bgp,l,0425030302,0,6,0,6
+CC-Baseline,host_crash,dc_clos_service,s,0425031007,0,5,0,5
+CC-Baseline,host_crash,dc_clos_service,m,0425031233,0,4,0,4
+CC-Baseline,host_crash,dc_clos_service,l,0425031556,0,6,0,6
+CC-Baseline,host_crash,ospf_enterprise_static,s,0425032001,0,7,0,7
+CC-Baseline,host_crash,ospf_enterprise_static,m,0425032544,0,7,0,7
+CC-Baseline,host_crash,ospf_enterprise_static,l,0425033250,0,4,0,4
+CC-Baseline,host_crash,rip_small_internet_vpn,s,0425033652,0,3,0,3
+CC-Baseline,host_crash,rip_small_internet_vpn,m,0425033845,0,7,0,7
+CC-Baseline,host_crash,rip_small_internet_vpn,l,0425034257,0,5,0,5
+CC-Baseline,host_crash,sdn_star,s,0425034505,0,2,0,2
+CC-Baseline,host_crash,sdn_star,m,0425034735,0,4,0,4
+CC-Baseline,host_crash,sdn_star,l,0425035011,0,9,0,9
+CC-Baseline,host_crash,sdn_clos,s,0425035209,0,2,0,2
+CC-Baseline,host_crash,sdn_clos,m,0425035414,0,5,0,5
+CC-Baseline,host_crash,sdn_clos,l,0425040050,0,4,0,4
+CC-Baseline,host_crash,p4_bloom_filter,-,0425040716,0,3,0,3
+CC-Baseline,host_crash,p4_counter,-,0425040830,0,8,0,8
+CC-Baseline,host_crash,p4_int,-,0425110812,0,5,0,5
+CC-Baseline,host_crash,p4_mpls,-,0425110926,0,2,0,2
+CC-Baseline,host_crash,simple_bgp,-,0425111103,0,5,0,5
+CC-Baseline,host_ip_conflict,dc_clos_bgp,s,0425111220,0,0,0,0
+CC-Baseline,host_ip_conflict,dc_clos_bgp,m,0425111431,0,0,0,0
+CC-Baseline,host_ip_conflict,dc_clos_bgp,l,0425111916,0,0,0,0
+CC-Baseline,host_ip_conflict,ospf_enterprise_static,s,0425133618,0,0,0,0
+CC-Baseline,host_ip_conflict,ospf_enterprise_static,m,0425133853,0,0,0,0
+CC-Baseline,host_ip_conflict,ospf_enterprise_static,l,0425134205,0,6,1,7
+CC-Baseline,host_ip_conflict,rip_small_internet_vpn,s,0425134616,0,0,0,0
+CC-Baseline,host_ip_conflict,rip_small_internet_vpn,m,0425134800,0,0,0,0
+CC-Baseline,host_ip_conflict,rip_small_internet_vpn,l,0425135028,0,0,0,0
+CC-Baseline,host_ip_conflict,sdn_star,s,0425135301,0,0,0,0
+CC-Baseline,host_ip_conflict,sdn_star,m,0425135439,0,0,0,0
+CC-Baseline,host_ip_conflict,sdn_star,l,0425135616,0,0,0,0
+CC-Baseline,host_ip_conflict,sdn_clos,s,0425135757,0,0,0,0
+CC-Baseline,host_ip_conflict,sdn_clos,m,0425135917,0,0,0,0
+CC-Baseline,host_ip_conflict,sdn_clos,l,0425140200,0,0,0,0
+CC-Baseline,host_ip_conflict,p4_bloom_filter,-,0425141057,0,0,0,0
+CC-Baseline,host_ip_conflict,p4_counter,-,0425141249,0,0,0,0
+CC-Baseline,host_ip_conflict,p4_int,-,0501091926,0,0,0,0
+CC-Baseline,host_ip_conflict,p4_mpls,-,0425141422,0,0,0,0
+CC-Baseline,host_ip_conflict,simple_bgp,-,0425141551,0,0,0,0
+CC-Baseline,host_incorrect_dns,dc_clos_service,s,0425141738,0,0,0,0
+CC-Baseline,host_incorrect_dns,dc_clos_service,m,0425142022,0,0,0,0
+CC-Baseline,host_incorrect_dns,dc_clos_service,l,0425142343,0,0,0,0
+CC-Baseline,host_incorrect_gateway,dc_clos_bgp,s,0425142855,0,0,0,0
+CC-Baseline,host_incorrect_gateway,dc_clos_bgp,m,0425143249,0,0,0,0
+CC-Baseline,host_incorrect_gateway,dc_clos_bgp,l,0425143739,0,0,0,0
+CC-Baseline,host_incorrect_gateway,dc_clos_service,s,0425144309,0,0,0,0
+CC-Baseline,host_incorrect_gateway,dc_clos_service,m,0425144623,0,0,0,0
+CC-Baseline,host_incorrect_gateway,dc_clos_service,l,0425145012,0,2,0,2
+CC-Baseline,host_incorrect_gateway,ospf_enterprise_static,s,0425145351,0,0,0,0
+CC-Baseline,host_incorrect_gateway,ospf_enterprise_static,m,0425145846,0,0,0,0
+CC-Baseline,host_incorrect_gateway,ospf_enterprise_static,l,0425150853,0,4,1,5
+CC-Baseline,host_incorrect_gateway,rip_small_internet_vpn,s,0425151508,0,0,0,0
+CC-Baseline,host_incorrect_gateway,rip_small_internet_vpn,m,0425151730,0,0,0,0
+CC-Baseline,host_incorrect_gateway,rip_small_internet_vpn,l,0425151950,0,0,0,0
+CC-Baseline,host_incorrect_gateway,simple_bgp,-,0425152249,0,1,0,1
+CC-Baseline,host_incorrect_ip,dc_clos_bgp,s,0425152448,0,0,0,0
+CC-Baseline,host_incorrect_ip,dc_clos_bgp,m,0425152804,0,0,0,0
+CC-Baseline,host_incorrect_ip,dc_clos_bgp,l,0425153513,0,2,0,2
+CC-Baseline,host_incorrect_ip,dc_clos_service,s,0425154024,0,0,0,0
+CC-Baseline,host_incorrect_ip,dc_clos_service,m,0425154326,0,0,0,0
+CC-Baseline,host_incorrect_ip,dc_clos_service,l,0425154829,0,0,0,0
+CC-Baseline,host_incorrect_ip,ospf_enterprise_static,s,0425155342,0,0,0,0
+CC-Baseline,host_incorrect_ip,ospf_enterprise_static,m,0425155742,0,0,0,0
+CC-Baseline,host_incorrect_ip,ospf_enterprise_static,l,0425160227,0,3,1,4
+CC-Baseline,host_incorrect_ip,rip_small_internet_vpn,s,0425165623,0,0,0,0
+CC-Baseline,host_incorrect_ip,rip_small_internet_vpn,m,0425165753,0,0,0,0
+CC-Baseline,host_incorrect_ip,rip_small_internet_vpn,l,0425165948,0,0,0,0
+CC-Baseline,host_incorrect_ip,sdn_star,s,0425170216,0,0,0,0
+CC-Baseline,host_incorrect_ip,sdn_star,m,0425170325,0,0,0,0
+CC-Baseline,host_incorrect_ip,sdn_star,l,0425170448,0,0,0,0
+CC-Baseline,host_incorrect_ip,sdn_clos,s,0425170610,0,0,0,0
+CC-Baseline,host_incorrect_ip,sdn_clos,m,0425170723,0,0,0,0
+CC-Baseline,host_incorrect_ip,sdn_clos,l,0425171559,0,0,0,0
+CC-Baseline,host_incorrect_ip,p4_bloom_filter,-,0425172708,0,1,0,1
+CC-Baseline,host_incorrect_ip,p4_counter,-,0425172921,0,0,0,0
+CC-Baseline,host_incorrect_ip,p4_int,-,0501092113,0,0,0,0
+CC-Baseline,host_incorrect_ip,p4_mpls,-,0425173110,0,1,0,1
+CC-Baseline,host_incorrect_ip,simple_bgp,-,0425173517,0,0,0,0
+CC-Baseline,host_incorrect_netmask,dc_clos_bgp,s,0425173652,0,0,0,0
+CC-Baseline,host_incorrect_netmask,dc_clos_bgp,m,0425173940,0,0,0,0
+CC-Baseline,host_incorrect_netmask,dc_clos_bgp,l,0425174333,0,0,0,0
+CC-Baseline,host_incorrect_netmask,dc_clos_service,s,0425174802,0,0,0,0
+CC-Baseline,host_incorrect_netmask,dc_clos_service,m,0425175114,0,0,0,0
+CC-Baseline,host_incorrect_netmask,dc_clos_service,l,0425175628,0,0,0,0
+CC-Baseline,host_incorrect_netmask,ospf_enterprise_static,s,0425180251,0,0,0,0
+CC-Baseline,host_incorrect_netmask,ospf_enterprise_static,m,0425180914,0,0,0,0
+CC-Baseline,host_incorrect_netmask,ospf_enterprise_static,l,0425181808,0,5,1,6
+CC-Baseline,host_incorrect_netmask,rip_small_internet_vpn,s,0425182303,0,0,0,0
+CC-Baseline,host_incorrect_netmask,rip_small_internet_vpn,m,0425182717,0,0,0,0
+CC-Baseline,host_incorrect_netmask,rip_small_internet_vpn,l,0425183444,0,0,0,0
+CC-Baseline,host_incorrect_netmask,simple_bgp,-,0425183724,0,0,0,0
+CC-Baseline,host_missing_ip,dc_clos_bgp,s,0425183845,0,0,0,0
+CC-Baseline,host_missing_ip,dc_clos_bgp,m,0425184044,0,0,0,0
+CC-Baseline,host_missing_ip,dc_clos_bgp,l,0425184602,0,1,0,1
+CC-Baseline,host_missing_ip,dc_clos_service,s,0425185117,0,0,0,0
+CC-Baseline,host_missing_ip,dc_clos_service,m,0425185345,0,1,0,1
+CC-Baseline,host_missing_ip,dc_clos_service,l,0425185810,0,0,0,0
+CC-Baseline,host_missing_ip,ospf_enterprise_static,s,0425190218,0,0,0,0
+CC-Baseline,host_missing_ip,ospf_enterprise_static,m,0425190551,0,0,0,0
+CC-Baseline,host_missing_ip,ospf_enterprise_static,l,0425191133,0,3,1,4
+CC-Baseline,host_missing_ip,rip_small_internet_vpn,s,0425191851,0,0,0,0
+CC-Baseline,host_missing_ip,rip_small_internet_vpn,m,0425192038,0,0,0,0
+CC-Baseline,host_missing_ip,rip_small_internet_vpn,l,0425192258,0,0,0,0
+CC-Baseline,host_missing_ip,sdn_star,s,0425192539,0,0,0,0
+CC-Baseline,host_missing_ip,sdn_star,m,0425192733,0,0,0,0
+CC-Baseline,host_missing_ip,sdn_star,l,0425192929,0,0,0,0
+CC-Baseline,host_missing_ip,sdn_clos,s,0425193108,0,0,0,0
+CC-Baseline,host_missing_ip,sdn_clos,m,0425193242,0,1,0,1
+CC-Baseline,host_missing_ip,sdn_clos,l,0425194102,0,0,0,0
+CC-Baseline,host_missing_ip,p4_bloom_filter,-,0425195431,0,0,0,0
+CC-Baseline,host_missing_ip,p4_counter,-,0425195545,0,2,0,2
+CC-Baseline,host_missing_ip,p4_int,-,0501092556,0,0,0,0
+CC-Baseline,host_missing_ip,p4_mpls,-,0425195754,0,0,0,0
+CC-Baseline,host_missing_ip,simple_bgp,-,0425195931,0,0,0,0
+CC-Baseline,dns_service_down,dc_clos_service,s,0425200110,0,0,0,0
+CC-Baseline,dns_service_down,dc_clos_service,m,0425200453,0,0,0,0
+CC-Baseline,dns_service_down,dc_clos_service,l,0425201015,0,0,0,0
+CC-Baseline,host_vpn_membership_missing,rip_small_internet_vpn,s,0425201511,0,0,0,0
+CC-Baseline,host_vpn_membership_missing,rip_small_internet_vpn,m,0425201911,0,0,0,0
+CC-Baseline,host_vpn_membership_missing,rip_small_internet_vpn,l,0425202750,0,0,0,0
+CC-Baseline,link_detach,dc_clos_bgp,s,0425203149,0,0,0,0
+CC-Baseline,link_detach,dc_clos_bgp,m,0425203608,0,0,0,0
+CC-Baseline,link_detach,dc_clos_bgp,l,0425204524,0,1,0,1
+CC-Baseline,link_detach,dc_clos_service,s,0425205219,0,0,0,0
+CC-Baseline,link_detach,dc_clos_service,m,0425205529,0,0,0,0
+CC-Baseline,link_detach,dc_clos_service,l,0425210110,0,0,0,0
+CC-Baseline,link_detach,ospf_enterprise_static,s,0425210534,0,0,0,0
+CC-Baseline,link_detach,ospf_enterprise_static,m,0425211023,0,0,0,0
+CC-Baseline,link_detach,ospf_enterprise_static,l,0425211846,0,3,1,4
+CC-Baseline,link_detach,rip_small_internet_vpn,s,0425212645,0,0,0,0
+CC-Baseline,link_detach,rip_small_internet_vpn,m,0425212918,0,0,0,0
+CC-Baseline,link_detach,rip_small_internet_vpn,l,0425213213,0,0,0,0
+CC-Baseline,link_detach,sdn_star,s,0425213532,0,0,0,0
+CC-Baseline,link_detach,sdn_star,m,0425213752,0,0,0,0
+CC-Baseline,link_detach,sdn_star,l,0425214019,0,0,0,0
+CC-Baseline,link_detach,sdn_clos,s,0425214213,0,0,0,0
+CC-Baseline,link_detach,sdn_clos,m,0425214406,0,0,0,0
+CC-Baseline,link_detach,sdn_clos,l,0425215109,0,0,0,0
+CC-Baseline,link_detach,p4_bloom_filter,-,0425215740,0,1,0,1
+CC-Baseline,link_detach,p4_counter,-,0425215936,0,2,0,2
+CC-Baseline,link_detach,p4_int,-,0501092759,0,0,0,0
+CC-Baseline,link_detach,p4_mpls,-,0425220153,0,0,0,0
+CC-Baseline,link_detach,simple_bgp,-,0425220341,0,0,0,0
+CC-Baseline,link_down,dc_clos_bgp,s,0425220525,0,0,0,0
+CC-Baseline,link_down,dc_clos_bgp,m,0425220934,0,0,0,0
+CC-Baseline,link_down,dc_clos_bgp,l,0425221731,0,0,0,0
+CC-Baseline,link_down,dc_clos_service,s,0425222326,0,1,0,1
+CC-Baseline,link_down,dc_clos_service,m,0425222717,0,1,0,1
+CC-Baseline,link_down,dc_clos_service,l,0425223304,0,0,0,0
+CC-Baseline,link_down,ospf_enterprise_static,s,0425223718,0,0,0,0
+CC-Baseline,link_down,ospf_enterprise_static,m,0425224333,0,0,0,0
+CC-Baseline,link_down,ospf_enterprise_static,l,0425225220,0,4,1,5
+CC-Baseline,link_down,rip_small_internet_vpn,s,0425230031,0,0,0,0
+CC-Baseline,link_down,rip_small_internet_vpn,m,0425230320,0,0,0,0
+CC-Baseline,link_down,rip_small_internet_vpn,l,0425230619,0,0,0,0
+CC-Baseline,link_down,sdn_star,s,0425230920,0,0,0,0
+CC-Baseline,link_down,sdn_star,m,0425231130,0,0,0,0
+CC-Baseline,link_down,sdn_star,l,0425231524,0,1,0,1
+CC-Baseline,link_down,sdn_clos,s,0425231825,0,0,0,0
+CC-Baseline,link_down,sdn_clos,m,0425232057,0,0,0,0
+CC-Baseline,link_down,sdn_clos,l,0425232806,0,0,0,0
+CC-Baseline,link_down,p4_bloom_filter,-,0425233601,0,1,0,1
+CC-Baseline,link_down,p4_counter,-,0425233902,0,0,0,0
+CC-Baseline,link_down,p4_int,-,0501093557,0,0,0,0
+CC-Baseline,link_down,p4_mpls,-,0425234139,0,0,0,0
+CC-Baseline,link_down,simple_bgp,-,0425234429,0,0,0,0
+CC-Baseline,link_flap,dc_clos_bgp,s,0425234652,0,0,0,0
+CC-Baseline,link_flap,dc_clos_bgp,m,0425235233,0,5,0,5
+CC-Baseline,link_flap,dc_clos_bgp,l,0426000517,0,0,0,0
+CC-Baseline,link_flap,dc_clos_service,s,0426001138,0,1,0,1
+CC-Baseline,link_flap,dc_clos_service,m,0426001543,0,0,0,0
+CC-Baseline,link_flap,dc_clos_service,l,0426002219,0,0,0,0
+CC-Baseline,link_flap,ospf_enterprise_static,s,0426002803,0,0,0,0
+CC-Baseline,link_flap,ospf_enterprise_static,m,0426003907,0,0,0,0
+CC-Baseline,link_flap,ospf_enterprise_static,l,0426004653,0,3,1,4
+CC-Baseline,link_flap,rip_small_internet_vpn,s,0426005443,0,0,0,0
+CC-Baseline,link_flap,rip_small_internet_vpn,m,0426005746,0,0,0,0
+CC-Baseline,link_flap,rip_small_internet_vpn,l,0426010047,0,0,0,0
+CC-Baseline,link_flap,sdn_star,s,0426010427,0,0,0,0
+CC-Baseline,link_flap,sdn_star,m,0426010757,0,0,0,0
+CC-Baseline,link_flap,sdn_star,l,0426011518,0,0,0,0
+CC-Baseline,link_flap,sdn_clos,s,0426011940,0,0,0,0
+CC-Baseline,link_flap,sdn_clos,m,0426012826,0,0,0,0
+CC-Baseline,link_flap,sdn_clos,l,0426013619,0,0,0,0
+CC-Baseline,link_flap,p4_bloom_filter,-,0426014614,0,1,0,1
+CC-Baseline,link_flap,p4_counter,-,0426015047,0,0,0,0
+CC-Baseline,link_flap,p4_int,-,0501093822,0,0,0,0
+CC-Baseline,link_flap,p4_mpls,-,0426015354,0,0,0,0
+CC-Baseline,link_flap,simple_bgp,-,0426020000,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,dc_clos_bgp,s,0426020210,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,dc_clos_bgp,m,0426021446,0,2,0,2
+CC-Baseline,link_fragmentation_disabled,dc_clos_bgp,l,0426022600,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,dc_clos_service,s,0426023505,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,dc_clos_service,m,0426024134,0,4,0,4
+CC-Baseline,link_fragmentation_disabled,dc_clos_service,l,0426025108,0,2,0,2
+CC-Baseline,link_fragmentation_disabled,ospf_enterprise_static,s,0426025821,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,ospf_enterprise_static,m,0426030522,0,3,0,3
+CC-Baseline,link_fragmentation_disabled,ospf_enterprise_static,l,0426031449,0,4,1,5
+CC-Baseline,link_fragmentation_disabled,rip_small_internet_vpn,s,0426032201,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,rip_small_internet_vpn,m,0426032607,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,rip_small_internet_vpn,l,0426033018,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,sdn_star,s,0426033502,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,sdn_star,m,0426033910,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,sdn_star,l,0426034513,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,sdn_clos,s,0426035056,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,sdn_clos,m,0426035617,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,sdn_clos,l,0426040410,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,p4_bloom_filter,-,0426041157,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,p4_counter,-,0426042006,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,p4_int,-,0501094026,0,0,0,0
+CC-Baseline,link_fragmentation_disabled,p4_mpls,-,0426042422,0,4,0,4
+CC-Baseline,link_fragmentation_disabled,simple_bgp,-,0426043036,0,2,0,2
+CC-Baseline,arp_acl_block,dc_clos_bgp,s,0426043452,0,0,0,0
+CC-Baseline,arp_acl_block,dc_clos_bgp,m,0426044337,0,0,0,0
+CC-Baseline,arp_acl_block,dc_clos_bgp,l,0426045402,0,2,0,2
+CC-Baseline,arp_acl_block,dc_clos_service,s,0426050445,0,0,0,0
+CC-Baseline,arp_acl_block,dc_clos_service,m,0426051018,0,3,0,3
+CC-Baseline,arp_acl_block,dc_clos_service,l,0426051929,0,0,0,0
+CC-Baseline,arp_acl_block,ospf_enterprise_static,s,0426052624,0,0,0,0
+CC-Baseline,arp_acl_block,ospf_enterprise_static,m,0426053552,0,3,0,3
+CC-Baseline,arp_acl_block,ospf_enterprise_static,l,0426055046,0,2,1,3
+CC-Baseline,arp_acl_block,rip_small_internet_vpn,s,0426055938,0,1,0,1
+CC-Baseline,arp_acl_block,rip_small_internet_vpn,m,0426060849,0,0,0,0
+CC-Baseline,arp_acl_block,rip_small_internet_vpn,l,0426061251,0,2,0,2
+CC-Baseline,arp_acl_block,sdn_star,s,0426061912,0,0,0,0
+CC-Baseline,arp_acl_block,sdn_star,m,0426063358,0,0,0,0
+CC-Baseline,arp_acl_block,sdn_star,l,0426064242,0,0,0,0
+CC-Baseline,arp_acl_block,sdn_clos,s,0426064924,0,0,0,0
+CC-Baseline,arp_acl_block,sdn_clos,m,0426065416,0,0,0,0
+CC-Baseline,arp_acl_block,sdn_clos,l,0426070043,0,0,0,0
+CC-Baseline,arp_acl_block,p4_bloom_filter,-,0426070735,0,0,0,0
+CC-Baseline,arp_acl_block,p4_counter,-,0426070956,0,0,0,0
+CC-Baseline,arp_acl_block,p4_int,-,0501094740,0,0,0,0
+CC-Baseline,arp_acl_block,p4_mpls,-,0426071749,0,1,0,1
+CC-Baseline,arp_acl_block,simple_bgp,-,0426072537,0,0,0,0
+CC-Baseline,bgp_acl_block,dc_clos_bgp,s,0426073100,0,0,0,0
+CC-Baseline,bgp_acl_block,dc_clos_bgp,m,0426073958,0,2,0,2
+CC-Baseline,bgp_acl_block,dc_clos_bgp,l,0426075641,0,4,0,4
+CC-Baseline,bgp_acl_block,dc_clos_service,s,0426081328,0,7,0,7
+CC-Baseline,bgp_acl_block,dc_clos_service,m,0426082139,0,0,0,0
+CC-Baseline,bgp_acl_block,dc_clos_service,l,0426083421,0,1,0,1
+CC-Baseline,bgp_acl_block,simple_bgp,-,0426084413,0,2,0,2
+CC-Baseline,dns_port_blocked,dc_clos_service,s,0426084702,0,0,0,0
+CC-Baseline,dns_port_blocked,dc_clos_service,m,0426085218,0,0,0,0
+CC-Baseline,dns_port_blocked,dc_clos_service,l,0426090029,0,0,0,0
+CC-Baseline,http_acl_block,dc_clos_service,s,0426090900,0,0,0,0
+CC-Baseline,http_acl_block,dc_clos_service,m,0426091340,0,1,0,1
+CC-Baseline,http_acl_block,dc_clos_service,l,0426092422,0,2,0,2
+CC-Baseline,http_acl_block,ospf_enterprise_static,s,0426093242,0,0,0,0
+CC-Baseline,http_acl_block,ospf_enterprise_static,m,0426094141,0,0,0,0
+CC-Baseline,http_acl_block,ospf_enterprise_static,l,0426095441,0,5,1,6
+CC-Baseline,http_acl_block,rip_small_internet_vpn,s,0426100222,0,0,0,0
+CC-Baseline,http_acl_block,rip_small_internet_vpn,m,0426101532,0,0,0,0
+CC-Baseline,http_acl_block,rip_small_internet_vpn,l,0426102541,0,2,0,2
+CC-Baseline,icmp_acl_block,dc_clos_bgp,s,0426103726,0,0,0,0
+CC-Baseline,icmp_acl_block,dc_clos_bgp,m,0426104636,0,0,0,0
+CC-Baseline,icmp_acl_block,dc_clos_bgp,l,0426105651,0,0,0,0
+CC-Baseline,icmp_acl_block,dc_clos_service,s,0426110510,0,0,0,0
+CC-Baseline,icmp_acl_block,dc_clos_service,m,0426111024,0,1,0,1
+CC-Baseline,icmp_acl_block,dc_clos_service,l,0426111838,0,0,0,0
+CC-Baseline,icmp_acl_block,ospf_enterprise_static,s,0426112444,0,0,0,0
+CC-Baseline,icmp_acl_block,ospf_enterprise_static,m,0426113519,0,0,0,0
+CC-Baseline,icmp_acl_block,ospf_enterprise_static,l,0426114400,0,2,1,3
+CC-Baseline,icmp_acl_block,rip_small_internet_vpn,s,0426115214,0,0,0,0
+CC-Baseline,icmp_acl_block,rip_small_internet_vpn,m,0426115736,0,0,0,0
+CC-Baseline,icmp_acl_block,rip_small_internet_vpn,l,0426120220,0,0,0,0
+CC-Baseline,icmp_acl_block,sdn_star,s,0426120704,0,0,0,0
+CC-Baseline,icmp_acl_block,sdn_star,m,0426121711,0,3,0,3
+CC-Baseline,icmp_acl_block,sdn_clos,m,0426123354,0,0,0,0
+CC-Baseline,icmp_acl_block,sdn_clos,l,0426125118,0,0,0,0
+CC-Baseline,icmp_acl_block,p4_bloom_filter,-,0426125727,0,2,0,2
+CC-Baseline,icmp_acl_block,p4_counter,-,0426130351,0,0,0,0
+CC-Baseline,icmp_acl_block,p4_int,-,0501095240,0,0,0,0
+CC-Baseline,icmp_acl_block,p4_mpls,-,0426131119,0,0,0,0
+CC-Baseline,icmp_acl_block,simple_bgp,-,0426131952,0,0,0,0
+CC-Baseline,ospf_acl_block,ospf_enterprise_static,s,0426132356,0,4,0,4
+CC-Baseline,ospf_acl_block,ospf_enterprise_static,m,0426133131,0,0,0,0
+CC-Baseline,ospf_acl_block,ospf_enterprise_static,l,0426133653,0,6,1,7
+CC-Baseline,bgp_asn_misconfig,dc_clos_bgp,s,0426134503,0,0,0,0
+CC-Baseline,bgp_asn_misconfig,dc_clos_bgp,m,0426134641,0,0,0,0
+CC-Baseline,bgp_asn_misconfig,dc_clos_bgp,l,0426135033,0,0,0,0
+CC-Baseline,bgp_asn_misconfig,dc_clos_service,s,0426135517,0,0,0,0
+CC-Baseline,bgp_asn_misconfig,dc_clos_service,m,0426135735,0,0,0,0
+CC-Baseline,bgp_asn_misconfig,dc_clos_service,l,0426140151,0,0,0,0
+CC-Baseline,bgp_asn_misconfig,simple_bgp,-,0426140613,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,dc_clos_bgp,s,0501100009,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,dc_clos_bgp,m,0501100215,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,dc_clos_bgp,l,0501100658,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,dc_clos_service,s,0501101406,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,dc_clos_service,m,0501101849,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,dc_clos_service,l,0501102552,0,0,0,0
+CC-Baseline,bgp_blackhole_route_leak,simple_bgp,-,0501103418,0,0,0,0
+CC-Baseline,bgp_hijacking,dc_clos_service,s,0426142224,0,0,0,0
+CC-Baseline,bgp_hijacking,dc_clos_service,m,0426142536,0,2,0,2
+CC-Baseline,bgp_hijacking,dc_clos_service,l,0426143153,0,1,0,1
+CC-Baseline,bgp_missing_route_advertisement,dc_clos_bgp,s,0426143924,0,0,0,0
+CC-Baseline,bgp_missing_route_advertisement,dc_clos_bgp,m,0426144915,0,2,0,2
+CC-Baseline,bgp_missing_route_advertisement,dc_clos_bgp,l,0426145843,0,2,0,2
+CC-Baseline,bgp_missing_route_advertisement,dc_clos_service,s,0426150818,0,0,0,0
+CC-Baseline,bgp_missing_route_advertisement,dc_clos_service,m,0426151120,0,0,0,0
+CC-Baseline,bgp_missing_route_advertisement,dc_clos_service,l,0426151626,0,0,0,0
+CC-Baseline,bgp_missing_route_advertisement,simple_bgp,-,0426152047,0,1,0,1
+CC-Baseline,host_static_blackhole,dc_clos_bgp,s,0501103814,0,0,0,0
+CC-Baseline,host_static_blackhole,dc_clos_bgp,m,0501105000,0,0,0,0
+CC-Baseline,host_static_blackhole,dc_clos_bgp,l,0501110118,0,0,0,0
+CC-Baseline,host_static_blackhole,dc_clos_service,s,0501111605,0,0,0,0
+CC-Baseline,host_static_blackhole,dc_clos_service,m,0501112418,0,0,0,0
+CC-Baseline,host_static_blackhole,dc_clos_service,l,0501113148,0,0,0,0
+CC-Baseline,host_static_blackhole,simple_bgp,-,0501113915,0,0,0,0
+CC-Baseline,mac_address_conflict,dc_clos_bgp,s,0426153901,0,3,0,3
+CC-Baseline,mac_address_conflict,dc_clos_bgp,m,0426154443,0,1,0,1
+CC-Baseline,mac_address_conflict,dc_clos_bgp,l,0426155533,0,0,0,0
+CC-Baseline,mac_address_conflict,dc_clos_service,s,0426161530,0,0,0,0
+CC-Baseline,mac_address_conflict,dc_clos_service,m,0426162132,0,0,0,0
+CC-Baseline,mac_address_conflict,dc_clos_service,l,0426162742,0,0,0,0
+CC-Baseline,mac_address_conflict,ospf_enterprise_static,s,0426163302,0,0,0,0
+CC-Baseline,mac_address_conflict,ospf_enterprise_static,m,0426163738,0,5,0,5
+CC-Baseline,mac_address_conflict,ospf_enterprise_static,l,0426164602,0,2,1,3
+CC-Baseline,mac_address_conflict,rip_small_internet_vpn,s,0426165512,0,0,0,0
+CC-Baseline,mac_address_conflict,rip_small_internet_vpn,m,0426170442,0,0,0,0
+CC-Baseline,mac_address_conflict,rip_small_internet_vpn,l,0426171646,0,0,0,0
+CC-Baseline,mac_address_conflict,sdn_star,s,0426172325,0,0,0,0
+CC-Baseline,mac_address_conflict,sdn_star,m,0426172523,0,0,0,0
+CC-Baseline,mac_address_conflict,sdn_star,l,0426172825,0,1,0,1
+CC-Baseline,mac_address_conflict,sdn_clos,s,0426173130,0,0,0,0
+CC-Baseline,mac_address_conflict,sdn_clos,m,0426173341,0,0,0,0
+CC-Baseline,mac_address_conflict,sdn_clos,l,0426174240,0,0,0,0
+CC-Baseline,mac_address_conflict,p4_bloom_filter,-,0426175229,0,7,0,7
+CC-Baseline,mac_address_conflict,p4_counter,-,0426180108,0,0,0,0
+CC-Baseline,mac_address_conflict,p4_int,-,0426180811,0,2,0,2
+CC-Baseline,mac_address_conflict,p4_mpls,-,0426181110,0,3,0,3
+CC-Baseline,mac_address_conflict,simple_bgp,-,0426181734,0,0,0,0
+CC-Baseline,ospf_area_misconfiguration,ospf_enterprise_static,s,0426182109,0,0,0,0
+CC-Baseline,ospf_area_misconfiguration,ospf_enterprise_static,m,0426182545,0,0,0,0
+CC-Baseline,ospf_area_misconfiguration,ospf_enterprise_static,l,0426183246,0,3,1,4
+CC-Baseline,ospf_neighbor_missing,ospf_enterprise_static,s,0426183828,0,0,0,0
+CC-Baseline,ospf_neighbor_missing,ospf_enterprise_static,m,0426184158,0,0,0,0
+CC-Baseline,ospf_neighbor_missing,ospf_enterprise_static,l,0426184724,0,3,1,4
+CC-Baseline,flow_rule_loop,sdn_star,s,0426185507,0,0,0,0
+CC-Baseline,flow_rule_loop,sdn_star,m,0426185800,0,0,0,0
+CC-Baseline,flow_rule_loop,sdn_star,l,0426190105,0,0,0,0
+CC-Baseline,flow_rule_loop,sdn_clos,s,0426190424,0,0,0,0
+CC-Baseline,flow_rule_loop,sdn_clos,m,0426190758,0,0,0,0
+CC-Baseline,flow_rule_loop,sdn_clos,l,0426191526,0,0,0,0
+CC-Baseline,flow_rule_shadowing,sdn_star,s,0426192025,0,0,0,0
+CC-Baseline,flow_rule_shadowing,sdn_star,m,0426192251,0,0,0,0
+CC-Baseline,flow_rule_shadowing,sdn_star,l,0426192542,0,0,0,0
+CC-Baseline,flow_rule_shadowing,sdn_clos,s,0426192948,0,0,0,0
+CC-Baseline,flow_rule_shadowing,sdn_clos,m,0426193439,0,0,0,0
+CC-Baseline,flow_rule_shadowing,sdn_clos,l,0426235854,0,0,0,0
+CC-Baseline,sdn_controller_crash,sdn_star,s,0501114404,0,0,0,0
+CC-Baseline,sdn_controller_crash,sdn_star,m,0427000723,0,0,0,0
+CC-Baseline,sdn_controller_crash,sdn_star,l,0427001504,0,0,0,0
+CC-Baseline,sdn_controller_crash,sdn_clos,s,0427001748,0,0,0,0
+CC-Baseline,sdn_controller_crash,sdn_clos,m,0427002045,0,0,0,0
+CC-Baseline,sdn_controller_crash,sdn_clos,l,0427002403,0,0,0,0
+CC-Baseline,southbound_port_block,sdn_star,s,0427002730,0,0,0,0
+CC-Baseline,southbound_port_block,sdn_star,m,0427003441,0,1,0,1
+CC-Baseline,southbound_port_block,sdn_star,l,0427003843,0,0,0,0
+CC-Baseline,southbound_port_block,sdn_clos,s,0427004217,0,1,0,1
+CC-Baseline,southbound_port_block,sdn_clos,m,0427004552,0,0,0,0
+CC-Baseline,southbound_port_block,sdn_clos,l,0427004853,0,0,0,0
+CC-Baseline,southbound_port_mismatch,sdn_star,s,0427005423,0,0,0,0
+CC-Baseline,southbound_port_mismatch,sdn_star,m,0427005643,0,0,0,0
+CC-Baseline,southbound_port_mismatch,sdn_star,l,0427005856,0,0,0,0
+CC-Baseline,southbound_port_mismatch,sdn_clos,s,0427010147,0,0,0,0
+CC-Baseline,southbound_port_mismatch,sdn_clos,m,0427010450,0,0,0,0
+CC-Baseline,southbound_port_mismatch,sdn_clos,l,0427010758,0,0,0,0
+CC-Baseline,p4_header_definition_error,p4_bloom_filter,-,0427011129,0,0,0,0
+CC-Baseline,p4_header_definition_error,p4_counter,-,0427011341,0,1,0,1
+CC-Baseline,p4_header_definition_error,p4_int,-,0501154912,0,1,0,1
+CC-Baseline,p4_header_definition_error,p4_mpls,-,0427011751,0,0,0,0
+CC-Baseline,p4_compilation_error_parser_state,p4_bloom_filter,-,0427012224,0,4,0,4
+CC-Baseline,p4_compilation_error_parser_state,p4_counter,-,0427012429,0,0,0,0
+CC-Baseline,p4_compilation_error_parser_state,p4_int,-,0501115728,0,0,0,0
+CC-Baseline,p4_compilation_error_parser_state,p4_mpls,-,0427012720,0,0,0,0
+CC-Baseline,mpls_label_limit_exceeded,p4_mpls,-,0427013255,0,0,0,0
+CC-Baseline,p4_table_entry_misconfig,p4_bloom_filter,-,0427013714,0,0,0,0
+CC-Baseline,p4_table_entry_misconfig,p4_counter,-,0427014047,0,1,0,1
+CC-Baseline,p4_table_entry_misconfig,p4_int,-,0501134727,0,1,0,1
+CC-Baseline,p4_table_entry_misconfig,p4_mpls,-,0427014608,0,0,0,0
+CC-Baseline,p4_table_entry_missing,p4_bloom_filter,-,0427015242,0,0,0,0
+CC-Baseline,p4_table_entry_missing,p4_counter,-,0427015534,0,0,0,0
+CC-Baseline,p4_table_entry_missing,p4_int,-,0501120707,0,0,0,0
+CC-Baseline,bmv2_switch_down,p4_bloom_filter,-,0427021217,0,0,0,0
+CC-Baseline,p4_table_entry_missing,p4_mpls,-,0501155502,0,0,0,0
+CC-Baseline,bmv2_switch_down,p4_counter,-,0427021347,0,0,0,0
+CC-Baseline,bmv2_switch_down,p4_int,-,0501121317,0,0,0,0
+CC-Baseline,bmv2_switch_down,p4_mpls,-,0427021534,0,0,0,0
+CC-Baseline,frr_service_down,dc_clos_bgp,s,0427021908,0,0,0,0
+CC-Baseline,frr_service_down,dc_clos_bgp,m,0427022052,0,0,0,0
+CC-Baseline,frr_service_down,dc_clos_bgp,l,0427022447,0,0,0,0
+CC-Baseline,frr_service_down,dc_clos_service,s,0427023540,0,0,0,0
+CC-Baseline,frr_service_down,dc_clos_service,m,0427023720,0,0,0,0
+CC-Baseline,frr_service_down,dc_clos_service,l,0427024122,0,0,0,0
+CC-Baseline,frr_service_down,ospf_enterprise_static,s,0427024441,0,0,0,0
+CC-Baseline,frr_service_down,ospf_enterprise_static,m,0427024945,0,1,0,1
+CC-Baseline,frr_service_down,ospf_enterprise_static,l,0427025416,0,7,1,8
+CC-Baseline,frr_service_down,rip_small_internet_vpn,s,0427025920,0,0,0,0
+CC-Baseline,frr_service_down,rip_small_internet_vpn,m,0427030203,0,0,0,0
+CC-Baseline,frr_service_down,rip_small_internet_vpn,l,0427030509,0,1,0,1
+CC-Baseline,frr_service_down,simple_bgp,-,0427030834,0,0,0,0
+CC-Baseline,arp_cache_poisoning,dc_clos_bgp,s,0427031009,0,1,0,1
+CC-Baseline,arp_cache_poisoning,dc_clos_bgp,m,0427031440,0,0,0,0
+CC-Baseline,arp_cache_poisoning,dc_clos_bgp,l,0427032108,0,0,0,0
+CC-Baseline,arp_cache_poisoning,dc_clos_service,s,0427032759,0,0,0,0
+CC-Baseline,arp_cache_poisoning,dc_clos_service,m,0427033210,0,0,0,0
+CC-Baseline,arp_cache_poisoning,dc_clos_service,l,0427033807,0,3,0,3
+CC-Baseline,arp_cache_poisoning,ospf_enterprise_static,s,0427034320,0,0,0,0
+CC-Baseline,arp_cache_poisoning,ospf_enterprise_static,m,0427035101,0,0,0,0
+CC-Baseline,arp_cache_poisoning,ospf_enterprise_static,l,0427040250,0,4,1,5
+CC-Baseline,arp_cache_poisoning,rip_small_internet_vpn,s,0427040842,0,0,0,0
+CC-Baseline,arp_cache_poisoning,rip_small_internet_vpn,m,0427041331,0,0,0,0
+CC-Baseline,arp_cache_poisoning,rip_small_internet_vpn,l,0427041737,0,0,0,0
+CC-Baseline,arp_cache_poisoning,sdn_star,s,0427042204,0,0,0,0
+CC-Baseline,arp_cache_poisoning,sdn_star,m,0427042354,0,0,0,0
+CC-Baseline,arp_cache_poisoning,sdn_star,l,0427042653,0,0,0,0
+CC-Baseline,arp_cache_poisoning,sdn_clos,s,0427043052,0,0,0,0
+CC-Baseline,arp_cache_poisoning,sdn_clos,m,0427043302,0,0,0,0
+CC-Baseline,arp_cache_poisoning,sdn_clos,l,0427043922,0,0,0,0
+CC-Baseline,arp_cache_poisoning,p4_bloom_filter,-,0427044931,0,0,0,0
+CC-Baseline,arp_cache_poisoning,p4_counter,-,0427045200,0,1,0,1
+CC-Baseline,arp_cache_poisoning,p4_int,-,0501154005,0,0,0,0
+CC-Baseline,arp_cache_poisoning,p4_mpls,-,0427045823,0,0,0,0
+CC-Baseline,arp_cache_poisoning,simple_bgp,-,0427050630,0,0,0,0
+CC-Baseline,web_dos_attack,dc_clos_service,s,0427050932,0,0,0,0
+CC-Baseline,web_dos_attack,dc_clos_service,m,0427051457,0,0,0,0
+CC-Baseline,web_dos_attack,dc_clos_service,l,0427052141,0,0,0,0
+CC-Baseline,web_dos_attack,ospf_enterprise_static,s,0427053020,0,0,0,0
+CC-Baseline,web_dos_attack,ospf_enterprise_static,m,0427054240,0,3,0,3
+CC-Baseline,web_dos_attack,ospf_enterprise_static,l,0427055555,0,6,1,7
+CC-Baseline,web_dos_attack,rip_small_internet_vpn,s,0427060149,0,0,0,0
+CC-Baseline,web_dos_attack,rip_small_internet_vpn,m,0427061010,0,0,0,0
+CC-Baseline,web_dos_attack,rip_small_internet_vpn,l,0427061626,0,1,0,1
+CC-Baseline,incast_traffic_network_limitation,dc_clos_service,s,0427062740,0,3,0,3
+CC-Baseline,incast_traffic_network_limitation,dc_clos_service,m,0427063151,0,1,0,1
+CC-Baseline,incast_traffic_network_limitation,dc_clos_service,l,0427063825,0,0,0,0
+CC-Baseline,incast_traffic_network_limitation,ospf_enterprise_static,s,0427064819,0,2,0,2
+CC-Baseline,incast_traffic_network_limitation,ospf_enterprise_static,m,0427065447,0,0,0,0
+CC-Baseline,incast_traffic_network_limitation,ospf_enterprise_static,l,0427070505,0,3,1,4
+CC-Baseline,incast_traffic_network_limitation,rip_small_internet_vpn,s,0427072824,0,2,0,2
+CC-Baseline,incast_traffic_network_limitation,rip_small_internet_vpn,m,0427073329,0,0,0,0
+CC-Baseline,incast_traffic_network_limitation,rip_small_internet_vpn,l,0427074019,0,3,0,3
+CC-Baseline,link_bandwidth_throttling,dc_clos_bgp,s,0427074649,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,dc_clos_bgp,m,0427075553,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,dc_clos_bgp,l,0427080547,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,dc_clos_service,s,0427081816,0,2,0,2
+CC-Baseline,link_bandwidth_throttling,dc_clos_service,m,0427082315,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,dc_clos_service,l,0427083119,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,ospf_enterprise_static,s,0427084047,0,2,0,2
+CC-Baseline,link_bandwidth_throttling,ospf_enterprise_static,m,0427084503,0,2,0,2
+CC-Baseline,link_bandwidth_throttling,ospf_enterprise_static,l,0427085251,0,8,1,9
+CC-Baseline,link_bandwidth_throttling,rip_small_internet_vpn,m,0427091816,0,3,0,3
+CC-Baseline,link_bandwidth_throttling,rip_small_internet_vpn,l,0427092552,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,sdn_star,s,0427093347,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,sdn_star,m,0427093715,0,3,0,3
+CC-Baseline,link_bandwidth_throttling,sdn_star,l,0427094208,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,sdn_clos,s,0427094628,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,sdn_clos,m,0427095131,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,sdn_clos,l,0427100308,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,p4_bloom_filter,-,0427101553,0,3,0,3
+CC-Baseline,link_bandwidth_throttling,p4_int,-,0501154428,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,p4_mpls,-,0427102504,0,0,0,0
+CC-Baseline,link_bandwidth_throttling,simple_bgp,-,0427104132,0,0,0,0
+CC-Baseline,link_high_packet_corruption,dc_clos_bgp,s,0427104414,0,1,0,1
+CC-Baseline,link_high_packet_corruption,dc_clos_bgp,m,0427105312,0,1,0,1
+CC-Baseline,link_high_packet_corruption,dc_clos_bgp,l,0427110216,0,1,0,1
+CC-Baseline,link_high_packet_corruption,dc_clos_service,s,0427110844,0,0,0,0
+CC-Baseline,link_high_packet_corruption,dc_clos_service,m,0427111543,0,3,0,3
+CC-Baseline,link_high_packet_corruption,dc_clos_service,l,0427112148,0,0,0,0
+CC-Baseline,link_high_packet_corruption,ospf_enterprise_static,s,0427112625,0,1,0,1
+CC-Baseline,link_high_packet_corruption,ospf_enterprise_static,m,0427113738,0,5,0,5
+CC-Baseline,link_high_packet_corruption,ospf_enterprise_static,l,0427114444,0,3,1,4
+CC-Baseline,link_high_packet_corruption,rip_small_internet_vpn,s,0427115141,0,3,0,3
+CC-Baseline,link_high_packet_corruption,rip_small_internet_vpn,m,0427115435,0,0,0,0
+CC-Baseline,link_high_packet_corruption,rip_small_internet_vpn,l,0427115718,0,2,0,2
+CC-Baseline,link_high_packet_corruption,sdn_star,s,0427120116,0,0,0,0
+CC-Baseline,link_high_packet_corruption,sdn_star,m,0427120349,0,2,0,2
+CC-Baseline,link_high_packet_corruption,sdn_star,l,0427120811,0,0,0,0
+CC-Baseline,link_high_packet_corruption,sdn_clos,s,0427121055,0,0,0,0
+CC-Baseline,link_high_packet_corruption,sdn_clos,m,0427121342,0,0,0,0
+CC-Baseline,link_high_packet_corruption,sdn_clos,l,0427122639,0,0,0,0
+CC-Baseline,link_high_packet_corruption,p4_bloom_filter,-,0427123236,0,0,0,0
+CC-Baseline,link_high_packet_corruption,p4_counter,-,0427123743,0,0,0,0
+CC-Baseline,link_high_packet_corruption,p4_int,-,0501154714,0,0,0,0
+CC-Baseline,link_high_packet_corruption,p4_mpls,-,0427123952,0,3,0,3
+CC-Baseline,link_high_packet_corruption,simple_bgp,-,0427124256,0,3,0,3
+CC-Baseline,dns_lookup_latency,dc_clos_service,s,0427124515,0,0,0,0
+CC-Baseline,dns_lookup_latency,dc_clos_service,m,0427124832,0,0,0,0
+CC-Baseline,dns_lookup_latency,dc_clos_service,l,0427125452,0,0,0,0
+CC-Baseline,receiver_resource_contention,dc_clos_service,s,0427125927,0,4,0,4
+CC-Baseline,receiver_resource_contention,dc_clos_service,m,0427130812,0,0,0,0
+CC-Baseline,receiver_resource_contention,dc_clos_service,l,0427131624,0,2,0,2
+CC-Baseline,receiver_resource_contention,ospf_enterprise_static,s,0427132407,0,4,0,4
+CC-Baseline,receiver_resource_contention,ospf_enterprise_static,m,0427133331,0,4,0,4
+CC-Baseline,receiver_resource_contention,ospf_enterprise_static,l,0427134315,0,4,0,4
+CC-Baseline,receiver_resource_contention,rip_small_internet_vpn,s,0427135353,0,0,0,0
+CC-Baseline,receiver_resource_contention,rip_small_internet_vpn,l,0427141332,0,2,0,2
+CC-Baseline,sender_application_delay,dc_clos_service,s,0427141804,0,0,0,0
+CC-Baseline,sender_application_delay,dc_clos_service,m,0427142608,0,1,0,1
+CC-Baseline,sender_application_delay,dc_clos_service,l,0427143534,0,0,0,0
+CC-Baseline,sender_application_delay,ospf_enterprise_static,s,0427144729,0,0,0,0
+CC-Baseline,sender_application_delay,ospf_enterprise_static,m,0427145659,0,6,0,6
+CC-Baseline,sender_application_delay,ospf_enterprise_static,l,0427150927,0,3,1,4
+CC-Baseline,sender_application_delay,rip_small_internet_vpn,s,0427151726,0,3,0,3
+CC-Baseline,sender_application_delay,rip_small_internet_vpn,m,0427152643,0,0,0,0
+CC-Baseline,sender_application_delay,rip_small_internet_vpn,l,0427153618,0,0,0,0
+CC-Baseline,sender_resource_contention,dc_clos_service,s,0427154744,0,4,0,4
+CC-Baseline,sender_resource_contention,dc_clos_service,m,0427155231,0,4,0,4
+CC-Baseline,sender_resource_contention,dc_clos_service,l,0427160150,0,2,0,2
+CC-Baseline,sender_resource_contention,ospf_enterprise_static,s,0427161015,0,7,0,7
+CC-Baseline,sender_resource_contention,ospf_enterprise_static,m,0427161629,0,0,0,0
+CC-Baseline,sender_resource_contention,ospf_enterprise_static,l,0427162612,0,4,0,4
+CC-Baseline,sender_resource_contention,rip_small_internet_vpn,s,0427163815,0,0,0,0
+CC-Baseline,sender_resource_contention,rip_small_internet_vpn,m,0427164851,0,1,0,1
+CC-Baseline,sender_resource_contention,rip_small_internet_vpn,l,0427165816,0,0,0,0
+SADE,dns_record_error,dc_clos_service,s,0426151750,0,0,0,0
+SADE,dns_record_error,dc_clos_service,m,0426171517,0,0,0,0
+SADE,dns_record_error,dc_clos_service,l,0428125723,0,0,0,0
+SADE,host_crash,dc_clos_bgp,s,0426154448,0,2,0,2
+SADE,host_crash,dc_clos_bgp,m,0426191841,0,1,0,1
+SADE,host_crash,dc_clos_bgp,l,0426192209,0,1,0,1
+SADE,host_crash,dc_clos_service,s,0426192611,0,1,0,1
+SADE,host_crash,dc_clos_service,m,0426192819,0,2,0,2
+SADE,host_crash,dc_clos_service,l,0426193058,0,1,0,1
+SADE,host_crash,ospf_enterprise_static,s,0426193732,0,4,0,4
+SADE,host_crash,ospf_enterprise_static,m,0426194126,0,2,0,2
+SADE,host_crash,ospf_enterprise_static,l,0426194644,0,1,0,1
+SADE,host_crash,rip_small_internet_vpn,s,0426195020,0,2,0,2
+SADE,host_crash,rip_small_internet_vpn,m,0426195302,0,2,0,2
+SADE,host_crash,rip_small_internet_vpn,l,0426195523,0,1,0,1
+SADE,host_crash,sdn_star,s,0429174124,0,1,0,1
+SADE,host_crash,sdn_star,m,0429174331,0,2,0,2
+SADE,host_crash,sdn_star,l,0429174539,0,1,0,1
+SADE,host_crash,sdn_clos,s,0429174731,0,1,0,1
+SADE,host_crash,sdn_clos,m,0429174911,0,3,0,3
+SADE,host_crash,sdn_clos,l,0429175825,0,2,0,2
+SADE,host_crash,p4_bloom_filter,-,0429180850,0,1,0,1
+SADE,host_crash,p4_counter,-,0426210526,0,1,0,1
+SADE,host_crash,p4_int,-,0426211805,0,1,0,1
+SADE,host_crash,p4_mpls,-,0426210750,0,1,0,1
+SADE,host_crash,simple_bgp,-,0426212031,0,1,0,1
+SADE,host_ip_conflict,dc_clos_bgp,s,0426212207,0,0,0,0
+SADE,host_ip_conflict,dc_clos_bgp,m,0426212511,0,0,0,0
+SADE,host_ip_conflict,dc_clos_bgp,l,0426212936,0,0,0,0
+SADE,host_ip_conflict,ospf_enterprise_static,s,0426215608,0,0,0,0
+SADE,host_ip_conflict,ospf_enterprise_static,m,0426220058,0,0,0,0
+SADE,host_ip_conflict,ospf_enterprise_static,l,0426221127,0,0,1,1
+SADE,host_ip_conflict,rip_small_internet_vpn,s,0426221618,0,0,0,0
+SADE,host_ip_conflict,rip_small_internet_vpn,m,0426222306,0,0,0,0
+SADE,host_ip_conflict,rip_small_internet_vpn,l,0426222735,0,0,0,0
+SADE,host_ip_conflict,sdn_star,s,0429181450,0,1,0,1
+SADE,host_ip_conflict,sdn_star,m,0429181727,0,0,0,0
+SADE,host_ip_conflict,sdn_star,l,0429181928,0,2,0,2
+SADE,host_ip_conflict,sdn_clos,s,0429182125,0,0,0,0
+SADE,host_ip_conflict,sdn_clos,m,0429182343,0,0,0,0
+SADE,host_ip_conflict,sdn_clos,l,0429183354,0,1,0,1
+SADE,host_ip_conflict,p4_bloom_filter,-,0426232526,0,0,0,0
+SADE,host_ip_conflict,p4_counter,-,0426232707,0,1,0,1
+SADE,host_ip_conflict,p4_int,-,0426233221,0,0,0,0
+SADE,host_ip_conflict,p4_mpls,-,0426233419,0,0,0,0
+SADE,host_ip_conflict,simple_bgp,-,0426233713,0,0,0,0
+SADE,host_incorrect_dns,dc_clos_service,s,0426233854,0,0,0,0
+SADE,host_incorrect_dns,dc_clos_service,m,0426234220,0,0,0,0
+SADE,host_incorrect_dns,dc_clos_service,l,0426234735,0,0,0,0
+SADE,host_incorrect_gateway,dc_clos_bgp,s,0426235151,0,0,0,0
+SADE,host_incorrect_gateway,dc_clos_bgp,m,0426235520,0,0,0,0
+SADE,host_incorrect_gateway,dc_clos_bgp,l,0426235922,0,0,0,0
+SADE,host_incorrect_gateway,dc_clos_service,s,0427000420,0,0,0,0
+SADE,host_incorrect_gateway,dc_clos_service,m,0427000800,0,0,0,0
+SADE,host_incorrect_gateway,dc_clos_service,l,0427001255,0,0,0,0
+SADE,host_incorrect_gateway,ospf_enterprise_static,s,0427002318,0,0,0,0
+SADE,host_incorrect_gateway,ospf_enterprise_static,m,0427002816,0,0,0,0
+SADE,host_incorrect_gateway,ospf_enterprise_static,l,0427003842,0,0,1,1
+SADE,host_incorrect_gateway,rip_small_internet_vpn,s,0427004319,0,0,0,0
+SADE,host_incorrect_gateway,rip_small_internet_vpn,m,0427004659,0,0,0,0
+SADE,host_incorrect_gateway,rip_small_internet_vpn,l,0427004943,0,0,0,0
+SADE,host_incorrect_gateway,simple_bgp,-,0427005250,0,0,0,0
+SADE,host_incorrect_ip,dc_clos_bgp,s,0427005506,0,0,0,0
+SADE,host_incorrect_ip,dc_clos_bgp,m,0427005811,0,0,0,0
+SADE,host_incorrect_ip,dc_clos_bgp,l,0427010303,0,0,0,0
+SADE,host_incorrect_ip,dc_clos_service,s,0427010742,0,0,0,0
+SADE,host_incorrect_ip,dc_clos_service,m,0427011116,0,0,0,0
+SADE,host_incorrect_ip,dc_clos_service,l,0427011453,0,0,0,0
+SADE,host_incorrect_ip,ospf_enterprise_static,s,0427011836,0,0,0,0
+SADE,host_incorrect_ip,ospf_enterprise_static,m,0427012353,0,0,0,0
+SADE,host_incorrect_ip,ospf_enterprise_static,l,0427013108,0,0,1,1
+SADE,host_incorrect_ip,rip_small_internet_vpn,s,0427014321,0,0,0,0
+SADE,host_incorrect_ip,rip_small_internet_vpn,m,0427014841,0,0,0,0
+SADE,host_incorrect_ip,rip_small_internet_vpn,l,0427015200,0,0,0,0
+SADE,host_incorrect_ip,sdn_star,s,0429184714,0,0,0,0
+SADE,host_incorrect_ip,sdn_star,m,0429184856,0,0,0,0
+SADE,host_incorrect_ip,sdn_star,l,0429185048,0,0,0,0
+SADE,host_incorrect_ip,sdn_clos,s,0429185233,0,0,0,0
+SADE,host_incorrect_ip,sdn_clos,m,0429185424,0,0,0,0
+SADE,host_incorrect_ip,sdn_clos,l,0429190620,0,2,0,2
+SADE,host_incorrect_ip,p4_bloom_filter,-,0427025103,0,0,0,0
+SADE,host_incorrect_ip,p4_counter,-,0427025504,0,0,0,0
+SADE,host_incorrect_ip,p4_int,-,0427025748,0,1,0,1
+SADE,host_incorrect_ip,p4_mpls,-,0427030352,0,0,0,0
+SADE,host_incorrect_ip,simple_bgp,-,0427030651,0,0,0,0
+SADE,host_incorrect_netmask,dc_clos_bgp,s,0427031151,0,0,0,0
+SADE,host_incorrect_netmask,dc_clos_bgp,m,0427031537,0,0,0,0
+SADE,host_incorrect_netmask,dc_clos_bgp,l,0427032055,0,0,0,0
+SADE,host_incorrect_netmask,dc_clos_service,s,0427032507,0,0,0,0
+SADE,host_incorrect_netmask,dc_clos_service,m,0427032905,0,0,0,0
+SADE,host_incorrect_netmask,dc_clos_service,l,0427034013,0,0,0,0
+SADE,host_incorrect_netmask,ospf_enterprise_static,s,0427040419,0,1,0,1
+SADE,host_incorrect_netmask,ospf_enterprise_static,m,0427041622,0,0,0,0
+SADE,host_incorrect_netmask,ospf_enterprise_static,l,0427042444,0,0,1,1
+SADE,host_incorrect_netmask,rip_small_internet_vpn,s,0427042851,0,0,0,0
+SADE,host_incorrect_netmask,rip_small_internet_vpn,m,0427043218,0,1,0,1
+SADE,host_incorrect_netmask,rip_small_internet_vpn,l,0427043905,0,3,0,3
+SADE,host_incorrect_netmask,simple_bgp,-,0427044547,0,2,0,2
+SADE,host_missing_ip,dc_clos_bgp,s,0427044745,0,0,0,0
+SADE,host_missing_ip,dc_clos_bgp,m,0427045017,0,0,0,0
+SADE,host_missing_ip,dc_clos_bgp,l,0427045443,0,0,0,0
+SADE,host_missing_ip,dc_clos_service,s,0427045919,0,0,0,0
+SADE,host_missing_ip,dc_clos_service,m,0427050147,0,0,0,0
+SADE,host_missing_ip,dc_clos_service,l,0427050504,0,0,0,0
+SADE,host_missing_ip,ospf_enterprise_static,s,0427050819,0,0,0,0
+SADE,host_missing_ip,ospf_enterprise_static,m,0427051300,0,0,0,0
+SADE,host_missing_ip,ospf_enterprise_static,l,0427052125,0,0,1,1
+SADE,host_missing_ip,rip_small_internet_vpn,s,0427052533,0,0,0,0
+SADE,host_missing_ip,rip_small_internet_vpn,m,0427053127,0,0,0,0
+SADE,host_missing_ip,rip_small_internet_vpn,l,0427053426,0,0,0,0
+SADE,host_missing_ip,sdn_star,s,0429193117,0,0,0,0
+SADE,host_missing_ip,sdn_star,m,0429193320,0,0,0,0
+SADE,host_missing_ip,sdn_star,l,0429193517,0,0,0,0
+SADE,host_missing_ip,sdn_clos,s,0429193739,0,0,0,0
+SADE,host_missing_ip,sdn_clos,m,0429193944,0,0,0,0
+SADE,host_missing_ip,sdn_clos,l,0429195235,0,0,0,0
+SADE,host_missing_ip,p4_bloom_filter,-,0427064101,0,0,0,0
+SADE,host_missing_ip,p4_counter,-,0427064255,0,0,0,0
+SADE,host_missing_ip,p4_int,-,0427064458,0,0,0,0
+SADE,host_missing_ip,p4_mpls,-,0427064658,0,0,0,0
+SADE,host_missing_ip,simple_bgp,-,0427064911,0,0,0,0
+SADE,dns_service_down,dc_clos_service,s,0427065104,0,0,0,0
+SADE,dns_service_down,dc_clos_service,m,0427065403,0,0,0,0
+SADE,dns_service_down,dc_clos_service,l,0427070138,0,0,0,0
+SADE,host_vpn_membership_missing,rip_small_internet_vpn,s,0427071225,0,1,0,1
+SADE,host_vpn_membership_missing,rip_small_internet_vpn,m,0427071855,0,1,0,1
+SADE,host_vpn_membership_missing,rip_small_internet_vpn,l,0427072713,0,1,0,1
+SADE,link_detach,dc_clos_bgp,s,0427073455,0,0,0,0
+SADE,link_detach,dc_clos_bgp,m,0427073732,0,0,0,0
+SADE,link_detach,dc_clos_bgp,l,0427074232,0,0,0,0
+SADE,link_detach,dc_clos_service,s,0427074640,0,0,0,0
+SADE,link_detach,dc_clos_service,m,0427074918,0,0,0,0
+SADE,link_detach,dc_clos_service,l,0427075241,0,0,0,0
+SADE,link_detach,ospf_enterprise_static,s,0427075622,0,0,0,0
+SADE,link_detach,ospf_enterprise_static,m,0427080107,0,0,0,0
+SADE,link_detach,ospf_enterprise_static,l,0427080938,0,0,1,1
+SADE,link_detach,rip_small_internet_vpn,s,0427081355,0,0,0,0
+SADE,link_detach,rip_small_internet_vpn,m,0427081643,0,0,0,0
+SADE,link_detach,rip_small_internet_vpn,l,0427081930,0,0,0,0
+SADE,link_detach,sdn_star,s,0429200817,0,0,0,0
+SADE,link_detach,sdn_star,m,0429201003,0,0,0,0
+SADE,link_detach,sdn_star,l,0429201156,0,0,0,0
+SADE,link_detach,sdn_clos,s,0429201359,0,0,0,0
+SADE,link_detach,sdn_clos,m,0429201555,0,0,0,0
+SADE,link_detach,sdn_clos,l,0427090810,0,0,0,0
+SADE,link_detach,p4_bloom_filter,-,0427092047,0,0,0,0
+SADE,link_detach,p4_counter,-,0427092303,0,0,0,0
+SADE,link_detach,p4_int,-,0427092457,0,0,0,0
+SADE,link_detach,p4_mpls,-,0427092712,0,0,0,0
+SADE,link_detach,simple_bgp,-,0427092931,0,0,0,0
+SADE,link_down,dc_clos_bgp,s,0427093124,0,0,0,0
+SADE,link_down,dc_clos_bgp,m,0427093704,0,0,0,0
+SADE,link_down,dc_clos_bgp,l,0427094226,0,0,0,0
+SADE,link_down,dc_clos_service,s,0427094648,0,0,0,0
+SADE,link_down,dc_clos_service,m,0427095014,0,0,0,0
+SADE,link_down,dc_clos_service,l,0427095408,0,0,0,0
+SADE,link_down,ospf_enterprise_static,s,0427100327,0,0,0,0
+SADE,link_down,ospf_enterprise_static,m,0427100932,0,0,0,0
+SADE,link_down,ospf_enterprise_static,l,0427101920,0,0,1,1
+SADE,link_down,rip_small_internet_vpn,s,0427102313,0,0,0,0
+SADE,link_down,rip_small_internet_vpn,m,0427102537,0,0,0,0
+SADE,link_down,rip_small_internet_vpn,l,0427102806,0,0,0,0
+SADE,link_down,sdn_star,s,0429203946,0,0,0,0
+SADE,link_down,sdn_star,m,0429204151,0,1,0,1
+SADE,link_down,sdn_star,l,0429205017,0,2,0,2
+SADE,link_down,sdn_clos,s,0429205402,0,0,0,0
+SADE,link_down,sdn_clos,m,0429205558,0,0,0,0
+SADE,link_down,sdn_clos,l,0429210457,0,0,0,0
+SADE,link_down,p4_bloom_filter,-,0427113525,0,0,0,0
+SADE,link_down,p4_counter,-,0427113826,0,0,0,0
+SADE,link_down,p4_int,-,0427114047,0,0,0,0
+SADE,link_down,p4_mpls,-,0427114351,0,0,0,0
+SADE,link_down,simple_bgp,-,0427114634,0,0,0,0
+SADE,link_flap,dc_clos_bgp,s,0427114915,0,0,0,0
+SADE,link_flap,dc_clos_bgp,m,0427115341,0,0,0,0
+SADE,link_flap,dc_clos_bgp,l,0427115859,0,0,0,0
+SADE,link_flap,dc_clos_service,s,0427120314,0,0,0,0
+SADE,link_flap,dc_clos_service,m,0427120821,0,0,0,0
+SADE,link_flap,dc_clos_service,l,0427121227,0,0,0,0
+SADE,link_flap,ospf_enterprise_static,s,0427121610,0,0,0,0
+SADE,link_flap,ospf_enterprise_static,m,0427121952,0,0,0,0
+SADE,link_flap,ospf_enterprise_static,l,0427123043,0,0,1,1
+SADE,link_flap,rip_small_internet_vpn,s,0427123441,0,0,0,0
+SADE,link_flap,rip_small_internet_vpn,m,0427123825,0,0,0,0
+SADE,link_flap,rip_small_internet_vpn,l,0427124044,0,0,0,0
+SADE,link_flap,sdn_star,s,0430130901,0,0,0,0
+SADE,link_flap,sdn_star,m,0430131100,0,0,0,0
+SADE,link_flap,sdn_star,l,0430131420,0,0,0,0
+SADE,link_flap,sdn_clos,s,0430131648,0,0,0,0
+SADE,link_flap,sdn_clos,m,0430132444,0,0,0,0
+SADE,link_flap,sdn_clos,l,0430133337,0,2,0,2
+SADE,link_flap,p4_bloom_filter,-,0430134311,0,0,0,0
+SADE,link_flap,p4_counter,-,0430135310,0,0,0,0
+SADE,link_flap,p4_int,-,0430135546,0,0,0,0
+SADE,link_flap,p4_mpls,-,0427141241,0,0,0,0
+SADE,link_flap,simple_bgp,-,0430140155,0,0,0,0
+SADE,link_fragmentation_disabled,dc_clos_bgp,s,0427141858,0,0,0,0
+SADE,link_fragmentation_disabled,dc_clos_bgp,m,0427142611,0,0,0,0
+SADE,link_fragmentation_disabled,dc_clos_bgp,l,0427143459,0,0,0,0
+SADE,link_fragmentation_disabled,dc_clos_service,s,0427144233,0,0,0,0
+SADE,link_fragmentation_disabled,dc_clos_service,m,0427144757,0,0,0,0
+SADE,link_fragmentation_disabled,dc_clos_service,l,0427145642,0,0,0,0
+SADE,link_fragmentation_disabled,ospf_enterprise_static,s,0427150209,0,0,0,0
+SADE,link_fragmentation_disabled,ospf_enterprise_static,m,0427150828,0,0,0,0
+SADE,link_fragmentation_disabled,ospf_enterprise_static,l,0427151557,0,0,1,1
+SADE,link_fragmentation_disabled,rip_small_internet_vpn,s,0427152344,0,0,0,0
+SADE,link_fragmentation_disabled,rip_small_internet_vpn,m,0427152841,0,0,0,0
+SADE,link_fragmentation_disabled,rip_small_internet_vpn,l,0427153302,0,0,0,0
+SADE,link_fragmentation_disabled,sdn_star,s,0430141045,0,0,0,0
+SADE,link_fragmentation_disabled,sdn_star,m,0430142313,0,0,0,0
+SADE,link_fragmentation_disabled,sdn_star,l,0430143514,0,1,0,1
+SADE,link_fragmentation_disabled,sdn_clos,s,0430144519,0,0,0,0
+SADE,link_fragmentation_disabled,sdn_clos,m,0430145503,0,0,0,0
+SADE,link_fragmentation_disabled,sdn_clos,l,0430150419,0,0,0,0
+SADE,link_fragmentation_disabled,p4_bloom_filter,-,0430152004,0,0,0,0
+SADE,link_fragmentation_disabled,p4_counter,-,0430152658,0,1,0,1
+SADE,link_fragmentation_disabled,p4_int,-,0430153613,0,2,0,2
+SADE,link_fragmentation_disabled,p4_mpls,-,0430154050,0,1,0,1
+SADE,link_fragmentation_disabled,simple_bgp,-,0427170240,0,0,0,0
+SADE,arp_acl_block,dc_clos_bgp,s,0429025014,0,0,0,0
+SADE,arp_acl_block,dc_clos_bgp,m,0429025420,0,0,0,0
+SADE,arp_acl_block,dc_clos_bgp,l,0429025855,0,0,0,0
+SADE,arp_acl_block,dc_clos_service,s,0429030647,0,0,0,0
+SADE,arp_acl_block,dc_clos_service,m,0429031052,0,0,0,0
+SADE,arp_acl_block,dc_clos_service,l,0429031442,0,0,0,0
+SADE,arp_acl_block,ospf_enterprise_static,s,0429031836,0,0,0,0
+SADE,arp_acl_block,ospf_enterprise_static,m,0429032450,0,0,0,0
+SADE,arp_acl_block,ospf_enterprise_static,l,0429033333,0,0,1,1
+SADE,arp_acl_block,rip_small_internet_vpn,s,0429033839,0,0,0,0
+SADE,arp_acl_block,rip_small_internet_vpn,m,0429034221,0,0,0,0
+SADE,arp_acl_block,rip_small_internet_vpn,l,0429034518,0,0,0,0
+SADE,arp_acl_block,sdn_star,s,0429034831,0,0,0,0
+SADE,arp_acl_block,sdn_star,m,0429035637,0,0,0,0
+SADE,arp_acl_block,sdn_star,l,0429040824,0,0,0,0
+SADE,arp_acl_block,sdn_clos,s,0429041708,0,0,0,0
+SADE,arp_acl_block,sdn_clos,m,0429042229,0,2,0,2
+SADE,arp_acl_block,sdn_clos,l,0429043205,0,0,0,0
+SADE,arp_acl_block,p4_bloom_filter,-,0429044057,0,0,0,0
+SADE,arp_acl_block,p4_counter,-,0429044400,0,0,0,0
+SADE,arp_acl_block,p4_int,-,0501140414,0,1,0,1
+SADE,arp_acl_block,p4_mpls,-,0429044654,0,2,0,2
+SADE,arp_acl_block,simple_bgp,-,0429045019,0,0,0,0
+SADE,bgp_acl_block,dc_clos_bgp,s,0429045351,0,0,0,0
+SADE,bgp_acl_block,dc_clos_bgp,m,0429045631,0,0,0,0
+SADE,bgp_acl_block,dc_clos_bgp,l,0429050241,0,0,0,0
+SADE,bgp_acl_block,dc_clos_service,s,0429050856,0,0,0,0
+SADE,bgp_acl_block,dc_clos_service,m,0429051246,0,0,0,0
+SADE,bgp_acl_block,dc_clos_service,l,0429051844,0,0,0,0
+SADE,bgp_acl_block,simple_bgp,-,0429052315,0,0,0,0
+SADE,dns_port_blocked,dc_clos_service,s,0429052515,0,0,0,0
+SADE,dns_port_blocked,dc_clos_service,m,0429052825,0,0,0,0
+SADE,dns_port_blocked,dc_clos_service,l,0429053414,0,0,0,0
+SADE,http_acl_block,dc_clos_service,s,0429053849,0,0,0,0
+SADE,http_acl_block,dc_clos_service,m,0429054128,0,0,0,0
+SADE,http_acl_block,dc_clos_service,l,0429054638,0,0,0,0
+SADE,http_acl_block,ospf_enterprise_static,s,0429055110,0,0,0,0
+SADE,http_acl_block,ospf_enterprise_static,m,0429055816,0,0,0,0
+SADE,http_acl_block,ospf_enterprise_static,l,0429060740,0,0,1,1
+SADE,http_acl_block,rip_small_internet_vpn,s,0429061254,0,0,0,0
+SADE,http_acl_block,rip_small_internet_vpn,m,0429061559,0,0,0,0
+SADE,http_acl_block,rip_small_internet_vpn,l,0429061857,0,0,0,0
+SADE,icmp_acl_block,dc_clos_bgp,s,0429062219,0,0,0,0
+SADE,icmp_acl_block,dc_clos_bgp,m,0429062759,0,0,0,0
+SADE,icmp_acl_block,dc_clos_bgp,l,0429063521,0,0,0,0
+SADE,icmp_acl_block,dc_clos_service,s,0429064234,0,0,0,0
+SADE,icmp_acl_block,dc_clos_service,m,0429064848,0,0,0,0
+SADE,icmp_acl_block,dc_clos_service,l,0429065639,0,0,0,0
+SADE,icmp_acl_block,ospf_enterprise_static,s,0429070157,0,0,0,0
+SADE,icmp_acl_block,ospf_enterprise_static,m,0429070721,0,0,0,0
+SADE,icmp_acl_block,ospf_enterprise_static,l,0429071533,0,0,1,1
+SADE,icmp_acl_block,rip_small_internet_vpn,s,0429072128,0,0,0,0
+SADE,icmp_acl_block,rip_small_internet_vpn,m,0429072457,0,0,0,0
+SADE,icmp_acl_block,rip_small_internet_vpn,l,0429072855,0,0,0,0
+SADE,icmp_acl_block,sdn_star,s,0429073313,0,0,0,0
+SADE,icmp_acl_block,sdn_star,m,0429073824,0,2,0,2
+SADE,icmp_acl_block,sdn_clos,m,0429081237,0,0,0,0
+SADE,icmp_acl_block,sdn_clos,l,0429082512,0,1,0,1
+SADE,icmp_acl_block,p4_bloom_filter,-,0429083636,0,0,0,0
+SADE,icmp_acl_block,p4_counter,-,0429084348,0,3,0,3
+SADE,icmp_acl_block,p4_mpls,-,0429085029,0,1,0,1
+SADE,icmp_acl_block,p4_int,-,0501145649,0,3,0,3
+SADE,icmp_acl_block,simple_bgp,-,0429091531,0,0,0,0
+SADE,ospf_acl_block,ospf_enterprise_static,s,0429091903,0,0,0,0
+SADE,ospf_acl_block,ospf_enterprise_static,m,0429092340,0,0,0,0
+SADE,ospf_acl_block,ospf_enterprise_static,l,0429093059,0,0,1,1
+SADE,bgp_asn_misconfig,dc_clos_bgp,s,0429030536,0,0,0,0
+SADE,bgp_asn_misconfig,dc_clos_bgp,m,0429030818,0,0,0,0
+SADE,bgp_asn_misconfig,dc_clos_bgp,l,0429031315,0,0,0,0
+SADE,bgp_asn_misconfig,dc_clos_service,s,0429031824,0,0,0,0
+SADE,bgp_asn_misconfig,dc_clos_service,m,0429032105,0,0,0,0
+SADE,bgp_asn_misconfig,dc_clos_service,l,0429032536,0,0,0,0
+SADE,bgp_asn_misconfig,simple_bgp,-,0430155706,0,0,0,0
+SADE,bgp_blackhole_route_leak,dc_clos_bgp,s,0430102836,0,0,0,0
+SADE,bgp_blackhole_route_leak,dc_clos_bgp,m,0430103201,0,0,0,0
+SADE,bgp_blackhole_route_leak,dc_clos_bgp,l,0430104043,0,0,0,0
+SADE,bgp_blackhole_route_leak,dc_clos_service,s,0430104950,0,0,0,0
+SADE,bgp_blackhole_route_leak,dc_clos_service,m,0430105430,0,0,0,0
+SADE,bgp_blackhole_route_leak,dc_clos_service,l,0430110047,0,0,0,0
+SADE,bgp_blackhole_route_leak,simple_bgp,-,0430111137,0,0,0,0
+SADE,bgp_hijacking,dc_clos_service,s,0429034104,0,0,0,0
+SADE,bgp_hijacking,dc_clos_service,m,0429034919,0,0,0,0
+SADE,bgp_hijacking,dc_clos_service,l,0429035747,0,0,0,0
+SADE,bgp_missing_route_advertisement,dc_clos_bgp,s,0429040514,0,2,0,2
+SADE,bgp_missing_route_advertisement,dc_clos_bgp,m,0429040815,0,2,0,2
+SADE,bgp_missing_route_advertisement,dc_clos_bgp,l,0429041439,0,0,0,0
+SADE,bgp_missing_route_advertisement,dc_clos_service,s,0429042110,0,0,0,0
+SADE,bgp_missing_route_advertisement,dc_clos_service,m,0429042442,0,0,0,0
+SADE,bgp_missing_route_advertisement,dc_clos_service,l,0429043157,0,0,0,0
+SADE,bgp_missing_route_advertisement,simple_bgp,-,0429044818,0,0,0,0
+SADE,host_static_blackhole,dc_clos_bgp,s,0430112512,0,0,0,0
+SADE,host_static_blackhole,dc_clos_bgp,m,0430112907,0,0,0,0
+SADE,host_static_blackhole,dc_clos_bgp,l,0430113921,0,0,0,0
+SADE,host_static_blackhole,dc_clos_service,s,0430114710,0,0,0,0
+SADE,host_static_blackhole,dc_clos_service,m,0430115411,0,1,0,1
+SADE,host_static_blackhole,dc_clos_service,l,0430120255,0,0,0,0
+SADE,host_static_blackhole,simple_bgp,-,0430121021,0,0,0,0
+SADE,mac_address_conflict,dc_clos_bgp,s,0429050127,0,0,0,0
+SADE,mac_address_conflict,dc_clos_bgp,m,0429050429,0,0,0,0
+SADE,mac_address_conflict,dc_clos_bgp,l,0429050857,0,2,0,2
+SADE,mac_address_conflict,dc_clos_service,s,0429051723,0,0,0,0
+SADE,mac_address_conflict,dc_clos_service,m,0429052051,0,0,0,0
+SADE,mac_address_conflict,dc_clos_service,l,0429052546,0,0,0,0
+SADE,mac_address_conflict,ospf_enterprise_static,s,0429053357,0,0,0,0
+SADE,mac_address_conflict,ospf_enterprise_static,m,0429053926,0,0,0,0
+SADE,mac_address_conflict,ospf_enterprise_static,l,0429054513,0,0,1,1
+SADE,mac_address_conflict,rip_small_internet_vpn,s,0429055219,0,0,0,0
+SADE,mac_address_conflict,rip_small_internet_vpn,m,0429055459,0,0,0,0
+SADE,mac_address_conflict,rip_small_internet_vpn,l,0429055735,0,0,0,0
+SADE,mac_address_conflict,sdn_star,s,0430155925,0,0,0,0
+SADE,mac_address_conflict,sdn_star,m,0430160139,0,0,0,0
+SADE,mac_address_conflict,sdn_star,l,0430160433,0,0,0,0
+SADE,mac_address_conflict,sdn_clos,s,0430160806,0,0,0,0
+SADE,mac_address_conflict,sdn_clos,m,0430161009,0,0,0,0
+SADE,mac_address_conflict,sdn_clos,l,0430162219,0,0,0,0
+SADE,mac_address_conflict,p4_bloom_filter,-,0430163742,0,2,0,2
+SADE,mac_address_conflict,p4_counter,-,0430164612,0,1,0,1
+SADE,mac_address_conflict,p4_int,-,0430164912,0,1,0,1
+SADE,mac_address_conflict,p4_mpls,-,0430165917,0,0,0,0
+SADE,mac_address_conflict,simple_bgp,-,0429072220,0,0,0,0
+SADE,ospf_area_misconfiguration,ospf_enterprise_static,s,0429072429,0,0,0,0
+SADE,ospf_area_misconfiguration,ospf_enterprise_static,m,0429072718,0,0,0,0
+SADE,ospf_area_misconfiguration,ospf_enterprise_static,l,0429073434,0,0,1,1
+SADE,ospf_neighbor_missing,ospf_enterprise_static,s,0429074002,0,0,0,0
+SADE,ospf_neighbor_missing,ospf_enterprise_static,m,0429074416,0,0,0,0
+SADE,ospf_neighbor_missing,ospf_enterprise_static,l,0429075100,0,0,1,1
+SADE,flow_rule_loop,sdn_star,s,0429123912,0,0,0,0
+SADE,flow_rule_loop,sdn_star,m,0429124249,0,0,0,0
+SADE,flow_rule_loop,sdn_star,l,0429124653,0,0,0,0
+SADE,flow_rule_loop,sdn_clos,s,0429125013,0,0,0,0
+SADE,flow_rule_loop,sdn_clos,m,0429125405,0,2,0,2
+SADE,flow_rule_loop,sdn_clos,l,0429130313,0,0,0,0
+SADE,flow_rule_shadowing,sdn_star,s,0429131604,0,0,0,0
+SADE,flow_rule_shadowing,sdn_star,m,0429131952,0,0,0,0
+SADE,flow_rule_shadowing,sdn_star,l,0429132300,0,0,0,0
+SADE,flow_rule_shadowing,sdn_clos,s,0429132622,0,0,0,0
+SADE,flow_rule_shadowing,sdn_clos,m,0429133050,0,1,0,1
+SADE,flow_rule_shadowing,sdn_clos,l,0429134346,0,0,0,0
+SADE,sdn_controller_crash,sdn_star,s,0429135829,0,2,0,2
+SADE,sdn_controller_crash,sdn_star,m,0429140124,0,0,0,0
+SADE,sdn_controller_crash,sdn_star,l,0429140505,0,0,0,0
+SADE,sdn_controller_crash,sdn_clos,s,0429140843,0,0,0,0
+SADE,sdn_controller_crash,sdn_clos,m,0429141136,0,0,0,0
+SADE,sdn_controller_crash,sdn_clos,l,0429141451,0,0,0,0
+SADE,southbound_port_block,sdn_star,s,0429141911,0,0,0,0
+SADE,southbound_port_block,sdn_star,m,0429142210,0,0,0,0
+SADE,southbound_port_block,sdn_star,l,0429142558,0,0,0,0
+SADE,southbound_port_block,sdn_clos,s,0429142929,0,0,0,0
+SADE,southbound_port_block,sdn_clos,m,0429143255,0,0,0,0
+SADE,southbound_port_block,sdn_clos,l,0429143844,0,0,0,0
+SADE,southbound_port_mismatch,sdn_star,s,0429144305,0,0,0,0
+SADE,southbound_port_mismatch,sdn_star,m,0429144609,0,0,0,0
+SADE,southbound_port_mismatch,sdn_star,l,0429144913,0,2,0,2
+SADE,southbound_port_mismatch,sdn_clos,s,0429145236,0,0,0,0
+SADE,southbound_port_mismatch,sdn_clos,m,0429145517,0,0,0,0
+SADE,southbound_port_mismatch,sdn_clos,l,0429145850,0,0,0,0
+SADE,p4_header_definition_error,p4_bloom_filter,-,0429150240,0,0,0,0
+SADE,p4_header_definition_error,p4_counter,-,0429123935,0,2,0,2
+SADE,p4_header_definition_error,p4_int,-,0429124651,0,4,0,4
+SADE,p4_header_definition_error,p4_mpls,-,0429125154,0,0,0,0
+SADE,p4_compilation_error_parser_state,p4_bloom_filter,-,0429125549,0,0,0,0
+SADE,p4_compilation_error_parser_state,p4_counter,-,0429125854,0,0,0,0
+SADE,p4_compilation_error_parser_state,p4_int,-,0429130236,0,0,0,0
+SADE,p4_compilation_error_parser_state,p4_mpls,-,0429130721,0,3,0,3
+SADE,mpls_label_limit_exceeded,p4_mpls,-,0429131324,0,1,0,1
+SADE,p4_table_entry_misconfig,p4_bloom_filter,-,0429132152,0,0,0,0
+SADE,p4_table_entry_misconfig,p4_counter,-,0429132806,0,4,0,4
+SADE,p4_table_entry_misconfig,p4_int,-,0429133436,0,4,0,4
+SADE,p4_table_entry_misconfig,p4_mpls,-,0429133939,0,2,0,2
+SADE,p4_table_entry_missing,p4_bloom_filter,-,0429134806,0,0,0,0
+SADE,p4_table_entry_missing,p4_counter,-,0429135213,0,4,0,4
+SADE,p4_table_entry_missing,p4_int,-,0429135837,0,1,0,1
+SADE,p4_table_entry_missing,p4_mpls,-,0429140723,0,1,0,1
+SADE,bmv2_switch_down,p4_bloom_filter,-,0429141632,0,0,0,0
+SADE,bmv2_switch_down,p4_counter,-,0429141913,0,0,0,0
+SADE,bmv2_switch_down,p4_int,-,0429142231,0,0,0,0
+SADE,bmv2_switch_down,p4_mpls,-,0429142533,0,1,0,1
+SADE,frr_service_down,dc_clos_bgp,s,0429143419,0,0,0,0
+SADE,frr_service_down,dc_clos_bgp,m,0429143735,0,0,0,0
+SADE,frr_service_down,dc_clos_bgp,l,0429144351,0,0,0,0
+SADE,frr_service_down,dc_clos_service,s,0429145042,0,0,0,0
+SADE,frr_service_down,dc_clos_service,m,0429145405,0,0,0,0
+SADE,frr_service_down,dc_clos_service,l,0429145915,0,0,0,0
+SADE,frr_service_down,ospf_enterprise_static,s,0429150411,0,0,0,0
+SADE,frr_service_down,ospf_enterprise_static,m,0429150816,0,0,0,0
+SADE,frr_service_down,ospf_enterprise_static,l,0429151456,0,0,1,1
+SADE,frr_service_down,rip_small_internet_vpn,s,0429152010,0,0,0,0
+SADE,frr_service_down,rip_small_internet_vpn,m,0429152459,0,0,0,0
+SADE,frr_service_down,rip_small_internet_vpn,l,0429153016,0,0,0,0
+SADE,frr_service_down,simple_bgp,-,0429153341,0,0,0,0
+SADE,arp_cache_poisoning,dc_clos_bgp,s,0429153616,0,0,0,0
+SADE,arp_cache_poisoning,dc_clos_bgp,m,0429154054,0,0,0,0
+SADE,arp_cache_poisoning,dc_clos_bgp,l,0429154659,0,0,0,0
+SADE,arp_cache_poisoning,dc_clos_service,s,0429155225,0,0,0,0
+SADE,arp_cache_poisoning,dc_clos_service,m,0429155717,0,0,0,0
+SADE,arp_cache_poisoning,dc_clos_service,l,0429160728,0,0,0,0
+SADE,arp_cache_poisoning,ospf_enterprise_static,s,0429161354,0,0,0,0
+SADE,arp_cache_poisoning,ospf_enterprise_static,m,0429162153,0,0,0,0
+SADE,arp_cache_poisoning,ospf_enterprise_static,l,0429163000,0,0,1,1
+SADE,arp_cache_poisoning,rip_small_internet_vpn,s,0429163501,0,0,0,0
+SADE,arp_cache_poisoning,rip_small_internet_vpn,m,0429163800,0,0,0,0
+SADE,arp_cache_poisoning,rip_small_internet_vpn,l,0429164232,0,0,0,0
+SADE,arp_cache_poisoning,sdn_star,s,0429164622,0,0,0,0
+SADE,arp_cache_poisoning,sdn_star,m,0429165503,0,0,0,0
+SADE,arp_cache_poisoning,sdn_star,l,0429170251,0,0,0,0
+SADE,arp_cache_poisoning,sdn_clos,s,0429171006,0,0,0,0
+SADE,arp_cache_poisoning,sdn_clos,m,0429171635,0,0,0,0
+SADE,arp_cache_poisoning,sdn_clos,l,0429172626,0,0,0,0
+SADE,arp_cache_poisoning,p4_bloom_filter,-,0429173945,0,0,0,0
+SADE,arp_cache_poisoning,p4_counter,-,0429174541,0,3,0,3
+SADE,arp_cache_poisoning,p4_int,-,0429175101,0,1,0,1
+SADE,arp_cache_poisoning,p4_mpls,-,0429175845,0,0,0,0
+SADE,arp_cache_poisoning,simple_bgp,-,0429180744,0,0,0,0
+SADE,web_dos_attack,dc_clos_service,s,0429181057,0,0,0,0
+SADE,web_dos_attack,dc_clos_service,m,0429181603,0,0,0,0
+SADE,web_dos_attack,dc_clos_service,l,0429182339,0,0,0,0
+SADE,web_dos_attack,ospf_enterprise_static,s,0429183932,0,0,0,0
+SADE,web_dos_attack,ospf_enterprise_static,m,0429184919,0,0,0,0
+SADE,web_dos_attack,ospf_enterprise_static,l,0429190244,0,0,1,1
+SADE,web_dos_attack,rip_small_internet_vpn,s,0429190954,0,1,0,1
+SADE,web_dos_attack,rip_small_internet_vpn,m,0429191830,0,0,0,0
+SADE,web_dos_attack,rip_small_internet_vpn,l,0429192631,0,0,0,0
+SADE,incast_traffic_network_limitation,dc_clos_service,s,0429193216,0,0,0,0
+SADE,incast_traffic_network_limitation,dc_clos_service,m,0429193524,0,0,0,0
+SADE,incast_traffic_network_limitation,dc_clos_service,l,0429194551,0,0,0,0
+SADE,incast_traffic_network_limitation,ospf_enterprise_static,s,0429194934,0,0,0,0
+SADE,incast_traffic_network_limitation,ospf_enterprise_static,m,0429195715,0,0,0,0
+SADE,incast_traffic_network_limitation,ospf_enterprise_static,l,0429200156,0,0,1,1
+SADE,incast_traffic_network_limitation,rip_small_internet_vpn,s,0429202239,0,0,0,0
+SADE,incast_traffic_network_limitation,rip_small_internet_vpn,m,0429202543,0,2,0,2
+SADE,incast_traffic_network_limitation,rip_small_internet_vpn,l,0429204256,0,0,0,0
+SADE,link_bandwidth_throttling,dc_clos_bgp,s,0429205609,0,0,0,0
+SADE,link_bandwidth_throttling,dc_clos_bgp,m,0429205954,0,0,0,0
+SADE,link_bandwidth_throttling,dc_clos_bgp,l,0429210535,0,0,0,0
+SADE,link_bandwidth_throttling,dc_clos_service,s,0429211532,0,0,0,0
+SADE,link_bandwidth_throttling,dc_clos_service,m,0429211850,0,0,0,0
+SADE,link_bandwidth_throttling,dc_clos_service,l,0429212540,0,0,0,0
+SADE,link_bandwidth_throttling,ospf_enterprise_static,s,0429214518,0,0,0,0
+SADE,link_bandwidth_throttling,ospf_enterprise_static,m,0429215145,0,0,0,0
+SADE,link_bandwidth_throttling,ospf_enterprise_static,l,0429222204,0,0,1,1
+SADE,link_bandwidth_throttling,rip_small_internet_vpn,m,0429224641,0,0,0,0
+SADE,link_bandwidth_throttling,rip_small_internet_vpn,l,0429230003,0,0,0,0
+SADE,link_bandwidth_throttling,sdn_star,s,0430055123,0,1,0,1
+SADE,link_bandwidth_throttling,sdn_star,m,0430055353,0,0,0,0
+SADE,link_bandwidth_throttling,sdn_star,l,0430055705,0,0,0,0
+SADE,link_bandwidth_throttling,sdn_clos,s,0430060338,0,0,0,0
+SADE,link_bandwidth_throttling,sdn_clos,m,0430060621,0,0,0,0
+SADE,link_bandwidth_throttling,sdn_clos,l,0430061430,0,0,0,0
+SADE,link_bandwidth_throttling,p4_bloom_filter,-,0430001316,0,0,0,0
+SADE,link_bandwidth_throttling,p4_int,-,0430001916,0,4,0,4
+SADE,link_bandwidth_throttling,p4_mpls,-,0430002223,0,1,0,1
+SADE,link_bandwidth_throttling,simple_bgp,-,0430002518,0,0,0,0
+SADE,link_high_packet_corruption,dc_clos_bgp,s,0430214450,0,0,0,0
+SADE,link_high_packet_corruption,dc_clos_bgp,m,0430215220,0,0,0,0
+SADE,link_high_packet_corruption,dc_clos_bgp,l,0430220352,0,0,0,0
+SADE,link_high_packet_corruption,dc_clos_service,s,0430220846,0,2,0,2
+SADE,link_high_packet_corruption,dc_clos_service,m,0430221249,0,0,0,0
+SADE,link_high_packet_corruption,dc_clos_service,l,0430221650,0,2,0,2
+SADE,link_high_packet_corruption,ospf_enterprise_static,s,0430222228,0,0,0,0
+SADE,link_high_packet_corruption,ospf_enterprise_static,m,0430223110,0,0,0,0
+SADE,link_high_packet_corruption,ospf_enterprise_static,l,0430223645,0,0,1,1
+SADE,link_high_packet_corruption,rip_small_internet_vpn,s,0430224111,0,0,0,0
+SADE,link_high_packet_corruption,rip_small_internet_vpn,m,0430224400,0,0,0,0
+SADE,link_high_packet_corruption,rip_small_internet_vpn,l,0430224654,0,0,0,0
+SADE,link_high_packet_corruption,sdn_star,s,0430064450,0,0,0,0
+SADE,link_high_packet_corruption,sdn_star,m,0430065326,0,0,0,0
+SADE,link_high_packet_corruption,sdn_star,l,0430065612,0,0,0,0
+SADE,link_high_packet_corruption,sdn_clos,s,0430065950,0,0,0,0
+SADE,link_high_packet_corruption,sdn_clos,m,0430070658,0,0,0,0
+SADE,link_high_packet_corruption,sdn_clos,l,0430071728,0,0,0,0
+SADE,link_high_packet_corruption,p4_bloom_filter,-,0430072726,0,0,0,0
+SADE,link_high_packet_corruption,p4_counter,-,0430073434,0,0,0,0
+SADE,link_high_packet_corruption,p4_int,-,0430073921,0,0,0,0
+SADE,link_high_packet_corruption,p4_mpls,-,0430074624,0,0,0,0
+SADE,link_high_packet_corruption,simple_bgp,-,0430225128,0,0,0,0
+SADE,dns_lookup_latency,dc_clos_service,s,0430225428,0,0,0,0
+SADE,dns_lookup_latency,dc_clos_service,m,0430225645,0,0,0,0
+SADE,dns_lookup_latency,dc_clos_service,l,0430230001,0,0,0,0
+SADE,receiver_resource_contention,dc_clos_service,s,0430230330,0,1,0,1
+SADE,receiver_resource_contention,dc_clos_service,m,0430230916,0,3,0,3
+SADE,receiver_resource_contention,dc_clos_service,l,0430231635,0,0,0,0
+SADE,receiver_resource_contention,ospf_enterprise_static,s,0430233732,0,1,0,1
+SADE,receiver_resource_contention,ospf_enterprise_static,m,0430234141,0,0,0,0
+SADE,receiver_resource_contention,ospf_enterprise_static,l,0430235113,0,0,1,1
+SADE,receiver_resource_contention,rip_small_internet_vpn,s,0430235758,0,1,0,1
+SADE,receiver_resource_contention,rip_small_internet_vpn,l,0501001446,0,1,0,1
+SADE,sender_application_delay,dc_clos_service,s,0501002248,0,0,0,0
+SADE,sender_application_delay,dc_clos_service,m,0501003119,0,0,0,0
+SADE,sender_application_delay,dc_clos_service,l,0501004354,0,0,0,0
+SADE,sender_application_delay,ospf_enterprise_static,s,0501010153,0,0,0,0
+SADE,sender_application_delay,ospf_enterprise_static,m,0501010913,0,0,0,0
+SADE,sender_application_delay,ospf_enterprise_static,l,0501011547,0,0,1,1
+SADE,sender_application_delay,rip_small_internet_vpn,s,0501012214,0,1,0,1
+SADE,sender_application_delay,rip_small_internet_vpn,m,0501013110,0,1,0,1
+SADE,sender_application_delay,rip_small_internet_vpn,l,0501013717,0,0,0,0
+SADE,sender_resource_contention,dc_clos_service,s,0501014639,0,1,0,1
+SADE,sender_resource_contention,dc_clos_service,m,0501015026,0,1,0,1
+SADE,sender_resource_contention,dc_clos_service,l,0501015505,0,2,0,2
+SADE,sender_resource_contention,ospf_enterprise_static,s,0501020258,0,1,0,1
+SADE,sender_resource_contention,ospf_enterprise_static,m,0501020631,0,1,0,1
+SADE,sender_resource_contention,ospf_enterprise_static,l,0501021157,0,0,1,1
+SADE,sender_resource_contention,rip_small_internet_vpn,s,0501021821,0,0,0,0
+SADE,sender_resource_contention,rip_small_internet_vpn,m,0501022536,0,1,0,1
+SADE,sender_resource_contention,rip_small_internet_vpn,l,0501023053,0,2,0,2
