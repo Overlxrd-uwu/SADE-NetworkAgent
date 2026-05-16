@@ -1,6 +1,15 @@
 import os
+import sys
 
 from nika.utils.session import Session
+
+_BASE_DIR = os.getenv("BASE_DIR", os.path.dirname(os.path.abspath(__file__)))
+_VENV_PYTHON = (
+    os.path.join(_BASE_DIR, ".venv", "Scripts", "python.exe")
+    if sys.platform == "win32"
+    else os.path.join(_BASE_DIR, ".venv", "bin", "python")
+)
+PYTHON = _VENV_PYTHON if os.path.exists(_VENV_PYTHON) else sys.executable
 
 
 class MCPServerConfig:
@@ -15,7 +24,7 @@ class MCPServerConfig:
         if if_submit:
             config = {
                 "task_mcp_server": {
-                    "command": "python3",
+                    "command": PYTHON,
                     "args": [f"{self.mcp_server_dir}/task_mcp_server.py"],
                     "transport": "stdio",
                 },
@@ -23,22 +32,22 @@ class MCPServerConfig:
         else:
             config = {
                 "kathara_base_mcp_server": {
-                    "command": "python3",
+                    "command": PYTHON,
                     "args": [f"{self.mcp_server_dir}/kathara_base_mcp_server.py"],
                     "transport": "stdio",
                 },
                 "kathara_frr_mcp_server": {
-                    "command": "python3",
+                    "command": PYTHON,
                     "args": [f"{self.mcp_server_dir}/kathara_frr_mcp_server.py"],
                     "transport": "stdio",
                 },
                 "kathara_bmv2_mcp_server": {
-                    "command": "python3",
+                    "command": PYTHON,
                     "args": [f"{self.mcp_server_dir}/kathara_bmv2_mcp_server.py"],
                     "transport": "stdio",
                 },
                 "kathara_telemetry_mcp_server": {
-                    "command": "python3",
+                    "command": PYTHON,
                     "args": [f"{self.mcp_server_dir}/kathara_telemetry_mcp_server.py"],
                     "transport": "stdio",
                 },
@@ -47,6 +56,7 @@ class MCPServerConfig:
         # add env to every server for the submission
         for server in config.values():
             server["env"] = {
+                "BASE_DIR": os.getenv("BASE_DIR", ""),
                 "LAB_SESSION_ID": self.session.session_id,
                 "root_cause_name": self.session.root_cause_name,
                 "LAB_NAME": self.session.scenario_name,

@@ -140,7 +140,18 @@ class ClaudeCodeAgentSADE:
         options = ClaudeAgentOptions(
             system_prompt=SADE_PROMPT,
             model="claude-sonnet-4-6",
-            cwd=str(Path(__file__).resolve().parent),
+            # The SADE engine (skills, CLAUDE.md, h.py) lives nested under
+            # `network_agents/SADE/` so the contributor-agent pool layout is
+            # self-contained. The wrapper file itself lives at
+            # `src/agent/claude_code_agent_sade.py`, so resolve up two
+            # levels and across to the nested engine root.
+            cwd=str(
+                Path(__file__).resolve().parents[2]
+                / "network_agents"
+                / "SADE"
+                / "src"
+                / "agent"
+            ),
             mcp_servers=self.mcp_servers,
             max_turns=self.max_turns,
             permission_mode="bypassPermissions",
@@ -238,9 +249,32 @@ class ClaudeCodeAgentSADE:
                             },
                         )
                         await client.query(reminder)
+                        system_logger.info(
+                            f"ClaudeCodeAgentSADE: REMINDER at API turn {api_turn_count}/{self.max_turns}"
+                        )
 
                 elif isinstance(message, ResultMessage):
                     result_text = message.result
+                    # Pull token counts out of the usage dict into top-level
+                    # fields so they're easy to grep from logs regardless of
+                    # how the session ended (successful submit, cap hit with
+                    # no submit, API error, etc).
+                    usage = message.usage or {}
+                    token_summary = {
+                        "input_tokens": usage.get("input_tokens", 0),
+                        "output_tokens": usage.get("output_tokens", 0),
+                        "cache_creation_input_tokens": usage.get(
+                            "cache_creation_input_tokens", 0
+                        ),
+                        "cache_read_input_tokens": usage.get(
+                            "cache_read_input_tokens", 0
+                        ),
+                    }
+                    token_summary["total_input_tokens"] = (
+                        token_summary["input_tokens"]
+                        + token_summary["cache_creation_input_tokens"]
+                        + token_summary["cache_read_input_tokens"]
+                    )
                     self._log_event(
                         conv_logger,
                         "llm_end",
@@ -248,11 +282,24 @@ class ClaudeCodeAgentSADE:
                             "result": result_text,
                             "stop_reason": message.stop_reason,
                             "num_turns": message.num_turns,
+                            "has_submitted": has_submitted,
+                            "tokens": token_summary,
                             "usage": message.usage,
                         },
                     )
                     system_logger.info(
-                        f"ClaudeCodeAgentSADE: session complete — stop_reason={message.stop_reason}"
+                        "ClaudeCodeAgentSADE: session complete - "
+                        f"stop_reason={message.stop_reason}, "
+                        f"submitted={has_submitted}, "
+                        f"api_turns={api_turn_count}, "
+                        f"sdk_turns={message.num_turns}, "
+                        f"tool_results={tool_result_count} | "
+                        f"tokens: input={token_summary['input_tokens']}, "
+                        f"cache_create={token_summary['cache_creation_input_tokens']}, "
+                        f"cache_read={token_summary['cache_read_input_tokens']}, "
+                        f"output={token_summary['output_tokens']}, "
+                        f"total_input={token_summary['total_input_tokens']}"
                     )
+                    break
 
         return result_text

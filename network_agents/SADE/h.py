@@ -21,13 +21,34 @@ import sys
 
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-VENV_PY = os.path.join(ROOT, ".venv", "Scripts", "python.exe")
-PYTHON = VENV_PY if os.path.exists(VENV_PY) else sys.executable
+# Locate the project venv. When SADE runs standalone, the venv lives next to
+# this file (./.venv/). When SADE is embedded as a contributor agent under
+# <nika-repo>/network_agents/SADE/, the venv lives at the outer repo root
+# (../../.venv/). Check local first, then embedded, then fall back to the
+# interpreter that invoked this launcher.
+_VENV_REL = (
+    os.path.join(".venv", "Scripts", "python.exe")
+    if sys.platform == "win32"
+    else os.path.join(".venv", "bin", "python")
+)
+_VENV_LOCAL = os.path.join(ROOT, _VENV_REL)
+_VENV_EMBED = os.path.join(ROOT, "..", "..", _VENV_REL)
+if os.path.exists(_VENV_LOCAL):
+    PYTHON = _VENV_LOCAL
+elif os.path.exists(_VENV_EMBED):
+    PYTHON = _VENV_EMBED
+else:
+    PYTHON = sys.executable
 SCRIPTS = os.path.join(
     ROOT, "src", "agent", ".claude", "skills",
     "diagnosis-methodology-skill", "scripts",
 )
-SESSION_FILE = os.path.join(ROOT, "runtime", "current_session.json")
+# Same standalone-vs-embedded layout reasoning as PYTHON above: the runtime
+# session file lives at the project root, which is either this dir (standalone
+# SADE) or two levels up (SADE embedded in a parent repo's contributor pool).
+_SESSION_LOCAL = os.path.join(ROOT, "runtime", "current_session.json")
+_SESSION_EMBED = os.path.join(ROOT, "..", "..", "runtime", "current_session.json")
+SESSION_FILE = _SESSION_LOCAL if os.path.exists(_SESSION_LOCAL) else _SESSION_EMBED
 # Special-purpose scripts not in the diagnosis-methodology folder.
 EXTRA_SCRIPTS = {
     "parse_large": os.path.join(
