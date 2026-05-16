@@ -89,7 +89,7 @@ class LLMJudge:
             str: The evaluation result from the judge model.
             int: The score extracted from the evaluation result.
         """
-        with open(trace_path, "r") as f:
+        with open(trace_path, "r", encoding="utf-8") as f:
             trace = f.read()
         trace = self._parse_trace(trace)
 
@@ -101,7 +101,7 @@ class LLMJudge:
             evaluation: JudgeResponse = self.llm.invoke(self.prompt)
 
         # Save evaluation result to file
-        with open(save_path, "w+") as f:
+        with open(save_path, "w+", encoding="utf-8") as f:
             f.write(evaluation.model_dump_json(indent=2))
 
         return evaluation

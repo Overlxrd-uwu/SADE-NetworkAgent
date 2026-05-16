@@ -50,6 +50,10 @@ class Session:
             f"{BASE_DIR}/runtime/current_session.json",
             f"{self.session_dir}/session_meta.json",
         )
+        # Release the log file handle before moving (Windows file lock).
+        from nika.utils.logger import close_logger
+
+        close_logger()
         shutil.move(f"{BASE_DIR}/runtime/system.log", f"{self.session_dir}/system.log")
 
     def start_session(self):

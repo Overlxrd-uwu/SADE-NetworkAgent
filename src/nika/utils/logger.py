@@ -45,3 +45,14 @@ def refresh_logger():
     global system_logger
     system_logger = SystemLogger().logger
     return system_logger
+
+
+def close_logger():
+    """Close and detach all handlers so the log file can be moved on Windows."""
+    logger = logging.getLogger("SystemLogger")
+    for h in list(logger.handlers):
+        try:
+            h.flush()
+            h.close()
+        finally:
+            logger.removeHandler(h)

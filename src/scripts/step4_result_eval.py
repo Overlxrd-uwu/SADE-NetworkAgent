@@ -70,11 +70,13 @@ def generic_eval(gt, submission):
 def _eval_problem(session: Session, judge_llm_backend: str, judge_model: str):
     """Evaluate the problem solution and log the results."""
     gt = f"{session.session_dir}/ground_truth.json"
-    gt = json.loads(open(gt, "r").read())
+    with open(gt, "r", encoding="utf-8") as f:
+        gt = json.loads(f.read())
 
     submission = f"{session.session_dir}/submission.json"
     if os.path.exists(submission):
-        submission = json.loads(open(submission, "r").read())
+        with open(submission, "r", encoding="utf-8") as f:
+            submission = json.loads(f.read())
         # task-specific evaluation
         (
             detection_score,
@@ -178,7 +180,19 @@ def eval_results(judge_llm_backend, judge_model, destroy_env=True):
     _eval_problem(session, judge_llm_backend, judge_model)
     net_env = get_net_env_instance(session.scenario_name)
     if destroy_env and net_env.lab_exists():
-        net_env.undeploy()
+        try:
+            net_env.undeploy()
+        except Exception as exc:
+            # Why: the eval row is already written by _eval_problem above; an
+            # undeploy failure here is cleanup-only (typically a transient
+            # Docker 403 "active endpoints" race) and must not bubble up, or
+            # the benchmark runner will record a duplicate SKIP row for a case
+            # that actually succeeded. Any leftover runtime is handled by the
+            # runner's auto-recover-stale-env step before the next case.
+            logger.warning(
+                f"Post-eval undeploy of {session.scenario_name} failed "
+                f"(non-fatal, result already recorded): {exc}"
+            )
     logger.info(f"Destroyed network environment: {session.scenario_name} with session ID: {session.session_id}")
     session.clear_session()
     assert not os.path.exists(f"{BASE_DIR}/runtime/current_session.json")
