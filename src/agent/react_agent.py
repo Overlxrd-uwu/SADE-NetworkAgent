@@ -14,7 +14,7 @@ from typing_extensions import TypedDict
 
 from agent.domain_agents.diagnosis_agent import DiagnosisAgent
 from agent.domain_agents.submission_agent import SubmissionAgent
-from agent.utils.loggers import FileLoggerHandler
+from agent.utils.loggers import AgentCallbackLogger
 from nika.utils.logger import system_logger
 from nika.utils.session import Session
 
@@ -108,26 +108,27 @@ class BasicReActAgent:
 
     async def diagnosis_agent_builder(self, state: AgentState):
         try:
+            cb = AgentCallbackLogger(agent="diagnosis_agent")
             diagnosis_report = await self.diagnosis_agent.ainvoke(
                 {"messages": state["messages"]},
                 config={
-                    "callbacks": [FileLoggerHandler(name="diagnosis_agent")],
+                    "callbacks": [cb],
                     "recursion_limit": self.max_steps,
                 },
                 debug=True,
             )
             return {"diagnosis_report": [diagnosis_report["messages"][-1].content], "is_max_steps_reached": False}
         except ValidationError as e:
-            FileLoggerHandler(name="diagnosis_agent").logger.error(f"Diagnosis agent validation error: {e}")
+            AgentCallbackLogger(agent="diagnosis_agent")._log("error", {"message": f"Validation error: {e}"})
             return {
                 "messages": [HumanMessage(content=f"Error: {e}")],
                 "diagnosis_report": ["ERROR_VALIDATION"],
                 "is_max_steps_reached": False,
             }
         except GraphRecursionError:
-            FileLoggerHandler(name="diagnosis_agent")._log(
-                event_type="error",
-                payload={"message": "Diagnosis agent reached max recursion limit."},
+            AgentCallbackLogger(agent="diagnosis_agent")._log(
+                "error",
+                {"message": "Diagnosis agent reached max recursion limit."},
             )
             return {
                 "messages": [HumanMessage(content="Error: diagnosis did not finish within max steps.")],
@@ -146,7 +147,7 @@ class BasicReActAgent:
                 ]
             },
             config={
-                "callbacks": [FileLoggerHandler(name="submission_agent")],
+                "callbacks": [AgentCallbackLogger(agent="submission_agent")],
                 "recursion_limit": self.max_steps,
             },
             debug=True,

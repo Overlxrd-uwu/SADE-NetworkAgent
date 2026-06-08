@@ -2,7 +2,7 @@
 
 import typer
 
-SUPPORTED_AGENT_TYPES = ("react",)
+SUPPORTED_AGENT_TYPES = ("react", "mock")
 SUPPORTED_LLM_BACKENDS = ("openai", "ollama", "deepseek")
 
 agent_app = typer.Typer(help="Troubleshooting agents.")

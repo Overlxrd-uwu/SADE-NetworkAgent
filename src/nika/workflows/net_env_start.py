@@ -1,11 +1,11 @@
 """Start a Kathara lab for one scenario and persist a new session."""
 
 from datetime import datetime
-from uuid import uuid4
 from typing import Literal
+from uuid import uuid4
 
 from nika.net_env.net_env_pool import get_net_env_instance, scenario_requires_topo_tier
-from nika.utils.logger import refresh_logger, system_logger
+from nika.utils.logger import log_event, refresh_logger
 from nika.utils.session import Session
 
 
@@ -42,18 +42,26 @@ def start_net_env(
     elif not net_env.lab_exists():
         net_env.deploy()
 
+    # Time-based session ID: YYYYMMDD-HHMMSS-{6hex}
+    session_id = datetime.now().strftime("%Y%m%d-%H%M%S") + "-" + uuid4().hex[:6]
+
     session = Session()
-    scenario_params = {"lab_name": net_env.lab.name}
+    scenario_params: dict = {"lab_name": net_env.lab.name}
     if tier is not None:
         scenario_params["topo_size"] = tier
     session.init_session(
-        session_id=net_env.lab.hash,
+        session_id=session_id,
         scenario_name=scenario,
         lab_name=net_env.lab.name,
         scenario_topo_size=tier,
         scenario_params=scenario_params,
     )
-    system_logger.info(
-        f"Started network environment: {scenario} with size {tier} in session {session.session_id}, lab {net_env.lab.name}"
+    log_event(
+        "env_start",
+        f"Started network environment: {scenario} (size={tier}) — session {session_id}, lab {net_env.lab.name}",
+        scenario=scenario,
+        topo_size=tier,
+        session_id=session_id,
+        lab_name=net_env.lab.name,
     )
-    return session.session_id
+    return session_id

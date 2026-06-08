@@ -1,5 +1,8 @@
 import logging
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_host import FaultInjectorHost
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,7 +11,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaBaseAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 # ==========================================
@@ -16,51 +18,50 @@ from nika.utils.logger import system_logger
 # ==========================================
 
 
+class VPNMembershipMissingParams(BaseModel):
+    """Parameters for injecting a VPN membership missing fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host to remove from VPN. Defaults to runtime selection.")
+    host_name_2: Optional[str] = Field(default=None, description="VPN server host name. Defaults to runtime selection.")
+
+
 class VPNMembershipMissingBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_vpn_membership_missing"
     TAGS: str = ["vpn"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_vpn_membership_missing",
-        summary="Remove one host membership from VPN server config.",
-        fields=(
-            FailureParamField("host_name", "str", "Target host to remove from VPN."),
-            FailureParamField("host_name_2", "str", "VPN server host name."),
-        ),
-        example="nika failure inject host_vpn_membership_missing --set host_name=host_1 --set host_name_2=vpn_server",
-    )
+
+    Params = VPNMembershipMissingParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
         self.logger = system_logger
-        self.net_env = get_net_env_instance(
-            scenario_name,
-            **kwargs,
-        )
+        self.net_env = get_net_env_instance(scenario_name, **kwargs)
         self.kathara_api = KatharaBaseAPI(lab_name=self.net_env.lab.name)
         self.injector = FaultInjectorHost(lab_name=self.net_env.lab.name)
         self.vpn_server = self.net_env.servers["vpn"][0]
         self.target_host = random.choice(["host_1", "web_server_1_1", "web_server_1_2"])
-
         self.faulty_devices = [self.target_host, self.vpn_server]
 
-    def inject_fault(self):
-        # backup the real conf and
+    def inject_fault(self, params: VPNMembershipMissingParams | None = None):
+        if params is None:
+            params = VPNMembershipMissingParams()
+        target_host = params.host_name if params.host_name is not None else self.target_host
+        vpn_server = params.host_name_2 if params.host_name_2 is not None else self.vpn_server
+
         self.kathara_api.exec_cmd(
-            host_name=self.vpn_server,
+            host_name=vpn_server,
             command="cp /etc/wireguard/wg0.conf /etc/wireguard/wg0.conf.bak",
         )
-        # remove the vpn conf to simulate missing vpn membership
         self.kathara_api.exec_cmd(
-            host_name=self.vpn_server,
-            command=f"sed -i '/# {self.target_host}/{{n; s/^/# /; n; s/^/# /; n; s/^/# /;}}' /etc/wireguard/wg0.conf",
+            host_name=vpn_server,
+            command=f"sed -i '/# {target_host}/{{n; s/^/# /; n; s/^/# /; n; s/^/# /;}}' /etc/wireguard/wg0.conf",
         )
-        # restart the wg interface
         self.kathara_api.exec_cmd(
-            host_name=self.vpn_server,
+            host_name=vpn_server,
             command="wg-quick down wg0 && wg-quick up wg0",
         )
-        self.logger.info(f"Removed VPN membership of {self.target_host} on {self.vpn_server}.")
+        self.logger.info(f"Removed VPN membership of {target_host} on {vpn_server}.")
+
 
 class HostIncorrectDNSDetection(VPNMembershipMissingBase, DetectionTask):
     META = ProblemMeta(

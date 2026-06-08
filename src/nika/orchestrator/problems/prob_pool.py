@@ -79,6 +79,11 @@ def list_avail_tags() -> list[str]:
     return list(tags)
 
 
+def get_problem_class(problem_name: str, task_level: TaskLevel) -> Type[TaskBase] | None:
+    """Return the registered class for *problem_name* at *task_level*, or None."""
+    return _PROBLEMS.get(problem_name, {}).get(task_level)
+
+
 def get_problem_instance(problem_names: list, task_level: TaskLevel, scenario_name: str, **kwargs) -> TaskBase:
     """Get the problem instance for a specific root cause name and task level.
     Args:

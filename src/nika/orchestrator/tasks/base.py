@@ -18,7 +18,7 @@ class TaskBase:
         self.results = {}
         self.scenario_name: NetworkEnvBase = None
 
-    def inject_fault(self):
+    def inject_fault(self, params=None):
         return NotImplementedError()
 
     def recover_fault(self):

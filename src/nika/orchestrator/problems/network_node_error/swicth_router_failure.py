@@ -1,5 +1,8 @@
 import logging
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,7 +11,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaAPIALL, KatharaBaseAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 logger = system_logger
@@ -18,16 +20,18 @@ logger = system_logger
 # ==================================================================
 
 
+class Bmv2SwitchDownParams(BaseModel):
+    """Parameters for injecting a BMv2 switch down fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target BMv2 switch name. Defaults to runtime selection.")
+
+
 class Bmv2SwitchDownBase:
     root_cause_category = RootCauseCategory.LINK_FAILURE
     root_cause_name = "bmv2_switch_down"
     TAGS: str = ["p4"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="bmv2_switch_down",
-        summary="Kill BMv2 switch process on a target switch.",
-        fields=(FailureParamField("host_name", "str", "Target BMv2 switch name."),),
-        example="nika failure inject bmv2_switch_down --set host_name=s1",
-    )
+
+    Params = Bmv2SwitchDownParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -36,8 +40,12 @@ class Bmv2SwitchDownBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.bmv2_switches)]
 
-    def inject_fault(self):
-        self.injector.inject_bmv2_down(host_name=self.faulty_devices[0])
+    def inject_fault(self, params: Bmv2SwitchDownParams | None = None):
+        if params is None:
+            params = Bmv2SwitchDownParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_bmv2_down(host_name=host)
+
 
 class Bmv2SwitchDownDetection(Bmv2SwitchDownBase, DetectionTask):
     META = ProblemMeta(
@@ -71,21 +79,21 @@ class Bmv2SwitchDownRCA(Bmv2SwitchDownBase, RCATask):
 # ==================================================================
 
 
+class FrrDownParams(BaseModel):
+    """Parameters for injecting an FRR service down fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target router host name. Defaults to a randomly selected router.")
+    service_name: str = Field(default="frr", description="Service name.")
+
+
 class FrrDownBase:
     """Base class for a FRR device down problem."""
 
     root_cause_category: RootCauseCategory = RootCauseCategory.NETWORK_NODE_ERROR
     root_cause_name: str = "frr_service_down"
     TAGS: str = ["frr"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="frr_service_down",
-        summary="Stop FRR service on one router.",
-        fields=(
-            FailureParamField("host_name", "str", "Target router host name."),
-            FailureParamField("service_name", "str", "Service name.", default="frr"),
-        ),
-        example="nika failure inject frr_service_down --set host_name=r1",
-    )
+
+    Params = FrrDownParams
 
     symptom_desc = "Users report connectivity issues to other hosts in the network."
 
@@ -97,8 +105,12 @@ class FrrDownBase:
         self.faulty_devices = [random.choice(self.net_env.routers)]
         self.service_name = "frr"
 
-    def inject_fault(self):
-        self.injector.inject_service_down(host_name=self.faulty_devices[0], service_name=self.service_name)
+    def inject_fault(self, params: FrrDownParams | None = None):
+        if params is None:
+            params = FrrDownParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_service_down(host_name=host, service_name=params.service_name)
+
 
 class FrrDownDetection(FrrDownBase, DetectionTask):
     META = ProblemMeta(

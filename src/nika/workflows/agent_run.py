@@ -4,8 +4,9 @@ import asyncio
 import logging
 import os
 
+from agent.mock_agent import MockAgent
 from agent.react_agent import BasicReActAgent
-from nika.utils.logger import system_logger
+from nika.utils.logger import bind_session_dir, log_event
 from nika.utils.session import Session
 
 logging.basicConfig(level=logging.INFO)
@@ -16,6 +17,8 @@ def _agent_selector(agent_type: str, llm_backend: str, model: str, *, max_steps:
     match agent_type.lower():
         case "react":
             return BasicReActAgent(llm_backend=llm_backend, model=model, max_steps=max_steps)
+        case "mock":
+            return MockAgent(llm_backend=llm_backend, model=model, max_steps=max_steps)
         case _:
             return None
 
@@ -29,8 +32,6 @@ def start_agent(
     session_id: str | None = None,
 ) -> None:
     """Load the running session, run the agent on ``task_description``, then end the session."""
-    logger = system_logger
-
     session = Session()
     session.load_running_session(session_id=session_id)
     session.update_session("agent_type", agent_type)
@@ -38,7 +39,14 @@ def start_agent(
     session.update_session("model", model)
     session.start_session()
 
-    logger.info(f"Starting agent: {agent_type} with model {model} in session {session.session_id}")
+    bind_session_dir(session.session_dir)
+    log_event(
+        "agent_start",
+        f"Starting agent: {agent_type} (model={model}) in session {session.session_id}",
+        session_id=session.session_id,
+        agent_type=agent_type,
+        model=model,
+    )
     os.environ["NIKA_SESSION_ID"] = session.session_id
     try:
         agent = _agent_selector(agent_type, llm_backend, model, max_steps=max_steps)
@@ -49,4 +57,9 @@ def start_agent(
         os.environ.pop("NIKA_SESSION_ID", None)
 
     session.end_session()
-    logger.info(f"Agent run completed for session ID: {session.session_id}")
+    log_event(
+        "agent_end",
+        f"Agent run completed for session {session.session_id}",
+        session_id=session.session_id,
+        agent_type=agent_type,
+    )

@@ -2,6 +2,9 @@ import ipaddress
 import logging
 import random
 import re
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -10,7 +13,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaFRRAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 # ==================================================================
@@ -18,17 +20,19 @@ from nika.utils.logger import system_logger
 # ==================================================================
 
 
+class OSPFAreaMisconfigParams(BaseModel):
+    """Parameters for injecting an OSPF area misconfiguration fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target router host name. Defaults to a randomly selected router.")
+
+
 class OSPFAreaMisconfigBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.MISCONFIGURATION
     root_cause_name: str = "ospf_area_misconfiguration"
 
     TAGS: str = ["ospf"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="ospf_area_misconfiguration",
-        summary="Change OSPF area ID on one router.",
-        fields=(FailureParamField("host_name", "str", "Target router host name."),),
-        example="nika failure inject ospf_area_misconfiguration --set host_name=r1",
-    )
+
+    Params = OSPFAreaMisconfigParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -38,25 +42,23 @@ class OSPFAreaMisconfigBase:
         self.logger = system_logger
         self.faulty_devices = [random.choice(self.net_env.routers)]
 
-    def inject_fault(self):
-        correct_area = self.kathara_api.exec_cmd(
-            self.faulty_devices[0],
-            "vtysh -c 'show running-config'",
-        )
+    def inject_fault(self, params: OSPFAreaMisconfigParams | None = None):
+        if params is None:
+            params = OSPFAreaMisconfigParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        correct_area = self.kathara_api.exec_cmd(host, "vtysh -c 'show running-config'")
         pattern = re.compile(r"^\s*network\s+\S+\s+area\s+(\S+)", re.MULTILINE)
         m = pattern.search(correct_area)
         if not m:
-            self.logger.error(f"Could not find OSPF area on {self.faulty_devices[0]}")
+            self.logger.error(f"Could not find OSPF area on {host}")
         correct_area = m.group(1)
         wrong_area = "66" if correct_area != "66" else "99"
-
         self.kathara_api.exec_cmd(
-            self.faulty_devices[0],
+            host,
             f"vtysh -c 'show running-config' | sed -E 's/(area )({correct_area})$/\\1{wrong_area}/' > /etc/frr/frr.conf && systemctl restart frr",
         )
-        self.logger.info(
-            f"Injected OSPF area misconfiguration on {self.faulty_devices[0]} from area {correct_area} to {wrong_area}."
-        )
+        self.logger.info(f"Injected OSPF area misconfiguration on {host} from area {correct_area} to {wrong_area}.")
+
 
 class OSPFAreaMisconfigDetection(OSPFAreaMisconfigBase, DetectionTask):
     META = ProblemMeta(
@@ -86,8 +88,14 @@ class OSPFAreaMisconfigRCA(OSPFAreaMisconfigBase, RCATask):
 
 
 # ==================================================================
-# Problem: OSPF Area Misconfiguration
+# Problem: OSPF Neighbor Missing
 # ==================================================================
+
+
+class OSPFNeighborMissingParams(BaseModel):
+    """Parameters for injecting an OSPF neighbor missing fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target router host name. Defaults to a randomly selected router.")
 
 
 class OSPFNeighborMissingBase:
@@ -95,12 +103,8 @@ class OSPFNeighborMissingBase:
     root_cause_name: str = "ospf_neighbor_missing"
 
     TAGS: str = ["ospf"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="ospf_neighbor_missing",
-        summary="Comment out OSPF network statements on one router.",
-        fields=(FailureParamField("host_name", "str", "Target router host name."),),
-        example="nika failure inject ospf_neighbor_missing --set host_name=r1",
-    )
+
+    Params = OSPFNeighborMissingParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -110,18 +114,19 @@ class OSPFNeighborMissingBase:
         self.logger = system_logger
         self.faulty_devices = [random.choice(self.net_env.routers)]
 
-    def inject_fault(self):
+    def inject_fault(self, params: OSPFNeighborMissingParams | None = None):
+        if params is None:
+            params = OSPFNeighborMissingParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
         cmd = (
             "sed -i.bak -E "
             "'s|^([[:space:]]*)network[[:space:]]+[^[:space:]]+[[:space:]]+area|\\1# &|' "
             "/etc/frr/frr.conf"
         )
-        self.kathara_api.exec_cmd(
-            self.faulty_devices[0],
-            cmd,
-        )
-        self.kathara_api.exec_cmd(self.faulty_devices[0], "systemctl restart frr")
-        self.logger.info(f"Injected OSPF neighbor missing on {self.faulty_devices[0]}.")
+        self.kathara_api.exec_cmd(host, cmd)
+        self.kathara_api.exec_cmd(host, "systemctl restart frr")
+        self.logger.info(f"Injected OSPF neighbor missing on {host}.")
+
 
 class OSPFNeighborMissingDetection(OSPFNeighborMissingBase, DetectionTask):
     META = ProblemMeta(
@@ -154,4 +159,3 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     task = OSPFNeighborMissingBase()
     # task.inject_fault()
-    # perform detection steps...

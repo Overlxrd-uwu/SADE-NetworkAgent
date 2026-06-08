@@ -2,6 +2,8 @@
 
 import typer
 
+from nika.cli.utils import env_id_from_lab, fmt_table, human_age
+
 env_app = typer.Typer(help="Kathara lab scenarios.")
 
 
@@ -39,32 +41,61 @@ def env_run(
 
 @env_app.command("ps")
 def env_ps() -> None:
-    """List all currently running env instances."""
+    """List running env instances, one row per deployed lab.
+
+    Sessions are grouped by their lab instance so you can see at a glance
+    how many sessions are active for each environment and how long it has
+    been running.
+
+    \b
+    Columns
+    -------
+    ENV ID      short ID derived from the deployed lab instance
+    TOPOLOGY    scenario name, with tier appended when applicable (e.g. dc_clos_bgp/m)
+    STATUS      running | finished
+    AGE         time elapsed since the env was created
+    SESSIONS    number of active sessions bound to this env
+    ENDPOINT    service endpoint when available, — otherwise
+    """
     from nika.utils.session_store import SessionStore
 
     sessions = SessionStore().list_running_sessions()
     if not sessions:
         typer.echo("No running env instances.")
         return
-    store = SessionStore()
+
+    # Deduplicate by lab_name — one env row per distinct deployed lab.
+    seen_labs: set[str] = set()
+    headers = ["ENV ID", "TOPOLOGY", "STATUS", "AGE", "SESSIONS", "ENDPOINT"]
+    rows: list[list[str]] = []
+
     for item in sessions:
-        counts = store.count_failure_statuses(session_id=item["session_id"])
-        if counts:
-            failure_summary = ",".join(f"{status}:{count}" for status, count in sorted(counts.items()))
-        else:
-            failure_summary = "none"
-        typer.echo(
-            " | ".join(
-                [
-                    f"session_id={item.get('session_id')}",
-                    f"lab={item.get('lab_name')}",
-                    f"scenario={item.get('scenario_name')}",
-                    f"tier={item.get('scenario_topo_size')}",
-                    f"created_at={item.get('created_at')}",
-                    f"failures={failure_summary}",
-                ]
-            )
+        lab_name: str = item.get("lab_name") or ""
+        if lab_name in seen_labs:
+            continue
+        seen_labs.add(lab_name)
+
+        env_id = env_id_from_lab(lab_name)
+
+        scenario = item.get("scenario_name", "—")
+        tier = item.get("scenario_topo_size")
+        topology = f"{scenario}/{tier}" if tier else scenario
+
+        status = item.get("status", "—")
+        age = human_age(item.get("created_at"))
+
+        # Count all running sessions sharing this lab instance.
+        active = sum(
+            1 for s in sessions
+            if s.get("lab_name") == lab_name and s.get("status") == "running"
         )
+        sessions_col = f"{active} active"
+
+        endpoint = item.get("endpoint", "—")
+
+        rows.append([env_id, topology, status, age, sessions_col, endpoint])
+
+    typer.echo(fmt_table(headers, rows))
 
 
 @env_app.command("stop")

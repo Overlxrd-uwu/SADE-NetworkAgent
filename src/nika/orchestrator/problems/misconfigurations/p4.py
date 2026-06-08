@@ -1,4 +1,7 @@
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -7,7 +10,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaAPIALL
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 logger = system_logger
@@ -18,19 +20,19 @@ logger = system_logger
 # ==================================================================
 
 
+class P4AggressiveDetectionThresholdsParams(BaseModel):
+    """Parameters for injecting a P4 aggressive detection thresholds fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target BMv2 switch name. Defaults to a randomly selected switch.")
+    p4_name: Optional[str] = Field(default=None, description="P4 program name (without suffix). Defaults to runtime detection.")
+
+
 class P4AggressiveDetectionThresholdsBase:
     root_cause_category = RootCauseCategory.NETWORK_NODE_ERROR
     root_cause_name = "p4_aggressive_detection_thresholds"
     TAGS: str = ["p4", "bloom_filter"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="p4_aggressive_detection_thresholds",
-        summary="Lower P4 packet threshold in program and restart switch.",
-        fields=(
-            FailureParamField("host_name", "str", "Target BMv2 switch name."),
-            FailureParamField("p4_name", "str", "P4 program name (without suffix)."),
-        ),
-        example="nika failure inject p4_aggressive_detection_thresholds --set host_name=s1",
-    )
+
+    Params = P4AggressiveDetectionThresholdsParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -39,19 +41,22 @@ class P4AggressiveDetectionThresholdsBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.bmv2_switches)]
 
-    def inject_fault(self):
-        # introduce a syntax error in the p4 file to simulate compilation error
+    def inject_fault(self, params: P4AggressiveDetectionThresholdsParams | None = None):
+        if params is None:
+            params = P4AggressiveDetectionThresholdsParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        p4_name = params.p4_name if params.p4_name is not None else getattr(self, "p4_name", None)
+        if p4_name is None:
+            p4_name = self.kathara_api.exec_cmd(host, "echo *.p4 | sed 's/\\.p4//'").strip()
         self.kathara_api.exec_cmd(
-            self.faulty_devices[0],
-            f"cp {self.p4_name}.p4 {self.p4_name}.p4.bak && "
-            f"rm {self.p4_name}.json && "
-            f"sed -Ei 's/#define PACKET_THRESHOLD 1000/#define PACKET_THRESHOLD 100/g' {self.p4_name}.p4 ",
+            host,
+            f"cp {p4_name}.p4 {p4_name}.p4.bak && "
+            f"rm {p4_name}.json && "
+            f"sed -Ei 's/#define PACKET_THRESHOLD 1000/#define PACKET_THRESHOLD 100/g' {p4_name}.p4 ",
         )
-        self.kathara_api.exec_cmd(self.faulty_devices[0], "pkill -f simple_switch")
-        self.kathara_api.exec_cmd(
-            self.faulty_devices[0],
-            f"./hostlab/{self.faulty_devices[0]}.startup",
-        )
+        self.kathara_api.exec_cmd(host, "pkill -f simple_switch")
+        self.kathara_api.exec_cmd(host, f"./hostlab/{host}.startup")
+
 
 class P4AggressiveDetectionThresholdsDetection(P4AggressiveDetectionThresholdsBase, DetectionTask):
     META = ProblemMeta(

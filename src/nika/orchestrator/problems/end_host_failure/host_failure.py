@@ -1,4 +1,7 @@
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -7,23 +10,24 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaBaseAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 
 # ==========================================
 # Problem: Host crash simulated by pausing a docker instance
 # ==========================================
 
 
+class HostCrashParams(BaseModel):
+    """Parameters for injecting a host-crash fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+
+
 class HostCrashBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_crash"
     TAGS: str = ["host"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_crash",
-        summary="Crash one host container.",
-        fields=(FailureParamField("host_name", "str", "Target host name."),),
-        example="nika failure inject host_crash --set host_name=pc1",
-    )
+
+    Params = HostCrashParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -32,10 +36,12 @@ class HostCrashBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.hosts)]
 
-    def inject_fault(self):
-        self.injector.inject_host_down(
-            host_name=self.faulty_devices[0],
-        )
+    def inject_fault(self, params: HostCrashParams | None = None):
+        if params is None:
+            params = HostCrashParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_host_down(host_name=host)
+
 
 class HostCrashDetection(HostCrashBase, DetectionTask):
     META = ProblemMeta(

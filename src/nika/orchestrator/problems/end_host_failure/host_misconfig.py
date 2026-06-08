@@ -1,5 +1,8 @@
 import logging
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_host import FaultInjectorHost
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,7 +11,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaBaseAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 # ==========================================
@@ -16,19 +18,19 @@ from nika.utils.logger import system_logger
 # ==========================================
 
 
+class HostMissingIPParams(BaseModel):
+    """Parameters for injecting a host-missing-IP fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+    intf_name: str = Field(default="eth0", description="Target interface name.")
+
+
 class HostMissingIPBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_missing_ip"
     TAGS: str = ["host"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_missing_ip",
-        summary="Remove IP from host interface.",
-        fields=(
-            FailureParamField("host_name", "str", "Target host name."),
-            FailureParamField("intf_name", "str", "Target interface name.", default="eth0"),
-        ),
-        example="nika failure inject host_missing_ip --set host_name=h1 --set intf_name=eth0",
-    )
+
+    Params = HostMissingIPParams
 
     symptom_desc = "Some hosts are unable to communicate with other devices in the network."
 
@@ -42,19 +44,17 @@ class HostMissingIPBase:
         self.incorrect_ip: str | None = None
         self.intf_name = "eth0"
 
-    def inject_fault(self):
-        real_ip = self.kathara_api.get_host_ip(self.faulty_devices[0], self.intf_name, with_prefix=True)
-        real_gateway = self.kathara_api.get_default_gateway(self.faulty_devices[0])
-        self.kathara_api.exec_cmd(
-            host_name=self.faulty_devices[0],
-            command=f"ip addr del {real_ip} dev {self.intf_name}",
-        )
-        # backup the removed IP to a file for recovery
-        self.kathara_api.exec_cmd(
-            host_name=self.faulty_devices[0],
-            command=f"echo '{real_ip} {real_gateway}' > /tmp/removed_ip.txt",
-        )
-        self.logger.info(f"Injected missing IP on {self.faulty_devices[0]} from {real_ip} and gateway {real_gateway}.")
+    def inject_fault(self, params: HostMissingIPParams | None = None):
+        if params is None:
+            params = HostMissingIPParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        intf = params.intf_name
+        real_ip = self.kathara_api.get_host_ip(host, intf, with_prefix=True)
+        real_gateway = self.kathara_api.get_default_gateway(host)
+        self.kathara_api.exec_cmd(host_name=host, command=f"ip addr del {real_ip} dev {intf}")
+        self.kathara_api.exec_cmd(host_name=host, command=f"echo '{real_ip} {real_gateway}' > /tmp/removed_ip.txt")
+        self.logger.info(f"Injected missing IP on {host} from {real_ip} and gateway {real_gateway}.")
+
 
 class HostMissingIPDetection(HostMissingIPBase, DetectionTask):
     META = ProblemMeta(
@@ -87,19 +87,19 @@ class HostMissingIPRCA(HostMissingIPBase, RCATask):
 """ Problem: Host IP conflict """
 
 
+class HostIPConflictParams(BaseModel):
+    """Parameters for injecting a host IP conflict fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Source host whose IP is copied. Defaults to runtime selection.")
+    host_name_2: Optional[str] = Field(default=None, description="Target host to misconfigure. Defaults to runtime selection.")
+
+
 class HostIPConflictBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_ip_conflict"
     TAGS: str = ["host"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_ip_conflict",
-        summary="Assign one host the same IP as another host.",
-        fields=(
-            FailureParamField("host_name", "str", "Source host whose IP is copied."),
-            FailureParamField("host_name_2", "str", "Target host to misconfigure."),
-        ),
-        example="nika failure inject host_ip_conflict --set host_name=h1 --set host_name_2=h2",
-    )
+
+    Params = HostIPConflictParams
 
     symptom_desc = "Some hosts experience intermittent connectivity issues."
 
@@ -110,14 +110,19 @@ class HostIPConflictBase:
         self.injector = FaultInjectorHost(lab_name=self.net_env.lab.name)
         self.faulty_devices = random.sample(self.net_env.hosts, 2)
 
-    def inject_fault(self):
+    def inject_fault(self, params: HostIPConflictParams | None = None):
+        if params is None:
+            params = HostIPConflictParams()
+        src_host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        dst_host = params.host_name_2 if params.host_name_2 is not None else self.faulty_devices[1]
         self.injector.inject_ip_change(
-            host_name=self.faulty_devices[1],
-            old_ip=self.kathara_api.get_host_ip(self.faulty_devices[1], "eth0", with_prefix=True),
-            new_ip=self.kathara_api.get_host_ip(self.faulty_devices[0], "eth0", with_prefix=True),
+            host_name=dst_host,
+            old_ip=self.kathara_api.get_host_ip(dst_host, "eth0", with_prefix=True),
+            new_ip=self.kathara_api.get_host_ip(src_host, "eth0", with_prefix=True),
             intf_name="eth0",
-            new_gateway=self.kathara_api.get_default_gateway(self.faulty_devices[0]),
+            new_gateway=self.kathara_api.get_default_gateway(src_host),
         )
+
 
 class HostIPConflictDetection(HostIPConflictBase, DetectionTask):
     META = ProblemMeta(
@@ -151,19 +156,19 @@ class HostIPConflictRCA(HostIPConflictBase, RCATask):
 # ==========================================
 
 
+class HostIncorrectIPParams(BaseModel):
+    """Parameters for injecting an incorrect host IP fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+    incorrect_ip: Optional[str] = Field(default=None, description="Incorrect CIDR IP. Defaults to a random 10.2.1.x/24 address.")
+
+
 class HostIncorrectIPBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_ip"
     TAGS: str = ["host"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_incorrect_ip",
-        summary="Set incorrect IP on one host.",
-        fields=(
-            FailureParamField("host_name", "str", "Target host name."),
-            FailureParamField("incorrect_ip", "str", "Incorrect CIDR IP (optional)."),
-        ),
-        example="nika failure inject host_incorrect_ip --set host_name=h1",
-    )
+
+    Params = HostIncorrectIPParams
 
     symptom_desc = "Some hosts seem to be unreachable in the network."
 
@@ -174,16 +179,20 @@ class HostIncorrectIPBase:
         self.injector = FaultInjectorHost(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.hosts)]
 
-    def inject_fault(self):
-        incorrect_ip = self.incorrect_ip or f"10.2.1.{random.randint(2, 254)}/24"
+    def inject_fault(self, params: HostIncorrectIPParams | None = None):
+        if params is None:
+            params = HostIncorrectIPParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        incorrect_ip = params.incorrect_ip or f"10.2.1.{random.randint(2, 254)}/24"
         ip_gateway = "10.2.1.1"
         self.injector.inject_ip_change(
-            host_name=self.faulty_devices[0],
-            old_ip=self.kathara_api.get_host_ip(self.faulty_devices[0], "eth0", with_prefix=True),
+            host_name=host,
+            old_ip=self.kathara_api.get_host_ip(host, "eth0", with_prefix=True),
             new_ip=incorrect_ip,
             intf_name="eth0",
             new_gateway=ip_gateway,
         )
+
 
 class HostIncorrectIPDetection(HostIncorrectIPBase, DetectionTask):
     META = ProblemMeta(
@@ -217,19 +226,19 @@ class HostIncorrectIPRCA(HostIncorrectIPBase, RCATask):
 # ==========================================
 
 
+class HostIncorrectGatewayParams(BaseModel):
+    """Parameters for injecting an incorrect host gateway fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+    new_gateway: Optional[str] = Field(default=None, description="Incorrect gateway IP. Defaults to a derived address.")
+
+
 class HostIncorrectGatewayBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_gateway"
     TAGS: str = ["host", "frr"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_incorrect_gateway",
-        summary="Set incorrect default gateway on one host.",
-        fields=(
-            FailureParamField("host_name", "str", "Target host name."),
-            FailureParamField("new_gateway", "str", "Incorrect gateway IP (optional)."),
-        ),
-        example="nika failure inject host_incorrect_gateway --set host_name=h1",
-    )
+
+    Params = HostIncorrectGatewayParams
 
     symptom_desc = "Some hosts seem to be unreachable in the network."
 
@@ -241,23 +250,26 @@ class HostIncorrectGatewayBase:
         self.faulty_devices = [random.choice(self.net_env.hosts)]
         self.new_gateway: str | None = None
 
-    def inject_fault(self):
-        if self.new_gateway:
-            new_gateway = self.new_gateway
-        else:
+    def inject_fault(self, params: HostIncorrectGatewayParams | None = None):
+        if params is None:
+            params = HostIncorrectGatewayParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        new_gateway = params.new_gateway or self.new_gateway
+        if new_gateway is None:
             try:
-                new_gateway_list = self.kathara_api.get_default_gateway(self.faulty_devices[0]).split(".")
-                new_gateway_list[-1] = "254"
-                new_gateway = ".".join(new_gateway_list)
+                gw_parts = self.kathara_api.get_default_gateway(host).split(".")
+                gw_parts[-1] = "254"
+                new_gateway = ".".join(gw_parts)
             except Exception:
                 new_gateway = "10.0.0.254"
         self.injector.inject_ip_change(
-            host_name=self.faulty_devices[0],
-            old_ip=self.kathara_api.get_host_ip(self.faulty_devices[0], "eth0", with_prefix=True),
-            new_ip=self.kathara_api.get_host_ip(self.faulty_devices[0], "eth0", with_prefix=True),
+            host_name=host,
+            old_ip=self.kathara_api.get_host_ip(host, "eth0", with_prefix=True),
+            new_ip=self.kathara_api.get_host_ip(host, "eth0", with_prefix=True),
             intf_name="eth0",
             new_gateway=new_gateway,
         )
+
 
 class HostIncorrectGatewayDetection(HostIncorrectGatewayBase, DetectionTask):
     META = ProblemMeta(
@@ -289,19 +301,21 @@ class HostIncorrectGatewayRCA(HostIncorrectGatewayBase, RCATask):
 # ==========================================
 # Problem: Incorrect Host netmask
 # ==========================================
+
+
+class HostIncorrectNetmaskParams(BaseModel):
+    """Parameters for injecting an incorrect host netmask fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+    netmask_prefix: int = Field(default=8, description="Incorrect prefix length.")
+
+
 class HostIncorrectNetmaskBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_netmask"
     TAGS: str = ["host", "frr"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_incorrect_netmask",
-        summary="Set incorrect netmask on one host.",
-        fields=(
-            FailureParamField("host_name", "str", "Target host name."),
-            FailureParamField("netmask_prefix", "int", "Incorrect prefix length.", default=8),
-        ),
-        example="nika failure inject host_incorrect_netmask --set host_name=h1 --set netmask_prefix=8",
-    )
+
+    Params = HostIncorrectNetmaskParams
 
     symptom_desc = "Some hosts seem to be unreachable in the network."
 
@@ -313,19 +327,21 @@ class HostIncorrectNetmaskBase:
         self.faulty_devices = [random.choice(self.net_env.hosts)]
         self.netmask_prefix = 8
 
-    def inject_fault(self):
-        new_ip = self.kathara_api.get_host_ip(self.faulty_devices[0], "eth0", with_prefix=True)
-        new_ip = new_ip.split("/")
-        new_ip[-1] = str(self.netmask_prefix)
-        new_ip = "/".join(new_ip)
-
+    def inject_fault(self, params: HostIncorrectNetmaskParams | None = None):
+        if params is None:
+            params = HostIncorrectNetmaskParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        old_ip = self.kathara_api.get_host_ip(host, "eth0", with_prefix=True)
+        ip_part = old_ip.split("/")[0]
+        new_ip = f"{ip_part}/{params.netmask_prefix}"
         self.injector.inject_ip_change(
-            host_name=self.faulty_devices[0],
-            old_ip=self.kathara_api.get_host_ip(self.faulty_devices[0], "eth0", with_prefix=True),
+            host_name=host,
+            old_ip=old_ip,
             new_ip=new_ip,
             intf_name="eth0",
-            new_gateway=self.kathara_api.get_default_gateway(self.faulty_devices[0]),
+            new_gateway=self.kathara_api.get_default_gateway(host),
         )
+
 
 class HostIncorrectNetmaskDetection(HostIncorrectNetmaskBase, DetectionTask):
     META = ProblemMeta(
@@ -359,19 +375,19 @@ class HostIncorrectNetmaskRCA(HostIncorrectNetmaskBase, RCATask):
 # =========================================
 
 
+class HostIncorrectDNSParams(BaseModel):
+    """Parameters for injecting an incorrect DNS resolver fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+    fake_dns_ip: str = Field(default="8.8.8.8", description="Incorrect DNS IP.")
+
+
 class HostIncorrectDNSBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_dns"
     TAGS: str = ["dns"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="host_incorrect_dns",
-        summary="Set incorrect DNS resolver on one host.",
-        fields=(
-            FailureParamField("host_name", "str", "Target host name."),
-            FailureParamField("fake_dns_ip", "str", "Incorrect DNS IP.", default="8.8.8.8"),
-        ),
-        example="nika failure inject host_incorrect_dns --set host_name=h1 --set fake_dns_ip=8.8.8.8",
-    )
+
+    Params = HostIncorrectDNSParams
 
     symptom_desc = "Some hosts are unable to access web services."
 
@@ -382,11 +398,12 @@ class HostIncorrectDNSBase:
         self.faulty_devices = [random.choice(self.net_env.hosts)]
         self.fake_dns_ip = "8.8.8.8"
 
-    def inject_fault(self):
-        self.injector.inject_dns_misconfiguration(
-            host_name=self.faulty_devices[0],
-            fake_dns_ip=self.fake_dns_ip,
-        )
+    def inject_fault(self, params: HostIncorrectDNSParams | None = None):
+        if params is None:
+            params = HostIncorrectDNSParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_dns_misconfiguration(host_name=host, fake_dns_ip=params.fake_dns_ip)
+
 
 class HostIncorrectDNSDetection(HostIncorrectDNSBase, DetectionTask):
     META = ProblemMeta(

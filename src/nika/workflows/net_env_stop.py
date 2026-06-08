@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from nika.net_env.net_env_pool import get_net_env_instance
-from nika.utils.logger import system_logger
+from nika.utils.logger import log_event
 from nika.utils.session import Session
 from nika.utils.session_store import SessionStore
 
@@ -11,8 +11,6 @@ from nika.utils.session_store import SessionStore
 def _stop_session_record(session_meta: dict) -> None:
     session = Session()
     for key, value in session_meta.items():
-        if key.endswith("_json"):
-            continue
         setattr(session, key, value)
     scenario = session.scenario_name
     if not scenario:
@@ -27,17 +25,38 @@ def _stop_session_record(session_meta: dict) -> None:
 
     if net_env.lab_exists():
         net_env.undeploy()
-        system_logger.info(f"Stopped network environment: {scenario} ({session.session_id})")
+        log_event(
+            "env_stop",
+            f"Stopped network environment: {scenario} ({session.session_id})",
+            scenario=scenario,
+            session_id=session.session_id,
+        )
     else:
-        system_logger.info(f"Network environment {scenario} ({session.session_id}) is not deployed.")
+        log_event(
+            "env_stop_skipped",
+            f"Network environment {scenario} ({session.session_id}) is not deployed.",
+            scenario=scenario,
+            session_id=session.session_id,
+        )
 
-    ended_cnt = SessionStore().mark_session_failures_ended(session.session_id, end_time=datetime.now().timestamp())
+    ended_cnt = SessionStore().mark_session_failures_ended(
+        session.session_id, end_time=datetime.now().timestamp()
+    )
     if ended_cnt:
-        system_logger.info(f"Marked {ended_cnt} failure record(s) as ended for session {session.session_id}")
+        log_event(
+            "failures_ended",
+            f"Marked {ended_cnt} failure record(s) as ended for session {session.session_id}",
+            session_id=session.session_id,
+            count=ended_cnt,
+        )
 
     session.clear_session()
-
-    system_logger.info(f"Cleared session {session.session_id} for scenario {scenario}")
+    log_event(
+        "session_cleared",
+        f"Cleared session {session.session_id} for scenario {scenario}",
+        session_id=session.session_id,
+        scenario=scenario,
+    )
 
 
 def stop_net_env(session_id: str | None = None, *, stop_all: bool = False) -> None:

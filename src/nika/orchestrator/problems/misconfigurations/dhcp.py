@@ -1,5 +1,8 @@
 import ipaddress
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_service import FaultInjectorService
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,7 +11,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaBaseAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 # ==================================================================
@@ -16,20 +18,20 @@ from nika.utils.logger import system_logger
 # ==================================================================
 
 
+class DHCPMissingSubnetParams(BaseModel):
+    """Parameters for injecting a DHCP missing subnet fault."""
+
+    host_name: Optional[str] = Field(default=None, description="DHCP server host name. Defaults to runtime selection.")
+    host_name_2: Optional[str] = Field(default=None, description="Affected client host name. Defaults to runtime selection.")
+
+
 class DHCPMissingSubnetBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.MISCONFIGURATION
     root_cause_name: str = "dhcp_missing_subnet"
 
     TAGS: str = ["dhcp"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="dhcp_missing_subnet",
-        summary="Delete DHCP subnet config for one affected host subnet.",
-        fields=(
-            FailureParamField("host_name", "str", "DHCP server host name."),
-            FailureParamField("host_name_2", "str", "Affected client host name."),
-        ),
-        example="nika failure inject dhcp_missing_subnet --set host_name=dhcp0 --set host_name_2=client1",
-    )
+
+    Params = DHCPMissingSubnetParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -39,19 +41,19 @@ class DHCPMissingSubnetBase:
         self.faulty_devices = [random.choice(self.net_env.servers["dhcp"])]
         self.faulty_devices.append(random.choice(self.net_env.hosts))
 
-    def inject_fault(self):
-        system_logger.info(
-            f"Injecting DHCP missing subnet fault: DHCP server {self.faulty_devices[0]}, affected host {self.faulty_devices[1]}"
-        )
+    def inject_fault(self, params: DHCPMissingSubnetParams | None = None):
+        if params is None:
+            params = DHCPMissingSubnetParams()
+        dhcp_server = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        client_host = params.host_name_2 if params.host_name_2 is not None else self.faulty_devices[1]
+        system_logger.info(f"Injecting DHCP missing subnet fault: DHCP server {dhcp_server}, affected host {client_host}")
         subnet = str(
             ipaddress.ip_network(
-                self.kathara_api.get_host_ip(self.faulty_devices[1], with_prefix=True), strict=False
+                self.kathara_api.get_host_ip(client_host, with_prefix=True), strict=False
             ).network_address
         )
-        self.injector.inject_delete_subnet(
-            dhcp_server=self.faulty_devices[0],
-            subnet=subnet,
-        )
+        self.injector.inject_delete_subnet(dhcp_server=dhcp_server, subnet=subnet)
+
 
 class DHCPMissingSubnetDetection(DHCPMissingSubnetBase, DetectionTask):
     META = ProblemMeta(

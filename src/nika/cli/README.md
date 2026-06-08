@@ -11,7 +11,7 @@ Requires `BASE_DIR` in the environment (or `.env`) pointing at the repository ro
 | `nika env` | List / deploy Kathará scenarios and create a session |
 | `nika failure` | List injectable problems / inject faults for a selected running session |
 | `nika agent` | Run a troubleshooting agent on one selected session task |
-| `nika eval` | Metrics, LLM judge, and publish (teardown) for one selected session |
+| `nika eval` | Metrics, LLM judge, session teardown, and offline summary CSV for finished sessions |
 | `nika benchmark` | Full pipeline for benchmark CSV rows or a single `(scenario, problem)` case |
 | `nika traffic` | Synthetic traffic (`od`, `web`) against the running lab |
 
@@ -75,13 +75,30 @@ Aligned with `nika agent run`:
 
 - **`nika eval metrics [--session-id ID]`**: rule-based metrics → `eval_metrics.json`.
 - **`nika eval judge -b BACKEND -m MODEL [--session-id ID]`**: LLM judge → `llm_judge.json`.
-- **`nika eval publish [--no-destroy] [--session-id ID]`**: merge artifacts, append CSV row, mark session finished, optionally undeploy.
+- **`nika eval publish [--no-destroy] [--session-id ID]`**: finalize `run.json`, optionally undeploy, clear runtime session state.
+- **`nika eval summary [filters] [-o PATH]`**: scan finished sessions under `results/` and write one CSV.
+
+### `nika eval summary` filters
+
+All filters are optional and repeatable. Omit filters to include every finished session that has the required artifacts.
+
+| Option | Meaning |
+|--------|---------|
+| `-o` / `--output` | Output CSV path (default: `results/0_summary/evaluation_summary.csv`) |
+| `-p` / `--problem` | Root-cause / problem id (e.g. `link_down`) |
+| `-e` / `--env` | Scenario / net env (e.g. `simple_bgp`) |
+| `-c` / `--category` | Root-cause category (e.g. `link_failure`) |
+| `--session-id` | Specific session id |
+| `-a` / `--agent` | Agent type |
+| `--model` | Agent model id |
+
+Each finished session directory should contain at least `run.json`, `ground_truth.json`, and `eval_metrics.json`. `llm_judge.json` is optional and merged when present.
 
 ---
 
 ## `nika benchmark`
 
-Implements the full end-to-end benchmark pipeline: start env → inject → agent → `eval_results` (metrics + judge + publish path inside `eval_results`).
+Implements the full end-to-end benchmark pipeline: start env → inject → agent → `eval_results` (metrics + judge + finish). Run `nika eval summary` afterward to aggregate CSV rows across finished sessions.
 
 ### Batch mode (default)
 
@@ -165,5 +182,6 @@ Options:
 
 ## Helpful paths
 
-- Session DB: `$BASE_DIR/runtime/sessions.db`
+- Runtime sessions: `$BASE_DIR/runtime/sessions/*.json` (cleared when a session is finished)
+- Eval summary CSV default: `$BASE_DIR/results/0_summary/evaluation_summary.csv`
 - Benchmark data: `benchmark/*.csv` under the repo root

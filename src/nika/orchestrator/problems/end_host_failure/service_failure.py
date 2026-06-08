@@ -1,5 +1,8 @@
 import logging
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,7 +11,6 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaBaseAPI
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 logger = system_logger
@@ -19,6 +21,13 @@ logger = system_logger
 # ==================================================================
 
 
+class DNSServiceDownParams(BaseModel):
+    """Parameters for injecting a DNS service down fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target DNS server host name. Defaults to runtime selection.")
+    service_name: str = Field(default="named", description="Service name.")
+
+
 class DNSServiceDownBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.LINK_FAILURE
     root_cause_name: str = "dns_service_down"
@@ -26,15 +35,8 @@ class DNSServiceDownBase:
     faulty_devices = "dns_server"
     symptom_desc = "Some hosts cannot access external websites."
     TAGS: str = ["dns"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="dns_service_down",
-        summary="Stop DNS service on a DNS server.",
-        fields=(
-            FailureParamField("host_name", "str", "Target DNS server host name."),
-            FailureParamField("service_name", "str", "Service name.", default="named"),
-        ),
-        example="nika failure inject dns_service_down --set host_name=dns0",
-    )
+
+    Params = DNSServiceDownParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -44,8 +46,12 @@ class DNSServiceDownBase:
         self.faulty_devices = [random.choice(self.net_env.servers["dns"])]
         self.service_name = "named"
 
-    def inject_fault(self):
-        self.injector.inject_service_down(host_name=self.faulty_devices[0], service_name=self.service_name)
+    def inject_fault(self, params: DNSServiceDownParams | None = None):
+        if params is None:
+            params = DNSServiceDownParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_service_down(host_name=host, service_name=params.service_name)
+
 
 class DNSServiceDownDetection(DNSServiceDownBase, DetectionTask):
     META = ProblemMeta(
@@ -79,20 +85,20 @@ class DNSServiceDownRCA(DNSServiceDownBase, RCATask):
 # ==================================================================
 
 
+class DHCPServiceDownParams(BaseModel):
+    """Parameters for injecting a DHCP service down fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target DHCP server host name. Defaults to runtime selection.")
+    service_name: str = Field(default="isc-dhcp-server", description="Service name.")
+
+
 class DHCPServiceDownBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.LINK_FAILURE
     root_cause_name: str = "dhcp_service_down"
 
     TAGS: str = ["dhcp"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="dhcp_service_down",
-        summary="Stop DHCP service on a DHCP server.",
-        fields=(
-            FailureParamField("host_name", "str", "Target DHCP server host name."),
-            FailureParamField("service_name", "str", "Service name.", default="isc-dhcp-server"),
-        ),
-        example="nika failure inject dhcp_service_down --set host_name=dhcp0",
-    )
+
+    Params = DHCPServiceDownParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -102,8 +108,12 @@ class DHCPServiceDownBase:
         self.faulty_devices = [random.choice(self.net_env.servers["dhcp"])]
         self.service_name = "isc-dhcp-server"
 
-    def inject_fault(self):
-        self.injector.inject_service_down(host_name=self.faulty_devices[0], service_name=self.service_name)
+    def inject_fault(self, params: DHCPServiceDownParams | None = None):
+        if params is None:
+            params = DHCPServiceDownParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_service_down(host_name=host, service_name=params.service_name)
+
 
 class DHCPServiceDownDetection(DHCPServiceDownBase, DetectionTask):
     META = ProblemMeta(

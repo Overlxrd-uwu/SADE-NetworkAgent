@@ -123,12 +123,15 @@ You can follow the steps below to run a complete troubleshooting task with NIKA.
    nika agent run -a react -b openai -m gpt-5-mini -n 20
    ```
 
-4. **Evaluate the run** (numeric metrics, LLM judge, and CSV publish are separate; run any subset, then publish when you want one summary row and teardown)
+4. **Evaluate the run** (metrics, judge, session teardown, and CSV summary are separate steps)
 
    ```shell
    nika eval metrics
    nika eval judge -b openai -m gpt-5-mini
    nika eval publish
+   nika eval summary                              # all finished sessions → default CSV
+   nika eval summary -p link_down -e simple_bgp   # filter by problem and scenario
+   nika eval summary -o results/0_summary/my_run.csv
    ```
 
 Full CLI documentation (benchmark batch mode, traffic types, parameter tables, and conventions) lives in **[src/nika/cli/README.md](src/nika/cli/README.md)**.

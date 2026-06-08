@@ -1,5 +1,8 @@
 import ipaddress
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,26 +11,25 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaAPIALL
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 
 # ==================================================================
 # Problem: BGP hijacking problem.
 # ==================================================================
 
 
+class BGPHijackingParams(BaseModel):
+    """Parameters for injecting a BGP hijacking fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target router host name. Defaults to a randomly selected router.")
+    target_network: Optional[str] = Field(default=None, description="Network prefix to advertise. Defaults to runtime selection.")
+
+
 class BGPHijackingBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.NETWORK_UNDER_ATTACK
     root_cause_name: str = "bgp_hijacking"
     TAGS: str = ["bgp", "http"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="bgp_hijacking",
-        summary="Inject forged BGP route advertisement from one router.",
-        fields=(
-            FailureParamField("host_name", "str", "Target router host name."),
-            FailureParamField("target_network", "str", "Network prefix to advertise (optional)."),
-        ),
-        example="nika failure inject bgp_hijacking --set host_name=r1",
-    )
+
+    Params = BGPHijackingParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -41,14 +43,15 @@ class BGPHijackingBase:
             ipaddress.ip_network(self.target_network, strict=False).subnets(new_prefix=25).__next__()
         )
 
-    def inject_fault(self):
+    def inject_fault(self, params: BGPHijackingParams | None = None):
+        if params is None:
+            params = BGPHijackingParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        target_network = params.target_network if params.target_network is not None else self.target_network
         asn_number = self.kathara_api.frr_get_bgp_asn_number(self.faulty_devices[0])
-        self.injector.inject_bgp_add_interface(
-            host_name=self.faulty_devices[0], intf_name="lo", ip_address=self.target_network
-        )
-        self.injector.inject_bgp_add_advertisement(
-            host_name=self.faulty_devices[0], network=self.target_network, AS=asn_number
-        )
+        self.injector.inject_bgp_add_interface(host_name=host, intf_name="lo", ip_address=target_network)
+        self.injector.inject_bgp_add_advertisement(host_name=host, network=target_network, AS=asn_number)
+
 
 class BGPHijackingDetection(BGPHijackingBase, DetectionTask):
     META = ProblemMeta(

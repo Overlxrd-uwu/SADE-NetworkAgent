@@ -1,17 +1,17 @@
 import logging
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_service import FaultInjectorService
 from nika.net_env.base import NetworkEnvBase
 from nika.net_env.net_env_pool import get_net_env_instance
 from nika.orchestrator.problems.problem_base import ProblemMeta, RootCauseCategory, TaskDescription, TaskLevel
 from nika.orchestrator.tasks.detection import DetectionTask
-from nika.orchestrator.tasks.localization import (
-    LocalizationTask,
-)
+from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaAPIALL
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 from nika.utils.logger import system_logger
 
 # ==================================================================
@@ -19,20 +19,20 @@ from nika.utils.logger import system_logger
 # ==================================================================
 
 
+class WebDoSParams(BaseModel):
+    """Parameters for injecting a web DoS attack fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target web server host name. Defaults to runtime selection.")
+    attacker_device: Optional[str] = Field(default=None, description="Attacker host name. Defaults to the last host.")
+
+
 class WebDoSBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.NETWORK_UNDER_ATTACK
     root_cause_name: str = "web_dos_attack"
     symptom_desc: str = "Users reports high latency when accessing some web services."
     TAGS: str = ["http"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="web_dos_attack",
-        summary="Start AB-based DoS traffic from attacker to web target.",
-        fields=(
-            FailureParamField("host_name", "str", "Target web server host name."),
-            FailureParamField("attacker_device", "str", "Attacker host name."),
-        ),
-        example="nika failure inject web_dos_attack --set host_name=web0 --set attacker_device=h10",
-    )
+
+    Params = WebDoSParams
 
     def __init__(self, scenario_name: NetworkEnvBase, **kwargs):
         super().__init__()
@@ -41,12 +41,17 @@ class WebDoSBase:
         self.kathara_api = KatharaAPIALL(lab_name=self.net_env.lab.name)
         self.injector = FaultInjectorService(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.servers["web"])]
-
         self.attacker_device = self.net_env.hosts[-1]
         self.target_website = self.kathara_api.get_host_ip(self.faulty_devices[0], with_prefix=False)
 
-    def inject_fault(self):
-        self.injector.inject_ab_attack(attacker_host=self.attacker_device, website=self.target_website)
+    def inject_fault(self, params: WebDoSParams | None = None):
+        if params is None:
+            params = WebDoSParams()
+        web_server = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        attacker = params.attacker_device if params.attacker_device is not None else self.attacker_device
+        target_ip = self.kathara_api.get_host_ip(web_server, with_prefix=False)
+        self.injector.inject_ab_attack(attacker_host=attacker, website=target_ip)
+
 
 class WebDoSDetection(WebDoSBase, DetectionTask):
     META = ProblemMeta(
@@ -76,7 +81,6 @@ class WebDoSRCA(WebDoSBase, RCATask):
 
 
 if __name__ == "__main__":
-    # Test the fault injection and recovery
     logging.basicConfig(level=logging.INFO)
     problem = WebDoSBase(scenario_name="dc_clos_service")
     # problem.inject_fault()

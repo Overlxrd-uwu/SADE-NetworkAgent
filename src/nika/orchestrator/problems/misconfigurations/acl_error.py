@@ -1,5 +1,8 @@
 import logging
 import random
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 from nika.generator.fault.injector_base import FaultInjectorBase
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -8,23 +11,24 @@ from nika.orchestrator.tasks.detection import DetectionTask
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
 from nika.service.kathara import KatharaAPIALL
-from nika.utils.failure_params import FailureParamField, FailureParamSchema
 
 # ==================================================================
 # Problem: BGP Access Policy Misconfiguration - ACL blocking BGP traffic
 # ==================================================================
 
 
+class BGPAclBlockParams(BaseModel):
+    """Parameters for injecting a BGP ACL block fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target router host name. Defaults to a randomly selected router.")
+
+
 class BGPAclBlockBase:
     root_cause_category = RootCauseCategory.MISCONFIGURATION
     root_cause_name = "bgp_acl_block"
     TAGS: str = ["bgp"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="bgp_acl_block",
-        summary="Block BGP traffic with ACL on one router.",
-        fields=(FailureParamField("host_name", "str", "Target router host name."),),
-        example="nika failure inject bgp_acl_block --set host_name=r1",
-    )
+
+    Params = BGPAclBlockParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -33,18 +37,13 @@ class BGPAclBlockBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.routers)]
 
-    def inject_fault(self):
-        # Inject ACL rules to block BGP (TCP port 179) traffic on the faulty device
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0],
-            rule="tcp dport 179 drop",
-            table_name="filter",
-        )
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0],
-            rule="tcp sport 179 drop",
-            table_name="filter",
-        )
+    def inject_fault(self, params: BGPAclBlockParams | None = None):
+        if params is None:
+            params = BGPAclBlockParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_acl_rule(host_name=host, rule="tcp dport 179 drop", table_name="filter")
+        self.injector.inject_acl_rule(host_name=host, rule="tcp sport 179 drop", table_name="filter")
+
 
 class BGPAclBlockDetection(BGPAclBlockBase, DetectionTask):
     META = ProblemMeta(
@@ -78,16 +77,18 @@ class BGPAclBlockRCA(BGPAclBlockBase, RCATask):
 # ==================================================================
 
 
+class OSPFAclBlockParams(BaseModel):
+    """Parameters for injecting an OSPF ACL block fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target router host name. Defaults to a randomly selected router.")
+
+
 class OSPFAclBlockBase:
     root_cause_category = RootCauseCategory.MISCONFIGURATION
     root_cause_name = "ospf_acl_block"
     TAGS: str = ["ospf"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="ospf_acl_block",
-        summary="Block OSPF traffic with ACL on one router.",
-        fields=(FailureParamField("host_name", "str", "Target router host name."),),
-        example="nika failure inject ospf_acl_block --set host_name=r1",
-    )
+
+    Params = OSPFAclBlockParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -96,18 +97,13 @@ class OSPFAclBlockBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.routers)]
 
-    def inject_fault(self):
-        # Inject ACL rules to block OSPF (UDP port 89) traffic on the faulty device
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0],
-            rule="ip protocol ospf drop",
-            table_name="filter",
-        )
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0],
-            rule="ip protocol ospf drop",
-            table_name="filter",
-        )
+    def inject_fault(self, params: OSPFAclBlockParams | None = None):
+        if params is None:
+            params = OSPFAclBlockParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_acl_rule(host_name=host, rule="ip protocol ospf drop", table_name="filter")
+        self.injector.inject_acl_rule(host_name=host, rule="ip protocol ospf drop", table_name="filter")
+
 
 class OSPFAclBlockDetection(OSPFAclBlockBase, DetectionTask):
     META = ProblemMeta(
@@ -141,16 +137,18 @@ class OSPFAclBlockRCA(OSPFAclBlockBase, RCATask):
 # ==================================================================
 
 
+class ARPAclBlockParams(BaseModel):
+    """Parameters for injecting an ARP ACL block fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
+
+
 class ARPAclBlockBase:
     root_cause_category = RootCauseCategory.MISCONFIGURATION
     root_cause_name = "arp_acl_block"
     TAGS: str = ["arp"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="arp_acl_block",
-        summary="Block ARP traffic with ACL on one host.",
-        fields=(FailureParamField("host_name", "str", "Target host name."),),
-        example="nika failure inject arp_acl_block --set host_name=h1",
-    )
+
+    Params = ARPAclBlockParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -159,9 +157,13 @@ class ARPAclBlockBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.hosts)]
 
-    def inject_fault(self):
-        self.injector.inject_acl_rule(host_name=self.faulty_devices[0], rule="drop", table_name="filter", family="arp")
-        self.kathara_api.exec_cmd(self.faulty_devices[0], "ip neigh flush all")
+    def inject_fault(self, params: ARPAclBlockParams | None = None):
+        if params is None:
+            params = ARPAclBlockParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_acl_rule(host_name=host, rule="drop", table_name="filter", family="arp")
+        self.kathara_api.exec_cmd(host, "ip neigh flush all")
+
 
 class ARPAclBlockDetection(ARPAclBlockBase, DetectionTask):
     META = ProblemMeta(
@@ -191,20 +193,22 @@ class ARPAclBlockRCA(ARPAclBlockBase, RCATask):
 
 
 # ==================================================================
-# Problem: ARP Access Policy Misconfiguration - ACL blocking ICMP traffic
+# Problem: ACL blocking ICMP traffic
 # ==================================================================
+
+
+class IcmpAclBlockParams(BaseModel):
+    """Parameters for injecting an ICMP ACL block fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
 
 
 class IcmpAclBlockBase:
     root_cause_category = RootCauseCategory.MISCONFIGURATION
     root_cause_name = "icmp_acl_block"
     TAGS: str = ["icmp"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="icmp_acl_block",
-        summary="Block ICMP traffic with ACL on one host.",
-        fields=(FailureParamField("host_name", "str", "Target host name."),),
-        example="nika failure inject icmp_acl_block --set host_name=h1",
-    )
+
+    Params = IcmpAclBlockParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -213,10 +217,12 @@ class IcmpAclBlockBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.hosts)]
 
-    def inject_fault(self):
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0], family="ip", rule="ip protocol icmp drop", table_name="filter"
-        )
+    def inject_fault(self, params: IcmpAclBlockParams | None = None):
+        if params is None:
+            params = IcmpAclBlockParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_acl_rule(host_name=host, family="ip", rule="ip protocol icmp drop", table_name="filter")
+
 
 class IcmpAclBlockDetection(IcmpAclBlockBase, DetectionTask):
     META = ProblemMeta(
@@ -246,20 +252,22 @@ class IcmpAclBlockRCA(IcmpAclBlockBase, RCATask):
 
 
 # ==================================================================
-# Problem: ARP Access Policy Misconfiguration - ACL blocking HTTP traffic
+# Problem: ACL blocking HTTP traffic
 # ==================================================================
+
+
+class HttpAclBlockParams(BaseModel):
+    """Parameters for injecting an HTTP ACL block fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target host name. Defaults to a randomly selected host.")
 
 
 class HttpAclBlockBase:
     root_cause_category = RootCauseCategory.MISCONFIGURATION
     root_cause_name = "http_acl_block"
     TAGS: str = ["http", "host"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="http_acl_block",
-        summary="Block HTTP traffic with ACL on one host.",
-        fields=(FailureParamField("host_name", "str", "Target host name."),),
-        example="nika failure inject http_acl_block --set host_name=h1",
-    )
+
+    Params = HttpAclBlockParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -268,10 +276,12 @@ class HttpAclBlockBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.hosts)]
 
-    def inject_fault(self):
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0], family="inet", rule="tcp dport 80 drop", table_name="filter"
-        )
+    def inject_fault(self, params: HttpAclBlockParams | None = None):
+        if params is None:
+            params = HttpAclBlockParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_acl_rule(host_name=host, family="inet", rule="tcp dport 80 drop", table_name="filter")
+
 
 class HttpAclBlockDetection(HttpAclBlockBase, DetectionTask):
     META = ProblemMeta(
@@ -305,17 +315,19 @@ class HttpAclBlockRCA(HttpAclBlockBase, RCATask):
 # ==================================================================
 
 
+class DNSPortBlockedParams(BaseModel):
+    """Parameters for injecting a DNS port blocked fault."""
+
+    host_name: Optional[str] = Field(default=None, description="Target DNS server host name. Defaults to runtime selection.")
+
+
 class DNSPortBlockedBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.MISCONFIGURATION
     root_cause_name: str = "dns_port_blocked"
 
     TAGS: str = ["dns", "http"]
-    FAILURE_PARAM_SCHEMA = FailureParamSchema(
-        problem_name="dns_port_blocked",
-        summary="Block DNS service ports with ACL on DNS server.",
-        fields=(FailureParamField("host_name", "str", "Target DNS server host name."),),
-        example="nika failure inject dns_port_blocked --set host_name=dns0",
-    )
+
+    Params = DNSPortBlockedParams
 
     def __init__(self, scenario_name: str | None, **kwargs):
         super().__init__()
@@ -324,17 +336,13 @@ class DNSPortBlockedBase:
         self.injector = FaultInjectorBase(lab_name=self.net_env.lab.name)
         self.faulty_devices = [random.choice(self.net_env.servers["dns"])]
 
-    def inject_fault(self):
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0],
-            rule="tcp dport 53 drop",
-            table_name="filter",
-        )
-        self.injector.inject_acl_rule(
-            host_name=self.faulty_devices[0],
-            rule="udp dport 53 drop",
-            table_name="filter",
-        )
+    def inject_fault(self, params: DNSPortBlockedParams | None = None):
+        if params is None:
+            params = DNSPortBlockedParams()
+        host = params.host_name if params.host_name is not None else self.faulty_devices[0]
+        self.injector.inject_acl_rule(host_name=host, rule="tcp dport 53 drop", table_name="filter")
+        self.injector.inject_acl_rule(host_name=host, rule="udp dport 53 drop", table_name="filter")
+
 
 class DNSPortBlockedDetection(DNSPortBlockedBase, DetectionTask):
     META = ProblemMeta(

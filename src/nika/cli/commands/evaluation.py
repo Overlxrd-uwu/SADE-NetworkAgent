@@ -1,4 +1,4 @@
-"""Commands for offline evaluation (metrics, judge, publish)."""
+"""Commands for offline evaluation (metrics, judge, publish, summary)."""
 
 import typer
 
@@ -43,14 +43,76 @@ def eval_publish(
     no_destroy: bool = typer.Option(
         False,
         "--no-destroy",
-        help="Leave the Kathara lab running after publishing.",
+        help="Leave the Kathara lab running after finishing the session.",
     ),
     session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
 ) -> None:
-    """Merge eval artifacts, append one CSV row, then undeploy and clear the session."""
+    """Finalize run.json, optionally undeploy, and clear the runtime session."""
     from nika.workflows.session_eval import publish_session_eval
 
     try:
         publish_session_eval(destroy_env=not no_destroy, session_id=session_id)
     except (FileNotFoundError, ValueError) as exc:
         raise typer.BadParameter(str(exc)) from exc
+
+
+@eval_app.command("summary")
+def eval_summary(
+    output: str | None = typer.Option(
+        None,
+        "-o",
+        "--output",
+        help="Output CSV path (default: results/0_summary/evaluation_summary.csv).",
+    ),
+    problem: list[str] | None = typer.Option(
+        None,
+        "-p",
+        "--problem",
+        help="Include only sessions with this root-cause / problem id (repeatable).",
+    ),
+    env: list[str] | None = typer.Option(
+        None,
+        "-e",
+        "--env",
+        help="Include only sessions from this scenario / net env (repeatable).",
+    ),
+    category: list[str] | None = typer.Option(
+        None,
+        "-c",
+        "--category",
+        help="Include only sessions in this root-cause category (repeatable).",
+    ),
+    session_id: list[str] | None = typer.Option(
+        None,
+        "--session-id",
+        help="Include only these session ids (repeatable).",
+    ),
+    agent: list[str] | None = typer.Option(
+        None,
+        "-a",
+        "--agent",
+        help="Include only sessions run with this agent type (repeatable).",
+    ),
+    model: list[str] | None = typer.Option(
+        None,
+        "--model",
+        help="Include only sessions run with this model id (repeatable).",
+    ),
+) -> None:
+    """Aggregate finished sessions under results/ into one CSV file."""
+    from nika.workflows.eval_summary import run_eval_summary
+
+    try:
+        out_path = run_eval_summary(
+            output_path=output,
+            problems=problem,
+            envs=env,
+            categories=category,
+            session_ids=session_id,
+            agent_types=agent,
+            models=model,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+
+    typer.echo(f"Wrote summary CSV: {out_path}")

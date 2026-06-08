@@ -6,10 +6,12 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
+from pydantic import ValidationError
+
 from nika.orchestrator.problems.prob_pool import get_problem_instance, list_avail_problem_names
 from nika.orchestrator.problems.problem_base import TaskLevel
 from nika.utils.failure_params import get_failure_param_schema, resolve_failure_params
-from nika.utils.logger import system_logger
+from nika.utils.logger import bind_session_dir, log_event
 from nika.utils.session import Session
 from nika.utils.session_store import SessionStore
 
@@ -105,11 +107,13 @@ def inject_failure(
     param_overrides: dict[str, str] | None = None,
 ) -> None:
     """Inject faults for ``problem_names`` into the lab for the running session."""
-    logger = system_logger
-
     session = Session()
     session.load_running_session(session_id=session_id)
     session.update_session("problem_names", problem_names)
+
+    # Bind per-session event logging now that session_dir is set.
+    bind_session_dir(session.session_dir)
+
     store = SessionStore()
 
     for problem_name in problem_names:
@@ -131,6 +135,12 @@ def inject_failure(
             **scenario_params,
         )
         tot_tasks.append(problem)
+
+    inject_meta = getattr(tot_tasks[0], "META", None)
+    if inject_meta is not None:
+        category = str(getattr(inject_meta, "root_cause_category", ""))
+        if category:
+            session.update_session("root_cause_category", category)
 
     failure_rows: list[tuple[int, str]] = []
     if re_inject:
@@ -157,7 +167,7 @@ def inject_failure(
                         ),
                         "scenario_name": session.scenario_name,
                         "lab_name": session.lab_name,
-                        "injection_params_json": _extract_injection_params(sub_problem),
+                        "injection_params": _extract_injection_params(sub_problem),
                         "status": "pending",
                         "start_time": now_ts,
                     }
@@ -179,27 +189,45 @@ def inject_failure(
                     "root_cause_category": str(getattr(getattr(inject_problem, "META", None), "root_cause_category", "")),
                     "scenario_name": session.scenario_name,
                     "lab_name": session.lab_name,
-                    "injection_params_json": params_snapshot,
+                    "injection_params": params_snapshot,
                     "status": "pending",
                     "start_time": now_ts,
                 }
             )
             failure_rows.append((failure_id, problem_names[0]))
 
-        if len(problem_names) == 1 and effective_params:
-            _apply_param_overrides(inject_problem, effective_params)
-        inject_problem.inject_fault()
+        ParamsClass = getattr(type(inject_problem), "Params", None)
+        if ParamsClass is not None:
+            # Pydantic-aware failure: build and validate the params model, then pass it in.
+            try:
+                fault_params = ParamsClass(**overrides) if overrides else ParamsClass()
+            except ValidationError as exc:
+                raise ValueError(f"Invalid parameters for '{problem_names[0]}': {exc}") from exc
+            inject_problem.inject_fault(params=fault_params)
+        else:
+            # Legacy path: apply overrides via attribute assignment.
+            if len(problem_names) == 1 and effective_params:
+                _apply_param_overrides(inject_problem, effective_params)
+            inject_problem.inject_fault()
         for failure_id, problem_name in failure_rows:
             store.update_failure_injection(
+                session.session_id,
                 failure_id,
-                {
-                    "status": "injected",
-                },
+                {"status": "injected"},
             )
-            logger.info(f"Failure status updated to injected: session={session.session_id}, problem={problem_name}")
+            log_event(
+                "failure_injected",
+                f"Failure injected: session={session.session_id}, problem={problem_name}",
+                session_id=session.session_id,
+                problem=problem_name,
+            )
 
-    logger.info(
-        f"Session {session.session_id}, injected problem(s): {problem_names} under {session.scenario_name}."
+    log_event(
+        "failure_inject_complete",
+        f"Session {session.session_id}: injected {problem_names} under {session.scenario_name}.",
+        session_id=session.session_id,
+        problems=problem_names,
+        scenario=session.scenario_name,
     )
     task_description = problem.get_task_description()
     session.update_session("task_description", task_description)
@@ -210,4 +238,8 @@ def inject_failure(
         tot_gt.update(json.loads(gt))
 
     session.write_gt(tot_gt)
-    logger.info(f"Ground truth saved for session ID: {session.session_id}")
+    log_event(
+        "ground_truth_saved",
+        f"Ground truth saved for session {session.session_id}.",
+        session_id=session.session_id,
+    )
