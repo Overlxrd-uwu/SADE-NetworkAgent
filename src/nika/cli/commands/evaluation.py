@@ -9,8 +9,8 @@ eval_app = typer.Typer(help="Evaluate a completed agent session.")
 def eval_metrics(
     session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
 ) -> None:
-    """Compute rule-based scores and trace stats; write eval_metrics.json."""
-    from nika.workflows.session_eval import run_eval_metrics
+    """Compute rule-based scores and trace stats on a closed session; write eval_metrics.json."""
+    from nika.workflows.eval.session import run_eval_metrics
 
     try:
         run_eval_metrics(session_id=session_id)
@@ -29,8 +29,8 @@ def eval_judge(
     judge_model: str = typer.Option(..., "-m", "--model", help="Judge model id."),
     session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
 ) -> None:
-    """Run LLM-as-judge only; write llm_judge.json."""
-    from nika.workflows.session_eval import run_llm_judge
+    """Run LLM-as-judge on a closed session; write llm_judge.json."""
+    from nika.workflows.eval.session import run_llm_judge
 
     try:
         run_llm_judge(judge_backend, judge_model, session_id=session_id)
@@ -40,18 +40,13 @@ def eval_judge(
 
 @eval_app.command("publish")
 def eval_publish(
-    no_destroy: bool = typer.Option(
-        False,
-        "--no-destroy",
-        help="Leave the Kathara lab running after finishing the session.",
-    ),
     session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
 ) -> None:
-    """Finalize run.json, optionally undeploy, and clear the runtime session."""
-    from nika.workflows.session_eval import publish_session_eval
+    """Validate eval artifacts on a closed session and record publish completion."""
+    from nika.workflows.eval.session import publish_session_eval
 
     try:
-        publish_session_eval(destroy_env=not no_destroy, session_id=session_id)
+        publish_session_eval(session_id=session_id)
     except (FileNotFoundError, ValueError) as exc:
         raise typer.BadParameter(str(exc)) from exc
 
@@ -100,7 +95,7 @@ def eval_summary(
     ),
 ) -> None:
     """Aggregate finished sessions under results/ into one CSV file."""
-    from nika.workflows.eval_summary import run_eval_summary
+    from nika.workflows.eval.summary import run_eval_summary
 
     try:
         out_path = run_eval_summary(
@@ -116,3 +111,44 @@ def eval_summary(
         raise typer.BadParameter(str(exc)) from exc
 
     typer.echo(f"Wrote summary CSV: {out_path}")
+
+
+@eval_app.command("clean")
+def eval_clean(
+    yes: bool = typer.Option(False, "-y", "--yes", help="Skip the confirmation prompt."),
+    force: bool = typer.Option(
+        False,
+        "--force",
+        help="Delete session files even when running sessions exist.",
+    ),
+) -> None:
+    """Delete historical results under results/ and runtime session JSON files."""
+    from nika.config import RESULTS_DIR, SESSIONS_DIR
+    from nika.utils.session_store import SessionStore
+    from nika.workflows.eval.clean import run_eval_clean
+
+    running = SessionStore().list_running_sessions()
+    if running and not force:
+        ids = ", ".join(str(row.get("session_id", "?")) for row in running)
+        raise typer.BadParameter(
+            f"{len(running)} running session(s) found ({ids}). "
+            "Close them with `nika session close` first, or pass --force."
+        )
+
+    label = f"all files under {RESULTS_DIR} and session files under {SESSIONS_DIR}"
+    if running and force:
+        label += f" (including {len(running)} running session file(s))"
+    if not yes:
+        confirmed = typer.confirm(f"Delete {label}?", default=False)
+        if not confirmed:
+            raise typer.Abort()
+
+    try:
+        report = run_eval_clean(force=force)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+
+    typer.echo(
+        f"Removed {report.results_entries_removed} entr{'y' if report.results_entries_removed == 1 else 'ies'} "
+        f"under {RESULTS_DIR} and {report.session_files_removed} session file(s) under {SESSIONS_DIR}."
+    )

@@ -36,7 +36,7 @@ where = ["src"]
 include = ["nika*", "agent*"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 filterwarnings = [
     "ignore::DeprecationWarning:fs",
     "ignore::DeprecationWarning:fs.opener",

@@ -58,7 +58,7 @@ cd nika
 uv sync
 
 # Activate the environment
-uv venv activate
+source .venv/bin/activate
 ```
 
 The Kathará API relies on Docker to function properly. We recommend to add current user to docker group to avoid calling with `sudo`. **However, please be aware of the security implications of this action.**
@@ -89,9 +89,9 @@ LANGSMITH_PROJECT=<>
 
 # if use langfuse for observability
 # check langfuse documentation for more details
-LANGFUSE_SECRET_KEY = <>
-LANGFUSE_PUBLIC_KEY = <>
-LANGFUSE_BASE_URL = "https://cloud.langfuse.com"
+LANGFUSE_SECRET_KEY=<>
+LANGFUSE_PUBLIC_KEY=<>
+LANGFUSE_HOST="https://cloud.langfuse.com"
 
 # api key for you LLM, e.g. DeepSeek here
 DEEPSEEK_API_KEY=<>
@@ -131,7 +131,7 @@ Each `nika env run` creates a **session** (printed as `session_id=…`). Session
    nika failure list
    nika failure describe <problem_id>         # parameter schema and usage hints
    nika failure inject <problem_id> [<problem_id> ...]
-   nika failure inject link_down --set device=sw1 --set interface=eth0
+   nika failure inject link_down --set host_name=host_1 --set intf_name=eth0
    nika failure ps [--session-id ID]          # persisted injection records
    ```
 
@@ -150,9 +150,10 @@ Each `nika env run` creates a **session** (printed as `session_id=…`). Session
    nika agent run -a mock -n 5                  # no LLM; useful for pipeline testing
    ```
 
-6. **Evaluate the run** (metrics, judge, session teardown, and CSV summary are separate steps)
+6. **Close the session, then evaluate the run** (metrics, judge, publish, and CSV summary are separate steps)
 
    ```shell
+   nika session close [SESSION_ID] -y           # undeploy lab and clear runtime state first
    nika eval metrics
    nika eval judge -b openai -m gpt-5-mini
    nika eval publish
@@ -168,6 +169,7 @@ Full CLI documentation (benchmark batch mode, traffic types, parameter tables, a
 ```shell
 nika benchmark run
 nika benchmark run dc_clos_bgp --problem bgp_asn_misconfig -t s
+nika benchmark run --judge --judge-backend openai --judge-model gpt-5-mini
 nika traffic list
 nika traffic run od --all-to-host host_1 --mbps 20 --interval 300 --background
 ```
@@ -189,15 +191,22 @@ uv run --with pytest pytest tests/test_session.py -v
 
 ## Network Scenarios
 
-This framework supports multiple network scenarios under the `nika/net_env` directory, including:
+Registered scenarios (see `nika env list`) live under `src/nika/net_env/`:
 
-| Scenario                                 | Scalable | Description                                                        |
-| ---------------------------------------- | -------- | ------------------------------------------------------------------ |
-| Data center network (CLOS)               | ✓        | Multi-tier leaf–spine fabric with edge servers.                    |
-| Campus network (3-tier)                  | ✓        | Enterprise core–distribution–access topology.                      |
-| ISP backbone network (meshed)            | ✓        | Provider-style backbone with core and access nodes.                |
-| SDN-enabled cloud POP fabric (CLOS/star) | ✓        | SDN fabric with centralized controller and edge switches.          |
-| P4 programmable testbed                  | --       | Compact testbed for data-plane algorithms and pipeline validation. |
+| Scenario ID | Scalable | Description |
+| ----------- | -------- | ----------- |
+| `dc_clos_bgp` | ✓ | Multi-tier data center CLOS with EBGP (FRR). |
+| `dc_clos_service` | ✓ | Data center CLOS with DNS/HTTP edge services and external clients. |
+| `ospf_enterprise_static` | ✓ | Enterprise hierarchical OSPF network with static host addressing. |
+| `ospf_enterprise_dhcp` | ✓ | Enterprise OSPF network with DHCP for host addressing. |
+| `rip_small_internet_vpn` | ✓ | Small RIP-based Internet with external zones and WireGuard VPN overlay. |
+| `sdn_clos` | ✓ | Scalable SDN spine–leaf fabric with OpenFlow controller. |
+| `sdn_star` | ✓ | SDN star (hub-and-spoke) topology with OpenFlow controller. |
+| `simple_bgp` | -- | Compact inter-domain BGP lab (two routers, two hosts). |
+| `p4_int` | -- | P4 spine–leaf testbed with In-band Network Telemetry (InfluxDB). |
+| `p4_bloom_filter` | -- | P4 bloom-filter data-plane validation testbed. |
+| `p4_counter` | -- | P4 counter pipeline testbed. |
+| `p4_mpls` | -- | P4 MPLS data-plane testbed. |
 
 
 💡 More scenarios are WIP!
@@ -258,30 +267,26 @@ Based on the above issues, we disclose a large public dataset of AI agents’ be
 
 ## MCP Servers and Tools
 
-This framework provides a set of MCP servers and tools to facilitate network troubleshooting tasks. All servers are available under `src/nika/service/mcp_server`. These include:
+This framework provides MCP servers under `src/nika/service/mcp_server`. These include:
 
-- **base mcp server for Kathará**: This server provides the basic functionality for interacting with Kathará network scenarios, including
-  - `get_reachability` to check the reachability by pinging all pairs of hosts.
-  - `iperf_test` to run iperf test between any two hosts.
-  - `systemctl_ops` to manage system services, i.e., start, stop, restart, status.
-  - `get_host_net_config` to retrieve the network configuration of a specific host.
-  - `nft_list_ruleset` to get the current nftables ruleset.
-- **BMv2 mcp server**: This server provides functionality for interacting with BMv2 switches, including
-  - `bmv2_get_log` to retrieve the log from a BMv2 switch.
-  - `bmv2_get_counter_arrays` to retrieve the counter arrays from a BMv2 switch.
-- **Frr mcp server**: This server provides functionality for interacting with FRRouting (FRR), including
-  - `frr_get_bgp_conf` to retrieve the BGP configuration from a FRR instance.
-  - `frr_get_ospf_conf` to retrieve the OSPF configuration from a FRR instance.
-- **INT mcp server**: This server provides functionality for interacting with INT (In-band Network Telemetry) data stored in InfluxDB, including
-  - `influx_list_buckets` to list all buckets in InfluxDB.
-  - `influx_get_measurements` to retrieve the measurements from a specific bucket in InfluxDB.
-  - `influx_query_measurement` to query data from InfluxDB.
-- **Generic mcp server**: This server provides generic functionalities, including
-  - `google_search` to perform a Google search.
-- **Task management mcp server**: This server provides functionality for managing tasks and submissions, including
-  - `list_avail_problems` to list all available problems for agent to solve.
-  - `get_submission_template` to retrieve the submission template for a specific problem.
-  - `submit` to submit a solution for a specific problem.
+- **Kathará base MCP server** (`kathara_base_mcp_server.py`): host reachability and diagnostics, including
+  - `get_reachability` to ping all pairs of hosts (subset when the lab is large).
+  - `ping_pair` to ping between two specific hosts.
+  - `iperf_test` to run an iperf test between two hosts.
+  - `systemctl_ops` to manage system services (start, stop, restart, status).
+  - `get_host_net_config` to retrieve the network configuration of a host.
+  - `get_tc_statistics`, `netstat`, `ip_addr_statistics`, `ethtool`, `curl_web_test` for interface and service checks.
+  - `cat_file`, `exec_shell`, `exec_shell_dual` to read files or run commands in containers.
+- **BMv2 MCP server** (`kathara_bmv2_mcp_server.py`): P4/BMv2 switch interaction, including
+  - `bmv2_get_log`, `bmv2_get_counter_arrays`, `bmv2_read_p4_program`, `bmv2_counter_read`.
+  - `bmv2_show_tables`, `bmv2_table_dump`, `bmv2_get_register_arrays`, `bmv2_register_read`.
+- **FRR MCP server** (`kathara_frr_mcp_server.py`): FRRouting routers, including
+  - `frr_get_bgp_conf`, `frr_get_ospf_conf`, `frr_show_running_config`, `frr_show_ip_route`, `frr_exec`.
+- **Telemetry MCP server** (`kathara_telemetry_mcp_server.py`): INT/InfluxDB telemetry, including
+  - `influx_list_buckets`, `influx_get_measurements`, `influx_count_measurements`, `influx_query_measurement`.
+- **Task management MCP server** (`task_mcp_server.py`): agent submissions, including
+  - `list_avail_problems` to list injectable root-cause ids.
+  - `submit` to write the agent's final detection/localization/RCA answer.
 
 💡 More tools are coming soon...
 
@@ -324,44 +329,19 @@ mcp.run(transport="sse")
 
 ## Logging and Observability
 
-This framework supports to log and monitor agents with Langfuse, Laminar, and LangSmith, check [Langchain Callbacks](https://python.langchain.com/docs/concepts/callbacks/) for details.
+The built-in ReAct agent (`react`) traces runs with **Langfuse** (LangChain `CallbackHandler`) and **LangSmith** (`langsmith.tracing_context`). Configure the keys in `.env` as shown above. See [LangChain Callbacks](https://python.langchain.com/docs/concepts/callbacks/) for callback details.
 
 ### Customized Logger
 
-This framework allows users to implement customized logging solutions tailored to their specific needs. This can be achieved by plugging the callback function to `mcp_use.MCPAgent`. For example, 
+Per-session message logging is implemented via `AgentCallbackLogger` in `src/agent/utils/loggers.py`. It writes structured JSONL to `{session_dir}/messages.jsonl` and is passed as a LangChain callback during agent runs. To extend it, subclass `BaseCallbackHandler` or reuse `AgentCallbackLogger`:
 
 ```python
-from langchain.callbacks.base import BaseCallbackHandler
+from agent.utils.loggers import AgentCallbackLogger
 
-class FileLoggerHandler(BaseCallbackHandler):
-    def __init__(self):
-        super().__init__()
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
-        file_handler = logging.FileHandler("mcp_use.log", encoding="utf-8")
-        formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
-
-    def on_llm_start(self, **kwargs):
-        ...
-
-    def on_llm_end(self, **kwargs):
-        ...
-
-    def on_tool_start(self,  **kwargs):
-        ...
-
-    def on_tool_end(self, **kwargs):
-        ...
-
-agent = MCPAgent(
-    llm=llm,
-    client=client,
-    max_steps=max_steps,
-    system_prompt_template=system_prompt_template,
-    verbose=True,
-    callbacks=[FileLoggerHandler()],
+callback = AgentCallbackLogger(agent="diagnosis_agent", session_dir=session_dir)
+result = await agent.ainvoke(
+    {"messages": messages},
+    config={"callbacks": [callback]},
 )
 ```
 

@@ -42,24 +42,10 @@ def get_lab_name() -> str:
     return str(lab_name)
 
 
-def _resolve_root_cause_name(meta: dict[str, Any]) -> str:
-    root_cause_name = meta.get("root_cause_name")
-    if root_cause_name:
-        return str(root_cause_name)
-    problem_names = meta.get("problem_names") or []
-    if len(problem_names) > 1:
-        return "multiple_faults"
-    if problem_names:
-        return str(problem_names[0])
-    raise ValueError(
-        f"Session '{meta.get('session_id')}' has no root_cause_name; inject failure first."
-    )
-
-
 def get_session_dir() -> str:
     meta = get_session_meta()
     session_dir = meta.get("session_dir")
     if session_dir:
         return str(session_dir)
     session_id = str(meta["session_id"])
-    return f"{RESULTS_DIR}/{_resolve_root_cause_name(meta)}/{session_id}"
+    return f"{RESULTS_DIR}/{session_id}"

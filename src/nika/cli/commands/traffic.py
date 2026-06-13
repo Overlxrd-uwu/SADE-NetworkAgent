@@ -12,7 +12,8 @@ import typer
 from nika.generator.traffic.od_flows import ODFLowGenerator
 from nika.generator.traffic.web_access import WebBrowsingTrafficGenerator
 from nika.net_env.net_env_pool import get_net_env_instance, scenario_requires_topo_tier
-from nika.utils.session import Session
+from nika.utils.session_resolve import resolve_running_session_id
+from nika.utils.session_store import SessionStore
 
 traffic_app = typer.Typer(help="Generate traffic in the Kathará lab.")
 
@@ -37,8 +38,8 @@ def _resolve_lab_and_tier(
     tier: str | None,
 ) -> tuple[str, str | None]:
     try:
-        session = Session()
-        session.load_running_session()
+        resolved_id = resolve_running_session_id()
+        meta = SessionStore().get_session(resolved_id)
     except (FileNotFoundError, ValueError, OSError, KeyError, TypeError, json.JSONDecodeError):
         if not lab:
             raise typer.BadParameter(
@@ -46,8 +47,8 @@ def _resolve_lab_and_tier(
             ) from None
         return lab, tier
 
-    resolved_lab = lab or getattr(session, "scenario_name", None)
-    resolved_tier = tier if tier is not None else getattr(session, "scenario_topo_size", None)
+    resolved_lab = lab or meta.get("scenario_name")
+    resolved_tier = tier if tier is not None else meta.get("scenario_topo_size")
     if not resolved_lab:
         raise typer.BadParameter("Session has no scenario_name; run `nika env run` or pass --lab.")
     return resolved_lab, resolved_tier

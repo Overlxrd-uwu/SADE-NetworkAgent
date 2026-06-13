@@ -5,7 +5,7 @@ from typing import Optional
 import typer
 
 def _exec_in_host(*, host: str, command: str, session_id: str | None, timeout: float) -> str:
-    from nika.workflows.exec_command import exec_command_in_host
+    from nika.workflows.exec.command import exec_command_in_host
 
     return exec_command_in_host(host=host, command=command, session_id=session_id, timeout=timeout)
 

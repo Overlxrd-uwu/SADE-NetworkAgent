@@ -1,5 +1,7 @@
 ## Build Images for InfluxDB (database for INT data)
 
+From this directory (`src/nika/net_env/p4/p4_int/`):
+
 ```shell
 docker build -t kathara/influxdb .
 ```

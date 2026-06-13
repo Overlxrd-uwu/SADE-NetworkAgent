@@ -2,7 +2,6 @@ import json
 import os
 from typing import List
 
-from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 from pydantic import BaseModel, Field
 
@@ -15,8 +14,6 @@ mcp = FastMCP(
     "task_mcp_server",
     instructions="This mcp server contains the apis to interact with tasks, for now using to submit your solution.",
 )
-
-load_dotenv(verbose=True)
 
 
 class SubmissionFormat(BaseModel):

@@ -86,12 +86,11 @@ def iter_session_dirs(results_dir: str | Path | None = None) -> list[Path]:
     if not root.exists():
         return []
     session_dirs: list[Path] = []
-    for problem_dir in sorted(root.iterdir()):
-        if not problem_dir.is_dir() or problem_dir.name == "0_summary":
+    for entry in sorted(root.iterdir()):
+        if not entry.is_dir() or entry.name == "0_summary":
             continue
-        for session_dir in sorted(problem_dir.iterdir()):
-            if session_dir.is_dir() and (session_dir / RUN_FILENAME).exists():
-                session_dirs.append(session_dir)
+        if (entry / RUN_FILENAME).exists():
+            session_dirs.append(entry)
     return session_dirs
 
 
@@ -159,7 +158,7 @@ def build_eval_result_from_session_dir(session_dir: Path) -> EvalResult:
         agent_type=run_meta.get("agent_type"),
         model=run_meta.get("model"),
         root_cause_category=resolve_root_cause_category(run_meta),
-        root_cause_name=run_meta.get("root_cause_name") or session_dir.parent.name,
+        root_cause_name=run_meta.get("root_cause_name"),
         net_env=run_meta.get("scenario_name"),
         scenario_topo_size=run_meta.get("scenario_topo_size"),
         session_id=run_meta.get("session_id") or session_dir.name,

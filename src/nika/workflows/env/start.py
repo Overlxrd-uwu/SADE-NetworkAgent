@@ -5,7 +5,7 @@ from typing import Literal
 from uuid import uuid4
 
 from nika.net_env.net_env_pool import get_net_env_instance, scenario_requires_topo_tier
-from nika.utils.logger import log_event, refresh_logger
+from nika.utils.logger import bind_session_dir, log_event, refresh_logger
 from nika.utils.session import Session
 
 
@@ -56,6 +56,7 @@ def start_net_env(
         scenario_topo_size=tier,
         scenario_params=scenario_params,
     )
+    bind_session_dir(session.session_dir)
     log_event(
         "env_start",
         f"Started network environment: {scenario} (size={tier}) — session {session_id}, lab {net_env.lab.name}",

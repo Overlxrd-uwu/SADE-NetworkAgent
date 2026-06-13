@@ -2,7 +2,7 @@
 
 Entry point: `nika` (see `[project.scripts]` in `pyproject.toml`). During development use `uv run nika …`.
 
-Requires `BASE_DIR` in the environment (or `.env`) pointing at the repository root so runtime and results paths resolve correctly.
+Runtime paths (`runtime/`, `results/`, `benchmark/`) resolve from the repository root (derived from the installed `nika` package location). A `.env` file at the repo root is loaded automatically.
 
 ## Command tree
 
@@ -13,7 +13,7 @@ Requires `BASE_DIR` in the environment (or `.env`) pointing at the repository ro
 | `nika failure` | List, describe, inject, and inspect faults for a running session |
 | `nika exec` | Run a shell command inside a lab host container |
 | `nika agent` | Run a troubleshooting agent on one selected session task |
-| `nika eval` | Metrics, LLM judge, session teardown, and offline summary CSV for finished sessions |
+| `nika eval` | Metrics, LLM judge, publish, and offline summary CSV for closed sessions |
 | `nika benchmark` | Full pipeline for benchmark CSV rows or a single `(scenario, problem)` case |
 | `nika traffic` | Synthetic traffic (`od`, `web`) against the running lab |
 
@@ -26,7 +26,7 @@ Use `nika <group> --help` and `nika <group> <command> --help` for generated opti
 - **`nika env run`** prints `session_id=…` and writes `runtime/sessions/{session_id}.json`.
 - Most commands that operate on a lab accept **`--session-id`** to target a specific session.
 - When **`--session-id` is omitted** and exactly **one** session is running, that session is selected automatically. With zero or multiple running sessions, the CLI raises an error asking you to pass `--session-id` or reduce concurrency.
-- **`nika session close`** and **`nika env stop`** both undeploy the Kathará lab and clear runtime session state; `session close` adds a confirmation prompt (skippable with `-y` / `--yes`).
+- **`nika session close`** undeploys the Kathará lab and clears runtime session state (confirmation prompt skippable with `-y` / `--yes`).
 
 ### Topology tier (`-t` / `--tier`)
 
@@ -50,10 +50,13 @@ Aligned with `nika agent run`:
 
 ### Benchmark judge options
 
-`nika benchmark run` configures **both** agent and judge in one command, so judge options use a **prefix** to avoid clashing with the agent:
+`nika benchmark run` configures **both** agent and judge in one command. By default it runs **metrics and publish only**; pass **`--judge`** to also run the LLM judge. Judge options use a **prefix** to avoid clashing with the agent:
 
+- **`--judge`**: enable LLM-as-judge after metrics.
 - **`--judge-backend`**
 - **`--judge-model`**
+
+Both judge options are required when **`--judge`** is set.
 
 ---
 
@@ -70,7 +73,6 @@ Aligned with `nika agent run`:
 - **`nika env list`**: print registered scenario ids.
 - **`nika env run NAME [-t s|m|l] [--no-redeploy] [--instance-tag TAG]`**: deploy one instance, create a session, and print `session_id=…`.
 - **`nika env ps`**: list running lab instances (one row per deployed Kathará lab). Columns: env id, topology, status, age, active session count, endpoint.
-- **`nika env stop [--session-id ID | --all]`**: stop one running session (auto-select only when exactly one running) or stop all.
 
 ---
 
@@ -108,10 +110,13 @@ Example: `nika exec host_1 ping -c 3 10.0.0.2 --timeout 30`
 
 ## `nika eval`
 
+Eval commands operate on **closed** sessions only. Close the lab with **`nika session close`** before running eval; artifacts are read from and written to `results/{session_id}/`.
+
 - **`nika eval metrics [--session-id ID]`**: rule-based metrics → `eval_metrics.json`.
 - **`nika eval judge -b BACKEND -m MODEL [--session-id ID]`**: LLM judge → `llm_judge.json`.
-- **`nika eval publish [--no-destroy] [--session-id ID]`**: finalize `run.json`, optionally undeploy, clear runtime session state.
+- **`nika eval publish [--session-id ID]`**: validate eval artifacts on a closed session and record publish completion.
 - **`nika eval summary [filters] [-o PATH]`**: scan finished sessions under `results/` and write one CSV.
+- **`nika eval clean [-y] [--force]`**: delete historical artifacts under `results/` and runtime session JSON files. Refuses when running sessions exist unless **`--force`** is passed.
 
 ### `nika eval summary` filters
 
@@ -133,7 +138,7 @@ Each finished session directory should contain at least `run.json`, `ground_trut
 
 ## `nika benchmark`
 
-Implements the full end-to-end benchmark pipeline: start env → inject → agent → `eval_results` (metrics + judge + finish). Run `nika eval summary` afterward to aggregate CSV rows across finished sessions.
+Implements the end-to-end benchmark pipeline: start env → inject → agent → close session → eval (metrics, optional judge, publish). Run `nika eval summary` afterward to aggregate CSV rows across finished sessions.
 
 ### Batch mode (default)
 
@@ -142,9 +147,12 @@ Omit the `SCENARIO` positional argument. Rows are read from a CSV file.
 ```shell
 nika benchmark run
 nika benchmark run --csv benchmark/benchmark_selected.csv
+nika benchmark run -j 4
 ```
 
-**Default CSV path**: `$BASE_DIR/benchmark/benchmark_selected.csv`.
+**Default CSV path**: `benchmark/benchmark_selected.csv` under the repository root.
+
+**`-j` / `--parallel`**: run up to N CSV rows concurrently (default `1`). Applies to batch mode only.
 
 **CSV columns** (header row):
 
@@ -163,12 +171,12 @@ Pass **`SCENARIO`** as the first positional argument (like `nika env run NAME`),
 ```shell
 nika benchmark run dc_clos_bgp --problem bgp_asn_misconfig -t s \
   -a react -b openai -m gpt-5-mini -n 20 \
-  --judge-backend openai --judge-model gpt-5-mini \
-  --destroy-env
+  --judge --judge-backend openai --judge-model gpt-5-mini
 ```
 
 - **`-t` / `--tier`**: required only when `SCENARIO` is scalable.
-- **`--destroy-env` / `--no-destroy-env`**: whether to tear down the lab after evaluation (default: `--no-destroy-env`).
+- **`--judge`**: optional; without it, only metrics and publish run after the agent finishes.
+- Each benchmark case gets its own lab; the lab is torn down when the session closes (before evaluation).
 
 ---
 
@@ -217,6 +225,6 @@ Options:
 
 ## Helpful paths
 
-- Runtime sessions: `$BASE_DIR/runtime/sessions/*.json` (cleared when a session is finished)
-- Eval summary CSV default: `$BASE_DIR/results/0_summary/evaluation_summary.csv`
+- Runtime sessions: `runtime/sessions/*.json` (cleared when a session is finished)
+- Eval summary CSV default: `results/0_summary/evaluation_summary.csv`
 - Benchmark data: `benchmark/*.csv` under the repo root

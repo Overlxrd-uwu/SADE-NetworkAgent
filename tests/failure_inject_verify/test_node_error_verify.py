@@ -33,7 +33,7 @@ from nika.orchestrator.problems.network_node_error.swicth_router_failure import 
     FrrDownParams,
 )
 
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 
 class Bmv2SwitchDownVerifyTest(FailureInjectVerifyTestCase):

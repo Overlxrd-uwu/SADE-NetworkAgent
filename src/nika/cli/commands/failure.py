@@ -4,6 +4,8 @@ import json
 
 import typer
 
+from nika.cli.utils import require_running_session_id
+
 failure_app = typer.Typer(help="Inject faults into the running lab.")
 
 
@@ -44,7 +46,7 @@ def failure_inject(
     ),
 ) -> None:
     """Inject one or more faults for the current session."""
-    from nika.workflows.failure_inject import inject_failure
+    from nika.workflows.failure.inject import inject_failure
 
     if not problems:
         raise typer.BadParameter("Provide at least one problem name.")
@@ -102,20 +104,10 @@ def failure_ps(
     session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
 ) -> None:
     """List persisted failure injection states for one session."""
-    from nika.utils.session import Session
     from nika.utils.session_store import SessionStore
 
-    store = SessionStore()
-    target_session_id = session_id
-    if target_session_id is None:
-        session = Session()
-        try:
-            session.load_running_session()
-        except (FileNotFoundError, ValueError) as exc:
-            raise typer.BadParameter(str(exc)) from exc
-        target_session_id = session.session_id
-
-    rows = store.list_failure_injections(session_id=target_session_id)
+    target_session_id = require_running_session_id(session_id)
+    rows = SessionStore().list_failure_injections(session_id=target_session_id)
     if not rows:
         typer.echo(f"No failure records for session {target_session_id}.")
         return

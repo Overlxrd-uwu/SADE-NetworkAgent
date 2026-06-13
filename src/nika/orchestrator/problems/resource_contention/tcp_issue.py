@@ -3,7 +3,7 @@ import random
 import tarfile
 from typing import Optional
 
-from nika.config import BASE_DIR
+from nika.config import pkg_path
 from nika.generator.fault.injector_host import FaultInjectorHost
 from nika.generator.fault.injector_tc import FaultInjectorTC
 from nika.net_env.net_env_pool import get_net_env_instance
@@ -123,7 +123,7 @@ class SenderApplicationDelayBase:
         host = params.host_name if params.host_name is not None else self.faulty_devices[0]
         self.kathara_api.exec_cmd(host_name=host, command="cp web_server.py web_server.py.bak")
         container = get_machine_container(lab_name=self.net_env.lab.name, host_name=host)
-        src_path = f"{BASE_DIR}/src/nika/net_env/utils/web/slow_sender_server.py"
+        src_path = str(pkg_path("net_env/utils/web/slow_sender_server.py"))
         data = io.BytesIO()
         with tarfile.open(fileobj=data, mode="w") as tar:
             tar.add(src_path, arcname="web_server.py")

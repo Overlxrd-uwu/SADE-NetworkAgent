@@ -29,7 +29,7 @@ from nika.orchestrator.problems.misconfigurations.ospf import (
 from nika.orchestrator.problems.misconfigurations.p4 import (
     P4AggressiveDetectionThresholdsDetection,
 )
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 
 class OSPFMisconfigVerifyTest(FailureInjectVerifyTestCase):

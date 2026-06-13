@@ -14,7 +14,7 @@ from nika.orchestrator.problems.end_host_failure.service_failure import (
     DNSServiceDownDetection,
 )
 from nika.orchestrator.problems.end_host_failure.vpn import HostIncorrectDNSDetection as VPNMembershipMissingDetection
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 
 class DNSRecordErrorVerifyTest(FailureInjectVerifyTestCase):

@@ -4,14 +4,9 @@ import json
 
 import typer
 
-from nika.cli.utils import env_id_from_lab, fmt_table, human_age
+from nika.cli.utils import env_id_from_lab, fmt_table
 
 session_app = typer.Typer(help="Active session management.")
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 
 def _agent_summary(session: dict) -> str:
@@ -26,30 +21,6 @@ def _agent_summary(session: dict) -> str:
     if start and end:
         return f"1 done ({agent_type})"
     return "—"
-
-
-def _load_all_sessions() -> list[dict]:
-    """Return all session documents (running + finished) sorted newest-first."""
-    import json as _json
-    from pathlib import Path
-
-    from nika.config import BASE_DIR
-
-    sessions_dir = Path(BASE_DIR) / "runtime" / "sessions"
-    result = []
-    if not sessions_dir.exists():
-        return result
-    for path in sorted(sessions_dir.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True):
-        try:
-            result.append(_json.loads(path.read_text(encoding="utf-8")))
-        except Exception:
-            pass
-    return result
-
-
-# ---------------------------------------------------------------------------
-# Commands
-# ---------------------------------------------------------------------------
 
 
 @session_app.command("ps")
@@ -71,12 +42,9 @@ def session_ps(
     FAILURES    number of injected failure records
     AGENTS      agent activity summary
     """
-    from nika.utils.session_store import SessionStore
+    from nika.workflows.session.list import list_sessions
 
-    if all_sessions:
-        sessions = _load_all_sessions()
-    else:
-        sessions = SessionStore().list_running_sessions()
+    sessions = list_sessions(running_only=not all_sessions)
 
     if not sessions:
         typer.echo("No sessions found.")
@@ -86,14 +54,16 @@ def session_ps(
     rows: list[list[str]] = []
     for s in sessions:
         n_failures = len(s.get("failure_injections", []))
-        rows.append([
-            s.get("session_id", "—"),
-            env_id_from_lab(s.get("lab_name")),
-            s.get("scenario_name", "—"),
-            s.get("status", "—"),
-            str(n_failures),
-            _agent_summary(s),
-        ])
+        rows.append(
+            [
+                s.get("session_id", "—"),
+                env_id_from_lab(s.get("lab_name")),
+                s.get("scenario_name", "—"),
+                s.get("status", "—"),
+                str(n_failures),
+                _agent_summary(s),
+            ]
+        )
 
     typer.echo(fmt_table(headers, rows))
 
@@ -107,20 +77,15 @@ def session_inspect(
     Prints the full session document as formatted JSON, with failure
     injection records summarised below the main body.
     """
-    from nika.utils.session_store import SessionStore
+    from nika.workflows.session.inspect import inspect_session
 
-    store = SessionStore()
     try:
-        data = store.get_session(session_id) if session_id else store.get_unique_running_session()
+        data, injections = inspect_session(session_id)
     except (FileNotFoundError, ValueError) as exc:
         raise typer.BadParameter(str(exc)) from exc
 
-    injections: list[dict] = data.pop("failure_injections", [])
-
-    # Main session metadata
     typer.echo(json.dumps(data, indent=2, default=str))
 
-    # Failure injections summary
     if injections:
         typer.echo(f"\nfailure_injections  ({len(injections)} record{'s' if len(injections) != 1 else ''}):")
         hdr = ["IDX", "PROBLEM", "STATUS", "PARAMS"]
@@ -130,12 +95,14 @@ def session_inspect(
             params_str = json.dumps(params_raw, default=str)
             if len(params_str) > 60:
                 params_str = params_str[:57] + "..."
-            fi_rows.append([
-                str(i),
-                inj.get("problem_name", "—"),
-                inj.get("status", "—"),
-                params_str,
-            ])
+            fi_rows.append(
+                [
+                    str(i),
+                    inj.get("problem_name", "—"),
+                    inj.get("status", "—"),
+                    params_str,
+                ]
+            )
         for line in fmt_table(hdr, fi_rows).splitlines():
             typer.echo("  " + line)
     else:
@@ -154,26 +121,28 @@ def session_close(
     omitted and only one session is running it is selected automatically.
 
     The Kathará lab is undeployed, all failure records are marked ended,
-    and the runtime session file is removed.
+    and the runtime session file is removed.  Closing ``all`` also runs
+    ``kathara wipe`` to remove leftover containers and networks when
+    session files are missing.
     """
-    from nika.workflows.net_env_stop import stop_net_env
     from nika.utils.session_store import SessionStore
+    from nika.workflows.session.close import close_session
 
     close_all = session_id is not None and session_id.lower() == "all"
 
     if close_all:
         running = SessionStore().list_running_sessions()
-        if not running:
-            typer.echo("No running sessions.")
-            return
-        label = f"all {len(running)} running session(s)"
+        if running:
+            label = f"all {len(running)} running session(s) and leftover Kathara resources"
+        else:
+            label = "leftover Kathara containers and networks"
         if not yes:
-            confirmed = typer.confirm(f"Stop lab containers and clear {label}?", default=False)
+            confirmed = typer.confirm(f"Stop lab containers and wipe {label}?", default=False)
             if not confirmed:
                 raise typer.Abort()
         try:
-            stop_net_env(stop_all=True)
-        except (FileNotFoundError, ValueError) as exc:
+            close_session(stop_all=True)
+        except ValueError as exc:
             raise typer.BadParameter(str(exc)) from exc
         typer.echo(f"Closed: {label}")
         return
@@ -188,7 +157,7 @@ def session_close(
             raise typer.Abort()
 
     try:
-        stop_net_env(session_id=session_id)
+        close_session(session_id=session_id)
     except (FileNotFoundError, ValueError) as exc:
         raise typer.BadParameter(str(exc)) from exc
 

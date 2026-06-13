@@ -15,9 +15,6 @@ from nika.evaluator.result_log import (
     resolve_root_cause_category,
     write_eval_summary_csv,
 )
-from nika.utils.logger import log_event, system_logger
-
-logger = system_logger
 
 
 def _matches_filters(
@@ -35,7 +32,7 @@ def _matches_filters(
     if session_ids and session_label not in session_ids:
         return False
     if problems:
-        root_cause = run_meta.get("root_cause_name") or session_dir.parent.name
+        root_cause = run_meta.get("root_cause_name")
         if root_cause not in problems:
             return False
     if envs and run_meta.get("scenario_name") not in envs:
@@ -71,12 +68,9 @@ def run_eval_summary(
     model_set = set(models) if models else None
 
     selected: list[Path] = []
-    skipped_unfinished: list[str] = []
-    skipped_incomplete: list[tuple[str, list[str]]] = []
 
     for session_dir in iter_session_dirs(results_dir):
         run_meta = json.loads((session_dir / RUN_FILENAME).read_text(encoding="utf-8"))
-        session_label = str(run_meta.get("session_id") or session_dir.name)
 
         if not _matches_filters(
             session_dir,
@@ -91,32 +85,14 @@ def run_eval_summary(
             continue
 
         if not is_finished_session(run_meta):
-            skipped_unfinished.append(session_label)
             continue
 
         missing = missing_summary_artifacts(session_dir)
         if missing:
-            skipped_incomplete.append((session_label, missing))
             continue
 
         selected.append(session_dir)
 
-    if skipped_unfinished:
-        logger.warning("Skipped unfinished sessions: %s", ", ".join(skipped_unfinished))
-    for session_label, missing in skipped_incomplete:
-        logger.warning(
-            "Skipped session %s (missing summary artifacts: %s)",
-            session_label,
-            ", ".join(missing),
-        )
-
     eval_results = [build_eval_result_from_session_dir(session_dir) for session_dir in selected]
     out_path = write_eval_summary_csv(eval_results, output_path or default_summary_csv_path())
-
-    log_event(
-        "eval_summary_written",
-        f"Wrote {len(eval_results)} row(s) to {out_path}",
-        output_path=str(out_path),
-        session_count=len(eval_results),
-    )
     return out_path

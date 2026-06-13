@@ -6,7 +6,7 @@ from typing import Literal
 from Kathara.manager.Kathara import Kathara, Machine
 from Kathara.model.Lab import Lab
 
-from nika.config import BASE_DIR
+from nika.config import pkg_path
 from nika.net_env.base import NetworkEnvBase
 
 cur_path = os.path.dirname(os.path.abspath(__file__))
@@ -316,10 +316,10 @@ class DCClosService(NetworkEnvBase):
         for router_meta in tot_spines:
             # general conf for frr
             router_meta.machine.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/bgp/daemons"), "/etc/frr/daemons"
+                str(pkg_path("net_env/utils/bgp/daemons")), "/etc/frr/daemons"
             )
             router_meta.machine.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/bgp/vtysh.conf"), "/etc/frr/vtysh.conf"
+                str(pkg_path("net_env/utils/bgp/vtysh.conf")), "/etc/frr/vtysh.conf"
             )
             router_meta.frr_config = FRR_BASE_TEMPLATE.format(
                 hostname=router_meta.name,
@@ -341,10 +341,10 @@ class DCClosService(NetworkEnvBase):
         for router_meta in tot_leaves + tot_super_spines:
             # general conf for frr
             router_meta.machine.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/bgp/daemons"), "/etc/frr/daemons"
+                str(pkg_path("net_env/utils/bgp/daemons")), "/etc/frr/daemons"
             )
             router_meta.machine.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/bgp/vtysh.conf"), "/etc/frr/vtysh.conf"
+                str(pkg_path("net_env/utils/bgp/vtysh.conf")), "/etc/frr/vtysh.conf"
             )
             router_meta.frr_config = FRR_BASE_TEMPLATE.format(
                 hostname=router_meta.name,

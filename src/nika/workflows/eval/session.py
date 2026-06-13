@@ -1,4 +1,4 @@
-"""Session evaluation: numeric metrics, LLM judge, and session teardown."""
+"""Session evaluation: numeric metrics, LLM judge, and publish on closed sessions."""
 
 import json
 import os
@@ -8,13 +8,12 @@ from pathlib import Path
 from nika.evaluator.llm_judge import LLMJudge
 from nika.evaluator.result_log import EVAL_METRICS_FILENAME, MESSAGES_FILENAME
 from nika.evaluator.trace_parser import AgentTraceParser
-from nika.net_env.net_env_pool import get_net_env_instance
 from nika.orchestrator.tasks.detection import DetectionSubmission
 from nika.orchestrator.tasks.localization import LocalizationTask
 from nika.orchestrator.tasks.rca import RCATask
-from nika.utils.logger import log_event, system_logger
+from nika.utils.logger import bind_session_dir, log_event, system_logger
 from nika.utils.session import Session
-from nika.utils.session_store import SessionStore
+from nika.workflows.session.close import close_session
 
 logger = system_logger
 
@@ -62,7 +61,8 @@ def generic_eval(gt, submission):
 def run_eval_metrics(*, session_id: str | None = None) -> None:
     """Compute rule-based scores and trace stats; write ``eval_metrics.json`` under the session dir."""
     session = Session()
-    session.load_running_session(session_id=session_id)
+    session.load_closed_session(session_id=session_id)
+    bind_session_dir(session.session_dir)
 
     gt_path = Path(session.session_dir) / "ground_truth.json"
     gt = json.loads(gt_path.read_text())
@@ -108,14 +108,15 @@ def run_eval_metrics(*, session_id: str | None = None) -> None:
     }
     out_path = Path(session.session_dir) / EVAL_METRICS_FILENAME
     out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    session.update_session("eval_metrics", payload)
+    session.update_run_meta("eval_metrics", payload)
     log_event("eval_metrics_saved", f"Wrote numeric eval metrics to {out_path}", session_id=session.session_id)
 
 
 def run_llm_judge(judge_llm_backend: str, judge_model: str, *, session_id: str | None = None) -> None:
     """Run LLM-as-judge only; writes ``llm_judge.json`` under the session dir."""
     session = Session()
-    session.load_running_session(session_id=session_id)
+    session.load_closed_session(session_id=session_id)
+    bind_session_dir(session.session_dir)
 
     gt_path = Path(session.session_dir) / "ground_truth.json"
     gt = json.loads(gt_path.read_text())
@@ -136,54 +137,46 @@ def run_llm_judge(judge_llm_backend: str, judge_model: str, *, session_id: str |
     )
     judge_path = Path(session.session_dir) / "llm_judge.json"
     if judge_path.exists():
-        session.update_session("llm_judge", json.loads(judge_path.read_text(encoding="utf-8")))
+        session.update_run_meta("llm_judge", json.loads(judge_path.read_text(encoding="utf-8")))
 
 
-def publish_session_eval(*, destroy_env: bool = True, session_id: str | None = None) -> None:
-    """Finalize a session: persist run.json, optionally undeploy, and clear runtime state."""
+def publish_session_eval(*, session_id: str | None = None) -> None:
+    """Validate eval artifacts on a closed session and record publish completion."""
     session = Session()
-    session.load_running_session(session_id=session_id)
+    session.load_closed_session(session_id=session_id)
+    bind_session_dir(session.session_dir)
 
-    if session.end_time is None:
-        session.end_session()
+    metrics_path = Path(session.session_dir) / EVAL_METRICS_FILENAME
+    if not metrics_path.exists():
+        raise FileNotFoundError(
+            f"eval_metrics.json not found under {session.session_dir}. Run `nika eval metrics` first."
+        )
 
     log_event(
         "eval_publish",
-        f"Finishing session {session.session_id} for scenario {session.scenario_name}.",
+        f"Published evaluation for session {session.session_id} (scenario {session.scenario_name}).",
         session_id=session.session_id,
         scenario=session.scenario_name,
     )
 
-    net_env_kwargs = {}
-    if session.scenario_topo_size is not None:
-        net_env_kwargs["topo_size"] = session.scenario_topo_size
-    net_env = get_net_env_instance(session.scenario_name, **net_env_kwargs)
-    if destroy_env and net_env.lab_exists():
-        net_env.undeploy()
-    log_event(
-        "env_destroy",
-        f"Destroyed network environment: {session.scenario_name} ({session.session_id})",
-        session_id=session.session_id,
-    )
-    ended_cnt = SessionStore().mark_session_failures_ended(session.session_id)
-    if ended_cnt:
-        log_event(
-            "failures_ended",
-            f"Marked {ended_cnt} failure record(s) as ended",
-            session_id=session.session_id,
-            count=ended_cnt,
-        )
-    session.clear_session()
-
 
 def eval_results(
-    judge_llm_backend: str,
-    judge_model: str,
     *,
     destroy_env: bool = True,
     session_id: str | None = None,
+    run_judge: bool = False,
+    judge_llm_backend: str | None = None,
+    judge_model: str | None = None,
 ) -> None:
-    """Run metrics, LLM judge, and finish in one call (benchmark / legacy pipeline)."""
-    run_eval_metrics(session_id=session_id)
-    run_llm_judge(judge_llm_backend, judge_model, session_id=session_id)
-    publish_session_eval(destroy_env=destroy_env, session_id=session_id)
+    """Close the session, then run metrics and publish; LLM judge runs only when ``run_judge`` is set."""
+    if run_judge and (not judge_llm_backend or not judge_model):
+        raise ValueError("--judge-backend and --judge-model are required when run_judge is enabled.")
+
+    session = Session()
+    session.load_running_session(session_id=session_id)
+    resolved_session_id = session.session_id
+    close_session(session_id=resolved_session_id, undeploy=destroy_env)
+    run_eval_metrics(session_id=resolved_session_id)
+    if run_judge:
+        run_llm_judge(judge_llm_backend, judge_model, session_id=resolved_session_id)
+    publish_session_eval(session_id=resolved_session_id)

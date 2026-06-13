@@ -59,7 +59,7 @@ def inject_failure(
     session.load_running_session(session_id=session_id)
     session.update_session("problem_names", problem_names)
 
-    # Bind per-session event logging now that session_dir is set.
+    # Bind per-session logging now that session_dir is set.
     bind_session_dir(session.session_dir)
 
     store = SessionStore()

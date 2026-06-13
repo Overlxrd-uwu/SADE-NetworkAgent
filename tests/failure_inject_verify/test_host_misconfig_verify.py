@@ -25,7 +25,7 @@ from nika.orchestrator.problems.end_host_failure.host_misconfig import (
     HostMissingIPParams,
 )
 
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 HOST = "pc1"
 HOST2 = "pc2"

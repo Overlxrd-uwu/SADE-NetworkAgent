@@ -15,7 +15,7 @@ from nika.orchestrator.problems.network_under_attack.dhcp import (
     DHCPSpoofedSubnetDetection,
 )
 from nika.orchestrator.problems.network_under_attack.web import WebDoSDetection
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 
 class WebDoSVerifyTest(FailureInjectVerifyTestCase):

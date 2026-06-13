@@ -1,9 +1,12 @@
 import json
 import os
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from nika.config import RESULTS_DIR
+from nika.evaluator.result_log import RUN_FILENAME, is_finished_session, iter_session_dirs
+from nika.utils.session_resolve import resolve_running_session_id
 from nika.utils.session_store import SessionStore
 
 
@@ -25,6 +28,8 @@ class Session:
         self.lab_name = lab_name
         self.scenario_topo_size = scenario_topo_size
         self.scenario_params = scenario_params or {}
+        self.session_dir = os.path.join(str(RESULTS_DIR), session_id)
+        os.makedirs(self.session_dir, exist_ok=True)
         self.store.create_session(
             {
                 "session_id": self.session_id,
@@ -32,20 +37,77 @@ class Session:
                 "scenario_name": self.scenario_name,
                 "scenario_topo_size": self.scenario_topo_size,
                 "scenario_params": self.scenario_params,
+                "session_dir": self.session_dir,
                 "status": "running",
             }
         )
+        self._write_run_json({k: v for k, v in self.__dict__.items() if k != "store"})
 
     def load_running_session(self, session_id: str | None = None):
-        session_meta = (
-            self.store.get_session(session_id)
-            if session_id is not None
-            else self.store.get_unique_running_session()
-        )
-        if session_meta.get("status") != "running":
-            raise ValueError(f"Session '{session_meta.get('session_id')}' is not running.")
+        resolved_id = resolve_running_session_id(session_id, store=self.store)
+        session_meta = self.store.get_session(resolved_id)
         for key, value in session_meta.items():
             setattr(self, key, value)
+        return self
+
+    def load_closed_session(self, session_id: str | None = None):
+        """Load a finished session from ``results/{session_id}/run.json`` for offline eval."""
+        if session_id is not None:
+            return self._load_closed_session_from_id(session_id)
+
+        candidates: list[tuple[float, dict]] = []
+        for session_dir in iter_session_dirs():
+            run_path = session_dir / RUN_FILENAME
+            run_meta = json.loads(run_path.read_text(encoding="utf-8"))
+            if not is_finished_session(run_meta):
+                continue
+            sid = run_meta.get("session_id") or session_dir.name
+            if self._session_is_still_running(sid):
+                continue
+            candidates.append((run_path.stat().st_mtime, run_meta))
+
+        if not candidates:
+            raise FileNotFoundError(
+                "No closed session found under results/. Close a session with `nika session close` first."
+            )
+        if len(candidates) > 1:
+            raise ValueError(
+                "Multiple closed sessions found under results/. Please pass --session-id to select one."
+            )
+        return self._apply_closed_session_meta(candidates[0][1])
+
+    def _session_is_still_running(self, session_id: str) -> bool:
+        try:
+            return self.store.get_session(session_id).get("status") == "running"
+        except FileNotFoundError:
+            return False
+
+    def _load_closed_session_from_id(self, session_id: str):
+        if self._session_is_still_running(session_id):
+            raise ValueError(
+                f"Session '{session_id}' is still running. Close it with `nika session close` before running eval."
+            )
+
+        session_dir = Path(RESULTS_DIR) / session_id
+        run_path = session_dir / RUN_FILENAME
+        if not run_path.exists():
+            raise FileNotFoundError(
+                f"Closed session '{session_id}' not found under results/. "
+                "Close the session with `nika session close` first."
+            )
+
+        run_meta = json.loads(run_path.read_text(encoding="utf-8"))
+        if not is_finished_session(run_meta):
+            raise ValueError(
+                f"Session '{session_id}' is not closed. Run `nika session close` before running eval."
+            )
+        return self._apply_closed_session_meta(run_meta, session_dir=session_dir)
+
+    def _apply_closed_session_meta(self, run_meta: dict, *, session_dir: Path | None = None):
+        for key, value in run_meta.items():
+            setattr(self, key, value)
+        resolved_dir = session_dir or Path(RESULTS_DIR) / (run_meta.get("session_id") or "")
+        self.session_dir = str(resolved_dir)
         return self
 
     def _write_session(self) -> str:
@@ -72,8 +134,17 @@ class Session:
                 self.root_cause_name = "multiple_faults"
             else:
                 self.root_cause_name = self.problem_names[0]
-            self.session_dir = f"{RESULTS_DIR}/{self.root_cause_name}/{self.session_id}"
         self._write_session()
+
+    def update_run_meta(self, key: str, value: Any):
+        """Update ``run.json`` for a closed session (no runtime session document)."""
+        setattr(self, key, value)
+        if hasattr(self, "problem_names") and hasattr(self, "session_id"):
+            if len(self.problem_names) > 1:
+                self.root_cause_name = "multiple_faults"
+            else:
+                self.root_cause_name = self.problem_names[0]
+        self._write_run_json({k: v for k, v in self.__dict__.items() if k != "store"})
 
     def write_gt(self, gt: dict[str, Any]):
         os.makedirs(self.session_dir, exist_ok=True)

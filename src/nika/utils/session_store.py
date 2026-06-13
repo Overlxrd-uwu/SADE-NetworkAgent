@@ -13,9 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from nika.config import BASE_DIR
-
-SESSIONS_DIR = os.path.join(BASE_DIR, "runtime", "sessions")
+from nika.config import SESSIONS_DIR
 
 
 def _now_iso() -> str:
@@ -23,8 +21,8 @@ def _now_iso() -> str:
 
 
 class SessionStore:
-    def __init__(self, sessions_dir: str = SESSIONS_DIR) -> None:
-        self.sessions_dir = sessions_dir
+    def __init__(self, sessions_dir: str | Path = SESSIONS_DIR) -> None:
+        self.sessions_dir = Path(sessions_dir)
         os.makedirs(self.sessions_dir, exist_ok=True)
 
     def _path(self, session_id: str) -> Path:

@@ -23,7 +23,7 @@ from nika.orchestrator.problems.resource_contention.tcp_issue import (
     ReceiverResourceContentionDetection,
     SenderResourceContentionDetection,
 )
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 
 class StressVerifyTest(FailureInjectVerifyTestCase):

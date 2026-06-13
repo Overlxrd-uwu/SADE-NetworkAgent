@@ -3,7 +3,7 @@ import os
 from Kathara.manager.Kathara import Kathara
 from Kathara.model.Lab import Lab
 
-from nika.config import BASE_DIR
+from nika.config import pkg_path
 from nika.net_env.base import NetworkEnvBase
 
 cur_path = os.path.dirname(os.path.abspath(__file__))
@@ -41,10 +41,10 @@ class SimpleBGP(NetworkEnvBase):
         for i, router in enumerate([router1, router2], start=1):
             router.copy_directory_from_path(os.path.join(cur_path, f"router{i}/etc"), "/etc")
             router.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/bgp/daemons"), "/etc/frr/daemons"
+                str(pkg_path("net_env/utils/bgp/daemons")), "/etc/frr/daemons"
             )
             router.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/bgp/vtysh.conf"), "/etc/frr/vtysh.conf"
+                str(pkg_path("net_env/utils/bgp/vtysh.conf")), "/etc/frr/vtysh.conf"
             )
             # to create the startup file, use self.lab instead of host
             self.lab.create_file_from_path(os.path.join(cur_path, f"router{i}.startup"), f"router{i}.startup")

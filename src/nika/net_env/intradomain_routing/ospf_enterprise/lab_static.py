@@ -6,7 +6,7 @@ from typing import Literal
 from Kathara.manager.Kathara import Kathara, Machine
 from Kathara.model.Lab import Lab
 
-from nika.config import BASE_DIR
+from nika.config import pkg_path
 from nika.net_env.base import NetworkEnvBase
 
 cur_path = os.path.dirname(os.path.abspath(__file__))
@@ -384,10 +384,10 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
         for core_id, core_meta in core_routers.items():
             # general conf for frr
             core_meta.machine.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/ospf/daemons"), "/etc/frr/daemons"
+                str(pkg_path("net_env/utils/ospf/daemons")), "/etc/frr/daemons"
             )
             core_meta.machine.create_file_from_path(
-                os.path.join(BASE_DIR, "src/nika/net_env/utils/ospf/vtysh.conf"), "/etc/frr/vtysh.conf"
+                str(pkg_path("net_env/utils/ospf/vtysh.conf")), "/etc/frr/vtysh.conf"
             )
             core_meta.frr_config = FRR_BASE_TEMPLATE.format(
                 router_id=core_meta.router_id,
@@ -407,10 +407,10 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
             for dist_meta in dist_metas:
                 # general conf for frr
                 dist_meta.machine.create_file_from_path(
-                    os.path.join(BASE_DIR, "src/nika/net_env/utils/ospf/daemons"), "/etc/frr/daemons"
+                    str(pkg_path("net_env/utils/ospf/daemons")), "/etc/frr/daemons"
                 )
                 dist_meta.machine.create_file_from_path(
-                    os.path.join(BASE_DIR, "src/nika/net_env/utils/ospf/vtysh.conf"), "/etc/frr/vtysh.conf"
+                    str(pkg_path("net_env/utils/ospf/vtysh.conf")), "/etc/frr/vtysh.conf"
                 )
                 dist_meta.frr_config = FRR_BASE_TEMPLATE.format(
                     router_id=dist_meta.router_id,
@@ -427,10 +427,10 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
 
         # add configurations for server switch
         server_access_meta.machine.create_file_from_path(
-            os.path.join(BASE_DIR, "src/nika/net_env/utils/ospf/daemons"), "/etc/frr/daemons"
+            str(pkg_path("net_env/utils/ospf/daemons")), "/etc/frr/daemons"
         )
         server_access_meta.machine.create_file_from_path(
-            os.path.join(BASE_DIR, "src/nika/net_env/utils/ospf/vtysh.conf"), "/etc/frr/vtysh.conf"
+            str(pkg_path("net_env/utils/ospf/vtysh.conf")), "/etc/frr/vtysh.conf"
         )
         server_access_meta.frr_config = FRR_BASE_TEMPLATE.format(
             router_id=server_access_meta.router_id,

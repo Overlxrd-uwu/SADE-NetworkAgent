@@ -1,20 +1,16 @@
-import os
+from nika.config import MCP_SERVER_DIR
 
 
 class MCPServerConfig:
     def __init__(self, session_id: str):
-        base_dir = os.getenv("BASE_DIR")
-        if not base_dir:
-            raise ValueError("BASE_DIR must be set before starting MCP servers.")
         if not session_id:
             raise ValueError("session_id is required to start MCP servers.")
-        self.mcp_server_dir = os.path.join(base_dir, "src/nika/service/mcp_server")
+        self.mcp_server_dir = str(MCP_SERVER_DIR)
         self.session_id = session_id
 
     def _server_env(self) -> dict[str, str]:
         return {
             "NIKA_SESSION_ID": self.session_id,
-            "BASE_DIR": os.getenv("BASE_DIR", ""),
         }
 
     def load_config(self, if_submit: bool = False) -> dict:

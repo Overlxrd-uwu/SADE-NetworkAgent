@@ -21,7 +21,7 @@ from nika.orchestrator.problems.link_failure.link_failure import (
     LinkFragParams,
 )
 
-from tests.failure_inject_verify.base import FailureInjectVerifyTestCase
+from tests.integration_base import FailureInjectVerifyTestCase
 
 HOST = "pc1"
 INTF = "eth0"

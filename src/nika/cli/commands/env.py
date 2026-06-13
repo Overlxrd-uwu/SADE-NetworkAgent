@@ -1,4 +1,4 @@
-"""Commands for starting, stopping, and listing network environments."""
+"""Commands for deploying and listing network environments."""
 
 import typer
 
@@ -33,7 +33,7 @@ def env_run(
     ),
 ) -> None:
     """Deploy one scenario and start a new session."""
-    from nika.workflows.net_env_start import start_net_env
+    from nika.workflows.env.start import start_net_env
 
     session_id = start_net_env(name, tier, redeploy=not no_redeploy, instance_tag=instance_tag)
     typer.echo(f"session_id={session_id}")
@@ -96,21 +96,3 @@ def env_ps() -> None:
         rows.append([env_id, topology, status, age, sessions_col, endpoint])
 
     typer.echo(fmt_table(headers, rows))
-
-
-@env_app.command("stop")
-def env_stop(
-    session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
-    stop_all: bool = typer.Option(False, "--all", help="Stop all running sessions."),
-) -> None:
-    """Stop one or all network environment sessions."""
-    from nika.workflows.net_env_stop import stop_net_env
-
-    if stop_all and session_id is not None:
-        raise typer.BadParameter("--all and --session-id cannot be used together.")
-    try:
-        stop_net_env(session_id=session_id, stop_all=stop_all)
-    except FileNotFoundError as exc:
-        raise typer.BadParameter(str(exc)) from exc
-    except ValueError as exc:
-        raise typer.BadParameter(str(exc)) from exc

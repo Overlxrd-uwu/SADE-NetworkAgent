@@ -2,6 +2,10 @@
 
 from datetime import datetime, timezone
 
+import typer
+
+from nika.utils.session_resolve import resolve_running_session_id, resolve_session_id
+
 
 def env_id_from_lab(lab_name: str | None) -> str:
     """Derive a short display ENV ID from a lab instance name.
@@ -53,3 +57,19 @@ def fmt_table(headers: list[str], rows: list[list[str]]) -> str:
     header_line = "  ".join(h.ljust(w) for h, w in zip(headers, widths))
     data_lines = ["  ".join(c.ljust(w) for c, w in zip(row, widths)) for row in rows]
     return "\n".join([header_line, sep] + data_lines)
+
+
+def require_session_id(session_id: str | None = None) -> str:
+    """Resolve a runtime session id or raise ``typer.BadParameter``."""
+    try:
+        return resolve_session_id(session_id)
+    except (FileNotFoundError, ValueError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+
+
+def require_running_session_id(session_id: str | None = None) -> str:
+    """Resolve a running session id or raise ``typer.BadParameter``."""
+    try:
+        return resolve_running_session_id(session_id)
+    except (FileNotFoundError, ValueError) as exc:
+        raise typer.BadParameter(str(exc)) from exc

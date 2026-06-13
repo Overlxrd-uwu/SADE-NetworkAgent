@@ -28,7 +28,7 @@ def agent_run(
     session_id: str | None = typer.Option(None, "--session-id", help="Target session id (lab_hash)."),
 ) -> None:
     """Run the agent on the current session task."""
-    from nika.workflows.agent_run import start_agent
+    from nika.workflows.agent.run import start_agent
 
     try:
         start_agent(agent_type, llm_backend, model, max_steps, session_id=session_id)
