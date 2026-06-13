@@ -11,7 +11,7 @@ from typing import ClassVar
 
 from typer.testing import CliRunner
 
-from nika.cli.main import app
+from nika.codex_cli.main import app
 from nika.service.mcp_server.mcp_session_context import SESSION_ID_ENV, get_lab_name
 from nika.utils.session_store import SessionStore
 from nika.workflows.eval.clean import remove_session_results

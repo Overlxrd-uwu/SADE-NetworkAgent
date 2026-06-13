@@ -79,7 +79,7 @@ def generate_sdn_clos_topology(
     tot_host_list: list[HostMeta] = []
     for leaf_id in range(LEAF_NUM):
         for host_id in range(HOST_PER_LEAF):
-            tot_host_list.append(HostMeta(name=f"host_{leaf_id + 1}_{host_id + 1}"))
+            tot_host_list.append(HostMeta(name=f"pc_{leaf_id + 1}_{host_id + 1}"))
 
     controller = ControllerMeta(name="controller")
 
@@ -92,7 +92,7 @@ def generate_sdn_clos_topology(
     host_pool = list(host_network.hosts())
     idx = 0
     for leaf_idx, leaf_switch in enumerate(leaf_switches, start=1):
-        leaf_hosts = [h for h in tot_host_list if h.name.startswith(f"host_{leaf_idx}_")]
+        leaf_hosts = [h for h in tot_host_list if h.name.startswith(f"pc_{leaf_idx}_")]
         for host_meta in leaf_hosts:
             link_name = f"{host_meta.name}_{leaf_switch.name}"
             host_meta.links.append((0, link_name))

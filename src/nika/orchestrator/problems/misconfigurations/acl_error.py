@@ -321,7 +321,7 @@ class HttpAclBlockParams(BaseModel):
 class HttpAclBlockBase:
     root_cause_category = RootCauseCategory.MISCONFIGURATION
     root_cause_name = "http_acl_block"
-    TAGS: str = ["http", "host"]
+    TAGS: str = ["http", "pc"]
 
     Params = HttpAclBlockParams
 

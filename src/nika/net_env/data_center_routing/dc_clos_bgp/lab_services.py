@@ -70,7 +70,7 @@ class DCClosService(NetworkEnvBase):
     LAB_NAME = "dc_clos_service"
     TOPO_LEVEL = "hard"
     TOPO_SIZE = ["s", "m", "l"]
-    TAGS = ["arp", "link", "mac", "bgp", "icmp", "frr", "dns", "host", "http"]
+    TAGS = ["arp", "link", "mac", "bgp", "icmp", "frr", "dns", "pc", "http"]
 
     def __init__(self, topo_size: Literal["s", "m", "l"] = "s"):
         super().__init__()

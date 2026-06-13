@@ -40,7 +40,12 @@ def benchmark_run(
     agent_type: str = typer.Option("react", "-a", "--agent", help="Agent implementation."),
     llm_backend: str = typer.Option("openai", "-b", "--backend", help="LLM provider (openai, ollama, deepseek)."),
     model: str = typer.Option("gpt-5-mini", "-m", "--model", help="Model id for the agent."),
-    max_steps: int = typer.Option(20, "-n", "--max-steps", help="Max agent steps."),
+    max_steps: int = typer.Option(
+        20,
+        "-n",
+        "--max-steps",
+        help="Max ReAct steps (react and mock only; ignored for cli).",
+    ),
     parallel: int = typer.Option(
         1,
         "-j",

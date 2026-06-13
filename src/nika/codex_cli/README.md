@@ -1,4 +1,6 @@
-# NIKA CLI reference
+# Codex CLI reference
+
+Python package: `nika.codex_cli` (directory `src/nika/codex_cli/`). A separate Claude CLI front-end may be added alongside this module later.
 
 Entry point: `nika` (see `[project.scripts]` in `pyproject.toml`). During development use `uv run nika …`.
 
@@ -37,14 +39,15 @@ Same semantics as `nika env run`:
 
 This flag is reused on **`nika benchmark run`** and **`nika traffic run`** when a tier is required and not already implied by the session.
 
-### Agent LLM options
+### Agent options
 
 Aligned with `nika agent run`:
 
-- **`-a` / `--agent`**: agent implementation (`react`, or `mock` for pipeline testing without an LLM).
-- **`-b` / `--backend`**: provider (`openai`, `ollama`, `deepseek`, …).
-- **`-m` / `--model`**: model id for that provider.
-- **`-n` / `--max-steps`**: ReAct step cap.
+- **`-a` / `--agent`**: `react` (LangGraph + LangChain ReAct), `cli` (LangGraph + Codex CLI subprocess), or `mock` (pipeline testing without an LLM).
+- **`-b` / `--backend`**: LLM provider for `react` and `mock` (`openai`, `ollama`, `deepseek`). Ignored for `cli` (Codex uses OpenAI models).
+- **`-m` / `--model`**: model id.
+- **`-n` / `--max-steps`**: max ReAct recursion steps per phase (`react` and `mock` only).
+- **`-e` / `--reasoning-effort`**: Codex `model_reasoning_effort` (`cli` only): `none`, `minimal`, `low`, `medium`, `high`, `xhigh`.
 
 `nika eval judge` uses **`-b`** and **`-m`** for the judge only (no agent in that command).
 
@@ -93,18 +96,35 @@ Run a shell command inside a host container for the selected session-bound lab:
 nika exec HOST COMMAND… [--session-id ID] [--timeout SECONDS]
 ```
 
-- **`HOST`**: container / host name in the lab (e.g. `host_1`).
+- **`HOST`**: container / pc name in the lab (e.g. `pc1`).
 - **`COMMAND`**: passed to the container shell (remaining args are joined with spaces).
 - **`--timeout`**: default `10` seconds.
 
-Example: `nika exec host_1 ping -c 3 10.0.0.2 --timeout 30`
+Example: `nika exec pc1 ping -c 3 10.0.0.2 --timeout 30`
 
 ---
 
 ## `nika agent`
 
-- **`nika agent list`**: supported agent types (`react`, `mock`) and LLM backends.
-- **`nika agent run [-a react] [-b openai] [-m MODEL] [-n 20] [--session-id ID]`**: run the agent on one selected session. Use **`-a mock`** to exercise the pipeline without calling an LLM.
+- **`nika agent list`**: supported agent types (`react`, `cli`, `mock`), LLM backends, and Codex reasoning-effort levels.
+- **`nika agent run`**: run the agent on one selected session.
+
+  | Flag | Applies to | Meaning |
+  |------|------------|---------|
+  | `-a` / `--agent` | all | `react`, `cli`, or `mock` |
+  | `-b` / `--backend` | `react`, `mock` | `openai`, `ollama`, or `deepseek` |
+  | `-m` / `--model` | all | model id |
+  | `-n` / `--max-steps` | `react`, `mock` | ReAct step cap per phase |
+  | `-e` / `--reasoning-effort` | `cli` | Codex reasoning effort level |
+  | `--session-id` | all | target session |
+
+  Examples:
+
+  ```shell
+  nika agent run -a react -b openai -m gpt-5-mini -n 20
+  nika agent run -a cli -m gpt-5.4-mini -e medium
+  nika agent run -a mock -n 5
+  ```
 
 ---
 
@@ -162,7 +182,7 @@ nika benchmark run -j 4
 | `scenario` | Scenario id (same as `nika env run`) |
 | `topo_size` | Tier `s`, `m`, or `l`; **empty** for scenarios without tiers (same values as `nika env run -t`) |
 
-Agent, judge, and step options use the same flags as below.
+Agent and judge options use the same flags as below (including `-a cli` and `-e` for Codex runs; `-n` applies only to `react` and `mock`).
 
 ### Single-case mode
 

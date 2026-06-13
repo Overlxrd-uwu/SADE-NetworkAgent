@@ -57,7 +57,7 @@ class RIPSmallInternetVPN(NetworkEnvBase):
     LAB_NAME = "rip_small_internet_vpn"
     TOPO_LEVEL = "medium"
     TOPO_SIZE = ["s", "m", "l"]
-    TAGS = ["link", "http", "host", "frr", "mac", "arp", "vpn", "icmp"]
+    TAGS = ["link", "http", "pc", "frr", "mac", "arp", "vpn", "icmp"]
 
     def __init__(self, topo_size: Literal["s", "m", "l"] = "s"):
         super().__init__()
@@ -93,7 +93,7 @@ class RIPSmallInternetVPN(NetworkEnvBase):
         # internal hosts
         tot_host_list: list[HostMeta] = []
         for host_idx in range(1, self.host_num + 1):
-            host_name = f"host_{host_idx}"
+            host_name = f"pc{host_idx}"
             host_machine = self.lab.new_machine(host_name, **{"image": "kathara/nika-wireguard", "cpu": 0.5, "mem": "256m"})
             host_meta = HostMeta(
                 name=host_name,
@@ -289,10 +289,10 @@ class RIPSmallInternetVPN(NetworkEnvBase):
 
         # Add basic configuration to hosts
         for host in tot_host_list:
-            if host.name == "host_1":
-                # set default vpn client config for host_1
+            if host.name == "pc1":
+                # set default vpn client config for pc1
                 host.machine.copy_directory_from_path(
-                    os.path.join(cur_path, "confs", "host_1"),
+                    os.path.join(cur_path, "confs", "pc1"),
                     "/",
                 )
                 host.cmd_list.append("wg-quick up wg0")
@@ -338,7 +338,7 @@ class RIPSmallInternetVPN(NetworkEnvBase):
             "The gateway connects to several external FRR routers, each fronting a bridged server LAN in 20.0.X.0/24 that hosts Apache web servers. "
             "One of them serves a WireGuard VPN server and the web servers (1_1 and 1_2) are accessible only via the VPN. "
             "All inter-router links use /31s from 192.168.0.0/16, and RIP runs on every router for both infrastructure and LAN prefixes. "
-            "One internal host (host_1) is preconfigured as a WireGuard VPN client, "
+            "One internal pc (pc1) is preconfigured as a WireGuard VPN client, "
             "establishing an encrypted tunnel to the external VPN server and allowing secure access to the external web services."
         )
         self.load_machines()

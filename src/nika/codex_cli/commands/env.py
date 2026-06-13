@@ -2,7 +2,7 @@
 
 import typer
 
-from nika.cli.utils import env_id_from_lab, fmt_table, human_age
+from nika.codex_cli.utils import env_id_from_lab, fmt_table, human_age
 
 env_app = typer.Typer(help="Kathara lab scenarios.")
 

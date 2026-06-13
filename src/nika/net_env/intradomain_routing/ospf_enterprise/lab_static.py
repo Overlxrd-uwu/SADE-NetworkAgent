@@ -70,7 +70,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
     LAB_NAME = "ospf_enterprise_static"
     TOPO_LEVEL = "medium"
     TOPO_SIZE = ["s", "m", "l"]
-    TAGS = ["host", "ospf", "mac", "http", "link", "frr", "icmp", "arp"]
+    TAGS = ["pc", "ospf", "mac", "http", "link", "frr", "icmp", "arp"]
 
     def __init__(self, topo_size: Literal["s", "m", "l"] = "s"):
         super().__init__()
@@ -139,7 +139,7 @@ class OSPFEnterpriseStatic(NetworkEnvBase):
                     access_key = f"{core_id}_{dist_id}_{access_id}"
                     access_hosts[access_key] = []
                     for host_id in range(1, HOST_PER_ACCESS + 1):
-                        host_name = f"host_{core_id}_{dist_id}_{access_id}_{host_id}"
+                        host_name = f"pc_{core_id}_{dist_id}_{access_id}_{host_id}"
                         host_machine = self.lab.new_machine(
                             host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                         )

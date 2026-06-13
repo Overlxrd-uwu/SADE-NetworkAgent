@@ -43,7 +43,7 @@ class NetworkEnvBase:
             elif "frr" in image:
                 self.routers.append(machine)
             elif "base" in image or "nginx" in image or "wireguard" in image:
-                host_keys = ["pc", "host", "client"]
+                host_keys = ["pc", "client"]
                 if any(key in machine for key in host_keys):
                     self.hosts.append(machine)
                 elif "load_balancer" in machine or "lb" in machine:
@@ -110,7 +110,7 @@ class NetworkEnvBase:
         if self.switches:
             summary += f"Switches: {', '.join(self.switches)}\n"
         if self.hosts:
-            summary += f"Hosts: {', '.join(self.hosts)}\n"
+            summary += f"PCs: {', '.join(self.hosts)}\n"
         if self.servers:
             for server_type, server_list in self.servers.items():
                 summary += f"{server_type.capitalize()} Servers: {', '.join(server_list)}\n"

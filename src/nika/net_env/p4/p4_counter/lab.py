@@ -13,14 +13,14 @@ class P4Counter(NetworkEnvBase):
     LAB_NAME = "p4_counter"
     TOPO_LEVEL = "easy"
     TOPO_SIZE = None
-    TAGS = ["link", "host", "p4", "mac", "arp", "icmp"]
+    TAGS = ["link", "pc", "p4", "mac", "arp", "icmp"]
 
     def __init__(self, **kwargs):
         super().__init__()
         self.lab = Lab(self.LAB_NAME)
         self.name = self.LAB_NAME
         self.instance = Kathara.get_instance()
-        self.desc = "A simple network with 4 bmv2 switches and 3 hosts."
+        self.desc = "A simple network with 4 bmv2 switches and 3 pcs."
 
         pc1 = self.lab.new_machine("pc1", **{"image": "kathara/base"})
         pc2 = self.lab.new_machine("pc2", **{"image": "kathara/base"})

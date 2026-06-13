@@ -73,7 +73,7 @@ def generate_sdn_star_topology(
 
     tot_host_list: list[HostMeta] = []
     for host_id in range(SWITCH_NUM):
-        host_name = f"host_{host_id + 1}"
+        host_name = f"pc{host_id + 1}"
         tot_host_list.append(HostMeta(name=host_name))
 
     controller = ControllerMeta(name="controller")

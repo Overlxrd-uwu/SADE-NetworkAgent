@@ -315,7 +315,7 @@ if __name__ == "__main__":
     for i in range(1, host_num + 1):
         for j in range(1, host_num + 1):
             if i != j:
-                od_dict.setdefault(f"host_{i}", {})[f"host_{j}"] = mbps
+                od_dict.setdefault(f"pc{i}", {})[f"pc{j}"] = mbps
     generator = ODFLowGenerator(lab_name=lab_name)
     server_results = asyncio.run(generator.astart_generate_traffic(od_dicts=od_dict, unit="M", interval=5, udp=False))
     print(json.dumps(server_results, indent=4))

@@ -13,14 +13,14 @@ class SimpleBGP(NetworkEnvBase):
     LAB_NAME = "simple_bgp"
     TOPO_LEVEL = "easy"
     TOPO_SIZE = None
-    TAGS = ["arp", "link", "mac", "bgp", "icmp", "frr", "host"]
+    TAGS = ["arp", "link", "mac", "bgp", "icmp", "frr", "pc"]
 
     def __init__(self, **kwargs):
         super().__init__()
         self.lab = Lab(self.LAB_NAME)
         self.name = self.LAB_NAME
         self.instance = Kathara.get_instance()
-        self.desc = "A simple BGP network with two routers and two hosts."
+        self.desc = "A simple BGP network with two routers and two pcs."
 
         router1 = self.lab.new_machine("router1", **{"image": "kathara/nika-frr", "cpus": 1})
         router2 = self.lab.new_machine("router2", **{"image": "kathara/nika-frr", "cpus": 1})

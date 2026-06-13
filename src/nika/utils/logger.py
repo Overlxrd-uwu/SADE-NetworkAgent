@@ -36,12 +36,9 @@ class _JsonlHandler(logging.Handler):
         self._path = events_path
 
     def emit(self, record: logging.LogRecord) -> None:
-        log_time = datetime.fromtimestamp(record.created).strftime("%Y-%m-%d %H:%M:%S")
         entry: dict = {
             "timestamp": datetime.fromtimestamp(record.created).isoformat(),
-            "log_time": log_time,
             "level": record.levelname,
-            "logger": record.name,
             "event": getattr(record, "event_type", "system"),
             "message": record.getMessage(),
         }

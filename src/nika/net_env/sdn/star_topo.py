@@ -41,7 +41,7 @@ class SDNStar(NetworkEnvBase):
     LAB_NAME = "sdn_star"
     TOPO_LEVEL = "easy"
     TOPO_SIZE = ["s", "m", "l"]
-    TAGS = ["link", "sdn", "host", "mac", "arp", "icmp"]
+    TAGS = ["link", "sdn", "pc", "mac", "arp", "icmp"]
 
     def __init__(self, topo_size: Literal["s", "m", "l"] = "s"):
         super().__init__()
@@ -80,7 +80,7 @@ class SDNStar(NetworkEnvBase):
         # add hosts
         tot_host_list = []
         for host_id in range(SWITCH_NUM):
-            host_name = f"host_{host_id + 1}"
+            host_name = f"pc{host_id + 1}"
             host_machine = self.lab.new_machine(
                 host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
             )

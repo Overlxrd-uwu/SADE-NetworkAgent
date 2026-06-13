@@ -71,7 +71,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
     LAB_NAME = "ospf_enterprise_dhcp"
     TOPO_LEVEL = "hard"
     TOPO_SIZE = ["s", "m", "l"]
-    TAGS = ["arp", "link", "web", "icmp", "frr", "dns", "ospf", "dhcp", "host", "mac", "http", "load_balancer"]
+    TAGS = ["arp", "link", "web", "icmp", "frr", "dns", "ospf", "dhcp", "pc", "mac", "http", "load_balancer"]
 
     def __init__(self, topo_size: Literal["s", "m", "l"] = "s"):
         super().__init__()
@@ -141,7 +141,7 @@ class OSPFEnterpriseDHCP(NetworkEnvBase):
                     access_key = f"{core_id}_{dist_id}_{access_id}"
                     access_hosts[access_key] = []
                     for host_id in range(1, HOST_PER_ACCESS + 1):
-                        host_name = f"host_{core_id}_{dist_id}_{access_id}_{host_id}"
+                        host_name = f"pc_{core_id}_{dist_id}_{access_id}_{host_id}"
                         host_machine = self.lab.new_machine(
                             host_name, **{"image": "kathara/nika-base", "cpus": 0.5, "mem": "256m"}
                         )

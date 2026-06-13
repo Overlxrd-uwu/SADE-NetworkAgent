@@ -4,7 +4,7 @@ from langchain_core.tools.structured import StructuredTool
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
 from agent.llm.model_factory import load_model
-from agent.utils.mcp_servers import MCPServerConfig
+from agent.utils.mcp_servers import MCPServerConfig, select_diagnosis_servers
 
 load_dotenv()
 
@@ -21,8 +21,17 @@ OVERALL_DIAGNOSIS_PROMPT = """\
 class DiagnosisAgent:
     """An agent that performs the total process of network diagnosis using the ReAct framework."""
 
-    def __init__(self, session_id: str, llm_backend: str = "openai", model: str = "gpt-5-mini"):
-        mcp_server_config = MCPServerConfig(session_id=session_id).load_config(if_submit=False)
+    def __init__(
+        self,
+        session_id: str,
+        llm_backend: str = "openai",
+        model: str = "gpt-5-mini",
+        scenario_name: str = "",
+        problem_names: list[str] | None = None,
+    ):
+        mcp_cfg = MCPServerConfig(session_id=session_id)
+        server_names = select_diagnosis_servers(scenario_name, problem_names or [])
+        mcp_server_config = mcp_cfg.load_filtered_config(server_names)
         self.client = MultiServerMCPClient(connections=mcp_server_config)
         self.tools = None
         self.llm = load_model(llm_backend=llm_backend, model=model)

@@ -13,7 +13,7 @@ class P4INT(NetworkEnvBase):
     LAB_NAME = "p4_int"
     TOPO_LEVEL = "medium"
     TOPO_SIZE = None
-    TAGS = ["link", "host", "p4", "mac", "arp", "icmp", "int"]
+    TAGS = ["link", "pc", "p4", "mac", "arp", "icmp", "int"]
 
     def __init__(self, **kwargs):
         super().__init__()

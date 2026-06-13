@@ -4,7 +4,7 @@ import json
 
 import typer
 
-from nika.cli.utils import env_id_from_lab, fmt_table
+from nika.codex_cli.utils import env_id_from_lab, fmt_table
 
 session_app = typer.Typer(help="Active session management.")
 

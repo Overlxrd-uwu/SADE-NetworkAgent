@@ -3,40 +3,11 @@
 import asyncio
 import logging
 
-from agent.mock_agent import MockAgent
-from agent.react_agent import BasicReActAgent
+from agent.registry import create_agent
 from nika.utils.logger import bind_session_dir, log_event
 from nika.utils.session import Session
 
 logging.basicConfig(level=logging.INFO)
-
-
-def _agent_selector(
-    agent_type: str,
-    llm_backend: str,
-    model: str,
-    *,
-    session_id: str,
-    max_steps: int = 20,
-):
-    """Return an agent instance for ``agent_type`` or None if unsupported."""
-    match agent_type.lower():
-        case "react":
-            return BasicReActAgent(
-                session_id=session_id,
-                llm_backend=llm_backend,
-                model=model,
-                max_steps=max_steps,
-            )
-        case "mock":
-            return MockAgent(
-                session_id=session_id,
-                llm_backend=llm_backend,
-                model=model,
-                max_steps=max_steps,
-            )
-        case _:
-            return None
 
 
 def start_agent(
@@ -46,6 +17,8 @@ def start_agent(
     max_steps: int,
     *,
     session_id: str | None = None,
+    reasoning_effort: str | None = None,
+    stream_output: bool = True,
 ) -> None:
     """Load the running session, run the agent on ``task_description``, then end the session."""
     session = Session()
@@ -53,6 +26,8 @@ def start_agent(
     session.update_session("agent_type", agent_type)
     session.update_session("llm_backend", llm_backend)
     session.update_session("model", model)
+    if reasoning_effort is not None:
+        session.update_session("reasoning_effort", reasoning_effort)
     session.start_session()
 
     bind_session_dir(session.session_dir)
@@ -63,15 +38,23 @@ def start_agent(
         agent_type=agent_type,
         model=model,
     )
-    agent = _agent_selector(
+    if agent_type == "cli" and stream_output:
+        effort_line = f" | Reasoning effort: {reasoning_effort}" if reasoning_effort else ""
+        print(
+            f"Session {session.session_id}\n"
+            f"Agent: cli | Model: {model}{effort_line}\n"
+            f"Results: {session.session_dir}\n",
+            flush=True,
+        )
+    agent = create_agent(
         agent_type,
-        llm_backend,
-        model,
         session_id=session.session_id,
+        llm_backend=llm_backend,
+        model=model,
         max_steps=max_steps,
+        reasoning_effort=reasoning_effort,
+        stream_output=stream_output,
     )
-    if agent is None:
-        raise ValueError(f"Unsupported agent type: {agent_type!r}")
     asyncio.run(agent.run(task_description=session.task_description))
 
     session.end_session()
@@ -81,3 +64,5 @@ def start_agent(
         session_id=session.session_id,
         agent_type=agent_type,
     )
+    if agent_type == "cli" and stream_output:
+        print(f"\nDone. Results saved to {session.session_dir}\n", flush=True)

@@ -75,10 +75,6 @@ class MockAgent:
         await self._run_submission(diagnosis_report)
         return {"diagnosis_report": diagnosis_report}
 
-    # ------------------------------------------------------------------
-    # Internal helpers
-    # ------------------------------------------------------------------
-
     async def _run_diagnosis(self, task_description: str) -> str:
         logger = self._make_logger("diagnosis_agent")
         logger._log(

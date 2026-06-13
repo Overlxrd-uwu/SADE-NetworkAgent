@@ -127,7 +127,7 @@ def generate_ospf_enterprise_static_topology(
                 access_hosts[access_key] = []
                 for host_id in range(1, HOST_PER_ACCESS + 1):
                     access_hosts[access_key].append(
-                        HostMeta(name=f"host_{core_id}_{dist_id}_{access_id}_{host_id}")
+                        HostMeta(name=f"pc_{core_id}_{dist_id}_{access_id}_{host_id}")
                     )
 
     server_network = IPv4Network("10.200.0.0/24")

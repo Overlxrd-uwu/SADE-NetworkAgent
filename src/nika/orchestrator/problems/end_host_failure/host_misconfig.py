@@ -28,7 +28,7 @@ class HostMissingIPParams(BaseModel):
 class HostMissingIPBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_missing_ip"
-    TAGS: str = ["host"]
+    TAGS: str = ["pc"]
 
     Params = HostMissingIPParams
 
@@ -114,7 +114,7 @@ class HostIPConflictParams(BaseModel):
 class HostIPConflictBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_ip_conflict"
-    TAGS: str = ["host"]
+    TAGS: str = ["pc"]
 
     Params = HostIPConflictParams
 
@@ -202,7 +202,7 @@ class HostIncorrectIPParams(BaseModel):
 class HostIncorrectIPBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_ip"
-    TAGS: str = ["host"]
+    TAGS: str = ["pc"]
 
     Params = HostIncorrectIPParams
 
@@ -288,7 +288,7 @@ class HostIncorrectGatewayParams(BaseModel):
 class HostIncorrectGatewayBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_gateway"
-    TAGS: str = ["host", "frr"]
+    TAGS: str = ["pc", "frr"]
 
     Params = HostIncorrectGatewayParams
 
@@ -379,7 +379,7 @@ class HostIncorrectNetmaskParams(BaseModel):
 class HostIncorrectNetmaskBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_incorrect_netmask"
-    TAGS: str = ["host", "frr"]
+    TAGS: str = ["pc", "frr"]
 
     Params = HostIncorrectNetmaskParams
 

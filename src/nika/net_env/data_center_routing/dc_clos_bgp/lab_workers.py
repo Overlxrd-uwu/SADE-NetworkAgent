@@ -66,7 +66,7 @@ class DCClosBGP(NetworkEnvBase):
     LAB_NAME = "dc_clos_bgp"
     TOPO_LEVEL = "medium"
     TOPO_SIZE = ["s", "m", "l"]
-    TAGS = ["arp", "link", "mac", "bgp", "icmp", "frr", "host"]
+    TAGS = ["arp", "link", "mac", "bgp", "icmp", "frr", "pc"]
 
     def __init__(self, topo_size: Literal["s", "m", "l"] = "s"):
         super().__init__()

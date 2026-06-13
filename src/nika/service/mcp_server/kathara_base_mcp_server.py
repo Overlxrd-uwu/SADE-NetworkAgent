@@ -266,5 +266,5 @@ if __name__ == "__main__":
     # print(res)
     # res = exec_shell(host_name="pc1", command="ping -c 400 10.0.0.2")
     # print(res)
-    # res = get_host_net_config("host_2_1_1_1")
+    # res = get_host_net_config("pc_2_1_1_1")
     # print(res)

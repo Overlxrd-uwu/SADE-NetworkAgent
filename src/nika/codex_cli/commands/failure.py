@@ -4,7 +4,7 @@ import json
 
 import typer
 
-from nika.cli.utils import require_running_session_id
+from nika.codex_cli.utils import require_running_session_id
 
 failure_app = typer.Typer(help="Inject faults into the running lab.")
 

@@ -142,4 +142,4 @@ class KatharaTCAPI(KatharaBaseAPI, TCMixin):
 if __name__ == "__main__":
     lab_name = "ospf_enterprise_dhcp"
     kathara_api = KatharaTCAPI(lab_name)
-    print(kathara_api.tc_show_statistics("host_1_1_1_1", "eth0"))
+    print(kathara_api.tc_show_statistics("pc_1_1_1_1", "eth0"))

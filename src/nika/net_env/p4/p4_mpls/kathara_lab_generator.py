@@ -35,12 +35,12 @@ def _read_file(path: str) -> str:
 
 def _add_link(machines: dict, device_a: str, device_b: str):
     link_name = f"{device_a}_to_{device_b}"
-    if device_a.startswith("host_"):
+    if device_a.startswith("pc"):
         machines[device_a].links.append((0, link_name))
     else:
         machines[device_a].links.append((machines[device_a].eth_index, link_name))
         machines[device_a].eth_index += 1
-    if device_b.startswith("host_"):
+    if device_b.startswith("pc"):
         machines[device_b].links.append((0, link_name))
     else:
         machines[device_b].links.append((machines[device_b].eth_index, link_name))
@@ -57,12 +57,12 @@ def generate_p4_mpls_topology(output_dir: str | None = None) -> str:
 
     machines = {}
     for i in range(1, 4):
-        machines[f"host_{i}"] = MachineMeta(name=f"host_{i}", image="kathara/base")
+        machines[f"pc{i}"] = MachineMeta(name=f"pc{i}", image="kathara/base")
     for i in range(1, 8):
         machines[f"switch_{i}"] = MachineMeta(name=f"switch_{i}", image="kathara/p4", cpus=0.5, mem="256m")
 
     # Topology from lab.py
-    _add_link(machines, "host_1", "switch_1")
+    _add_link(machines, "pc1", "switch_1")
     _add_link(machines, "switch_1", "switch_2")
     _add_link(machines, "switch_1", "switch_3")
     _add_link(machines, "switch_2", "switch_4")
@@ -71,13 +71,13 @@ def generate_p4_mpls_topology(output_dir: str | None = None) -> str:
     _add_link(machines, "switch_4", "switch_6")
     _add_link(machines, "switch_5", "switch_7")
     _add_link(machines, "switch_6", "switch_7")
-    _add_link(machines, "switch_7", "host_2")
-    _add_link(machines, "switch_7", "host_3")
+    _add_link(machines, "switch_7", "pc2")
+    _add_link(machines, "switch_7", "pc3")
 
     # Host startups from startups/ folder
     for i in range(1, 4):
-        machines[f"host_{i}"].cmd_list = _read_file(
-            os.path.join(STARTUPS_DIR, f"host_{i}.startup")
+        machines[f"pc{i}"].cmd_list = _read_file(
+            os.path.join(STARTUPS_DIR, f"pc{i}.startup")
         ).strip().split("\n")
 
     # Switch startups and files from startups/ folder
@@ -97,10 +97,10 @@ def generate_p4_mpls_topology(output_dir: str | None = None) -> str:
                 os.path.join(P4_UTILS, "thrift_API.py")
             )
 
-    all_machines = [machines[f"host_{i}"] for i in range(1, 4)] + [
+    all_machines = [machines[f"pc{i}"] for i in range(1, 4)] + [
         machines[f"switch_{i}"] for i in range(1, 8)
     ]
-    return _write_lab(output_dir, all_machines, "p4_mpls", "P4 MPLS - 3 hosts, 7 switches")
+    return _write_lab(output_dir, all_machines, "p4_mpls", "P4 MPLS - 3 pcs, 7 switches")
 
 
 def _write_lab(

@@ -20,8 +20,8 @@ from pathlib import Path
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
 from agent.utils.mcp_servers import MCPServerConfig
-from nika.cli.main import app
-from nika.cli.utils import env_id_from_lab
+from nika.codex_cli.main import app
+from nika.codex_cli.utils import env_id_from_lab
 from nika.utils.session_store import SESSIONS_DIR, SessionStore
 from tests.integration_base import OrderedPipelineTestCase
 

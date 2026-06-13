@@ -26,7 +26,7 @@ class HostCrashParams(BaseModel):
 class HostCrashBase:
     root_cause_category: RootCauseCategory = RootCauseCategory.END_HOST_FAILURE
     root_cause_name: str = "host_crash"
-    TAGS: str = ["host"]
+    TAGS: str = ["pc"]
 
     Params = HostCrashParams
 

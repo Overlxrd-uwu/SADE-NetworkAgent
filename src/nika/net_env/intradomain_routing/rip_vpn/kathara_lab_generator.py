@@ -155,7 +155,7 @@ def generate_rip_vpn_topology(
     Generate Kathara-compatible lab configuration for RIP Small Internet VPN.
     WireGuard keys are read from wireguard_keys_path (default: src/nika/net_env/utils/wireguard/keys.txt),
     format: one line per key pair: private_key,public_key. Needs at least 4 key pairs
-    (vpn_server_1, host_1, web_server_1_1, web_server_1_2).
+    (vpn_server_1, pc1, web_server_1_1, web_server_1_2).
     Returns the absolute path to the output directory.
     """
     if output_dir is None:
@@ -166,7 +166,7 @@ def generate_rip_vpn_topology(
     if len(key_pairs) < 4:
         raise ValueError(
             f"WireGuard keys file must contain at least 4 key pairs (got {len(key_pairs)}). "
-            "Required: vpn_server_1, host_1, web_server_1_1, web_server_1_2."
+            "Required: vpn_server_1, pc1, web_server_1_1, web_server_1_2."
         )
 
     match topo_size:
@@ -187,7 +187,7 @@ def generate_rip_vpn_topology(
 
     tot_host_list: list[HostMeta] = []
     for host_idx in range(1, host_num + 1):
-        tot_host_list.append(HostMeta(name=f"host_{host_idx}"))
+        tot_host_list.append(HostMeta(name=f"pc{host_idx}"))
 
     gateway_router_meta = RouterMeta(name="gateway_router")
 
@@ -308,10 +308,10 @@ def generate_rip_vpn_topology(
         router_meta.extra_files["/etc/frr/frr.conf"] = FRR_BASE_TEMPLATE_RIP.format(network=network_str)
         router_meta.cmd_list.append("service frr start")
 
-    # WireGuard: key index 0=vpn_server_1, 1=host_1, 2=web_server_1_1, 3=web_server_1_2
+    # WireGuard: key index 0=vpn_server_1, 1=pc1, 2=web_server_1_1, 3=web_server_1_2
     server_priv, server_pub = key_pairs[0][0], key_pairs[0][1]
     wg_server_peers = [
-        ("host_1", key_pairs[1][1], "172.16.1.11/32"),
+        ("pc1", key_pairs[1][1], "172.16.1.11/32"),
         ("web_server_1_1", key_pairs[2][1], "172.16.1.21/32"),
         ("web_server_1_2", key_pairs[3][1], "172.16.1.22/32"),
     ]
@@ -322,7 +322,7 @@ def generate_rip_vpn_topology(
 
     # Host configs
     for host in tot_host_list:
-        if host.name == "host_1":
+        if host.name == "pc1":
             host.extra_files["/etc/wireguard/wg0.conf"] = _wg_conf_client(
                 key_pairs[1][0], server_pub, "172.16.1.11"
             )

@@ -39,15 +39,15 @@ def generate_p4_bloom_filter_topology(output_dir: str | None = None) -> str:
     if output_dir is None:
         output_dir = os.path.join(SCRIPT_DIR, "topology")
 
-    host_1 = MachineMeta(name="host_1", image="kathara/base")
-    host_2 = MachineMeta(name="host_2", image="kathara/base")
+    pc1 = MachineMeta(name="pc1", image="kathara/base")
+    pc2 = MachineMeta(name="pc2", image="kathara/base")
     switch_1 = MachineMeta(name="switch_1", image="kathara/p4")
     switch_2 = MachineMeta(name="switch_2", image="kathara/p4")
 
-    # Topology: host_1 - switch_1 - switch_2 - host_2
-    host_1.links.append((0, "A"))
+    # Topology: pc1 - switch_1 - switch_2 - pc2
+    pc1.links.append((0, "A"))
     switch_1.links.append((0, "A"))
-    host_2.links.append((0, "B"))
+    pc2.links.append((0, "B"))
     switch_2.links.append((0, "B"))
     switch_1.links.append((1, "C"))
     switch_2.links.append((1, "C"))
@@ -66,9 +66,9 @@ def generate_p4_bloom_filter_topology(output_dir: str | None = None) -> str:
             if j != i:
                 cmd_list.append(f"arp -s 10.0.0.{j} 00:00:0a:00:00:0{j}")
         if i == 1:
-            host_1.cmd_list = cmd_list
+            pc1.cmd_list = cmd_list
         else:
-            host_2.cmd_list = cmd_list
+            pc2.cmd_list = cmd_list
 
     # Switch startup and files
     switch_startup_base = [
@@ -105,8 +105,8 @@ def generate_p4_bloom_filter_topology(output_dir: str | None = None) -> str:
             os.path.join(P4_UTILS, "thrift_API.py")
         )
 
-    all_machines = [host_1, host_2, switch_1, switch_2]
-    return _write_lab(output_dir, all_machines, "p4_bloom_filter", "P4 Bloom Filter - 2 hosts, 2 switches")
+    all_machines = [pc1, pc2, switch_1, switch_2]
+    return _write_lab(output_dir, all_machines, "p4_bloom_filter", "P4 Bloom Filter - 2 pcs, 2 switches")
 
 
 def _write_lab(

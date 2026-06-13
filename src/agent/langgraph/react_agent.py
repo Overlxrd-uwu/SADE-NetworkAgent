@@ -12,8 +12,8 @@ from langgraph.graph import END, START, StateGraph
 from pydantic import Field, ValidationError
 from typing_extensions import TypedDict
 
-from agent.domain_agents.diagnosis_agent import DiagnosisAgent
-from agent.domain_agents.submission_agent import SubmissionAgent
+from agent.langgraph.domain_agents.diagnosis_agent import DiagnosisAgent
+from agent.langgraph.domain_agents.submission_agent import SubmissionAgent
 from agent.utils.loggers import AgentCallbackLogger
 from nika.utils.logger import system_logger
 from nika.utils.session import Session
@@ -65,7 +65,13 @@ class BasicReActAgent:
             system_logger.warning("Authentication to Langfuse failed. Please check your LANGFUSE_API_KEY.")
 
         # load agent and tools
-        diagnosis_agent = DiagnosisAgent(session_id=session_id, llm_backend=llm_backend, model=model)
+        diagnosis_agent = DiagnosisAgent(
+            session_id=session_id,
+            llm_backend=llm_backend,
+            model=model,
+            scenario_name=self.session.scenario_name,
+            problem_names=self.session.problem_names,
+        )
         asyncio.run(diagnosis_agent.load_tools())
         self.diagnosis_agent = diagnosis_agent.get_agent()
 

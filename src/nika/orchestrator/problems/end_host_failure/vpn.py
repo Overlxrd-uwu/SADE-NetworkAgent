@@ -39,7 +39,7 @@ class VPNMembershipMissingBase:
         self.kathara_api = KatharaBaseAPI(lab_name=self.net_env.lab.name)
         self.injector = FaultInjectorHost(lab_name=self.net_env.lab.name)
         self.vpn_server = self.net_env.servers["vpn"][0]
-        self.target_host = random.choice(["host_1", "web_server_1_1", "web_server_1_2"])
+        self.target_host = random.choice(["pc1", "web_server_1_1", "web_server_1_2"])
         self.faulty_devices = [self.target_host, self.vpn_server]
 
     def inject_fault(self, params: VPNMembershipMissingParams | None = None):

@@ -77,7 +77,7 @@ def _run_benchmark_row_subprocess(
         judge_model=judge_model,
     )
     proc = subprocess.run(
-        [sys.executable, "-m", "nika.cli.main", "benchmark", "run", *cli_args],
+        [sys.executable, "-m", "nika.codex_cli.main", "benchmark", "run", *cli_args],
         capture_output=True,
         text=True,
     )
@@ -133,6 +133,7 @@ def run_single_benchmark(
         model=model,
         max_steps=max_steps,
         session_id=session_id,
+        stream_output=False,
     )
 
     eval_results(

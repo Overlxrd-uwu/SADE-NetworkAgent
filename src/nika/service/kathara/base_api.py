@@ -50,7 +50,7 @@ class KatharaBaseAPI:
         """
         hosts = []
         for name, machine in self.lab.machines.items():
-            host_keys = ["pc", "host", "client"]
+            host_keys = ["pc", "client"]
             image = machine.get_image()
             if "base" in image and any(key in name for key in host_keys):
                 hosts.append(name)
@@ -345,7 +345,7 @@ class KatharaBaseAPI:
             elif "frr" in image:
                 self.routers.append(machine)
             elif "base" in image or "nginx" in image or "wireguard" in image:
-                host_keys = ["pc", "host", "client"]
+                host_keys = ["pc", "client"]
                 if any(key in machine for key in host_keys):
                     self.hosts.append(machine)
                 elif "load_balancer" in machine or "lb" in machine:
@@ -563,7 +563,7 @@ async def main():
     # result = await api.get_reachability()
     result = api.exec_cmd("load_balancer", "curl http://20.200.0.2")
 
-    # result = api.curl_web_test("host_1_1_1_1", "http://web0.local", times=3)
+    # result = api.curl_web_test("pc_1_1_1_1", "http://web0.local", times=3)
     print(result)
 
 
