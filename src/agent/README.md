@@ -36,6 +36,17 @@ src/agent/
 | SDK | `sdk` | TBD (recommended: same two phases) | Anthropic SDK / Cursor SDK | Planned |
 | LangGraph + CLI | `cli` | LangGraph `StateGraph` | `codex exec` subprocess | Implemented |
 
+## Community Agents
+
+Community-contributed agents live under `src/agent/community/<name>/` and implement the
+same `protocols.TroubleshootingAgent` contract.
+
+| Type | CLI name | Orchestration | LLM access | Location |
+|------|----------|---------------|------------|----------|
+| SADE | `sade` | Single Claude Code session, phase-gated workflow + 15-skill library | `claude-agent-sdk` (optional extra `sade`) | `community/sade` |
+
+See `community/sade/README.md` for details and the paper citation.
+
 ## Shared Two-Phase Flow
 
 Every implementation follows the same troubleshooting pipeline:

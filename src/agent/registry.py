@@ -45,5 +45,16 @@ def create_agent(
                 reasoning_effort=reasoning_effort,
                 stream_output=stream_output,
             )
+        case "sade":
+            # Lazy import: claude-agent-sdk is an optional dependency only
+            # required for the community SADE agent.
+            from agent.community.sade.agent import SadeAgent
+
+            return SadeAgent(
+                session_id=session_id,
+                llm_backend=llm_backend,
+                model=model,
+                max_steps=max_steps,
+            )
         case _:
             raise ValueError(f"Unsupported agent type: {agent_type!r}")

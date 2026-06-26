@@ -1,0 +1,1 @@
+"""Prompt templates for Claude Code agents."""

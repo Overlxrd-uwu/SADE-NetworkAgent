@@ -4,7 +4,7 @@ import typer
 
 from agent.cli.codex_worker import REASONING_EFFORT_LEVELS
 
-SUPPORTED_AGENT_TYPES = ("react", "mock", "cli")
+SUPPORTED_AGENT_TYPES = ("react", "mock", "cli", "sade")
 SUPPORTED_LLM_BACKENDS = ("openai", "ollama", "deepseek")
 
 agent_app = typer.Typer(help="Troubleshooting agents.")

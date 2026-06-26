@@ -28,6 +28,10 @@ dependencies = [
     "func_timeout"
 ]
 
+[project.optional-dependencies]
+# SADE community agent (src/agent/community/sade) drives Claude Code via the SDK.
+sade = ["claude-agent-sdk"]
+
 [project.scripts]
 nika = "nika.codex_cli.main:main"
 
